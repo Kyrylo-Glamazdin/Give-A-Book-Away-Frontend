@@ -5,7 +5,9 @@ HIIiiiii im lost
 <<<<<<< HEAD
 Kyrylo Glamazdin
 
-Lesly Ayala
+<<<<<<< HEAD
+A test 
+
 =======
 =======
 
