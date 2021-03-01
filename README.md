@@ -6,7 +6,7 @@ hi im Shelsy and i never learned how to swim. i like the smell of dirt after rai
 Kyrylo Glamazdin
 
 <<<<<<< HEAD
-A test 
+Hi I'm Lesly I also don't know how to swim and I like empanadas.
 
 =======
 =======
