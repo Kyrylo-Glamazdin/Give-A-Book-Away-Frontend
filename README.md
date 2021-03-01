@@ -1,6 +1,6 @@
 # Give-A-Book-Away-Frontend
 >>>>>>> HEAD
-HIIiiiii im lost 
+hi im Shelsy and i never learned how to swim. i like the smell of dirt after rain. 
 
 <<<<<<< HEAD
 Kyrylo Glamazdin
