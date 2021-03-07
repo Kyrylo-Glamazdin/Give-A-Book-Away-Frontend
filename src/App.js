@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Post from "./Components/Post";
 import Navbar from "./Components/Navbar.js";
 import Searchbar from "./Components/Searchbar.js";
+import BookList from "./Components/bookList/BookList";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   constructor(props) {
@@ -14,12 +16,13 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <Route path="/" render={NavbarComponent} />
-          <Switch>{
-          <Route path="/post" component={Post}/>
-          /* more routes here */}</Switch>
+        <NavbarComponent/>
+        {/* <Searchbar /> */}
+          <Switch>
+            <Route exact path="/" component={BookList} />
+            <Route exact path="/post" component={Post} />
+          </Switch>
         </Router>
-        <Searchbar />
       </div>
     );
   }
