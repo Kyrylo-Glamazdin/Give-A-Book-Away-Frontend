@@ -11,7 +11,7 @@ class Navbar extends Component {
                 </div>
                 <div className="button-group">
                     <Link className="navbutton" to="/">Home</Link>
-                    <Link className="navbutton" to="/post/">Post</Link>
+                    <Link className="navbutton" to="/post">Post</Link>
                     <Link className="navbutton" to="/inbox/">Inbox</Link>
                     <Link className="navbutton" to="/profile/">Profile</Link>
                 </div>
