@@ -15,13 +15,11 @@
 .site-title {
     display: inline-block;
     color: whitesmoke;
-    margin-top: 17px;
     margin-left: 35px;
 }
 
 .button-group {
     float: right;
-    margin-top: 17px;
 }
 
 .navbutton-left {

@@ -8,6 +8,14 @@
   width: 1px;
 }
 .searchbar {
-  text-align: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 25px;
 }
+
+/* .searchbar-form {
+  background-color: darkgray;
+  width: 50%;
+} */

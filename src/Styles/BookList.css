@@ -1,4 +1,4 @@
-.search-box {
+/* .search-box {
 
 }
 .search-box .search-input{
@@ -28,4 +28,12 @@
         width: 90%;
         display: block !important;
     }
+  } */
+
+  .book-grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 35px;
+      margin-bottom: 55px;
+      margin-left: 10%;
   }

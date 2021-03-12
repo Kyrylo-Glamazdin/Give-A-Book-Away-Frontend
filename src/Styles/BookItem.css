@@ -1,0 +1,35 @@
+.book-item {
+    width: 22%;
+    margin-left: 10px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.book-item-info {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
+.book-item-img-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-item-title {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.book-item-author {
+    margin-top: 3px;
+}
+
+.book-item-distance {
+    margin-top: 1px;
+    font-size: 16px;
+    color: rgb(100, 100, 100);
+}
