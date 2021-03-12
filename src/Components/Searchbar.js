@@ -1,24 +1,11 @@
 import React, { Component } from "react";
 //import ReactDom from "react-dom";
 import "../Styles/Searchbar.css";
-//ReactDOM.render(<Searchbar />, document.getElementById("Searchbar"));
+import { Input, Search } from 'semantic-ui-react';
 
-//function Searchbar() {
-//const Searchbar = () =>{}
-/*
-class Searchbar extends Component {
-  render() {
-    return (
-      <div className="searchbar">
-        <input type="text" placeholder="Search..." />
-      </div>
-    );
-  }
-}
-*/
 //https://www.emgoto.com/react-search-bar/ tutorial that helped make searchbar
 const Searchbar = () => (
-  //
+  
   <div className="searchbar">
     <form action="/" method="get">
       <label htmlFor="header-search">
@@ -35,6 +22,7 @@ const Searchbar = () => (
       <button type="submit">Search</button>
     </form>
   </div> //
+
 );
 
 export default Searchbar;

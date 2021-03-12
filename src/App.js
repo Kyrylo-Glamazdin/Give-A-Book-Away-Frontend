@@ -14,11 +14,13 @@ class App extends Component {
 
   render() {
     const NavbarComponent = () => <Navbar />;
+    const BookListComponent = () => <BookList />;
+    const PostComponent = () => <Post />;
     return (
       <div>
         <Router>
-        <NavbarComponent/>
-        {/* <Searchbar /> */}
+          <NavbarComponent />
+          {/* <Searchbar /> */}
           <Switch>
             <Route exact path="/" component={BookList} />
             <Route exact path="/post" component={Post} />
