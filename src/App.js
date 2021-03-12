@@ -19,7 +19,6 @@ class App extends Component {
       <div>
         <Router>
         <NavbarComponent/>
-        {/* <Searchbar /> */}
           <Switch>
             <Route exact path="/" component={BookListComponent} />
             <Route exact path="/post" component={PostComponent} />
