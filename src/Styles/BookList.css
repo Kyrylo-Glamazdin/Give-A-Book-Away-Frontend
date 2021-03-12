@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 .search-box {
-=======
-/* .search-box {
->>>>>>> c493e0abe9f5cda636090e8496a3f34fea452735
 
 }
 .search-box .search-input{
@@ -32,9 +28,7 @@
         width: 90%;
         display: block !important;
     }
-<<<<<<< HEAD
-=======
-  } */
+  }
 
   .book-grid {
       display: flex;
@@ -42,5 +36,4 @@
       margin-top: 35px;
       margin-bottom: 55px;
       margin-left: 10%;
->>>>>>> c493e0abe9f5cda636090e8496a3f34fea452735
   }
