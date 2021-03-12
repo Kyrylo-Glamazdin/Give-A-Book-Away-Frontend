@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar.js";
 import Searchbar from "./Components/Searchbar.js";
 import BookList from "./Components/bookList/BookList";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SignUp from "./Components/login/SignUp";
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={BookList} />
             <Route exact path="/post" component={Post} />
+            <Route exact path="/signup" component={SignUp} />
           </Switch>
         </Router>
       </div>
