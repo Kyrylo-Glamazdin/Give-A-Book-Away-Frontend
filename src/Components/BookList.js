@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component} from 'react'
 import {connect} from 'react-redux';
 import Searchbar from './Searchbar.js';
 import BookItem from './BookItem.js';
@@ -7,14 +7,29 @@ import "../Styles/BookList.css"
 class BookList extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            searchInput: ""
+        }
+    }
+
+    handleFormChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleSearchSubmit = event => {
+        event.preventDefault();
+        //back-end call
     }
 
     render() {
         return(
             <div>
-                <Searchbar />
+                <Searchbar handleFormChange={this.handleFormChange} handleSearchSubmit={this.handleSearchSubmit} formValue={this.state.searchInput} />
                 <div className="book-grid">
-                    {this.props.books.map(book => (<BookItem book={book}/>))}
+                    {this.props.books.map(book => (<BookItem key={"book"+book.id} book={book}/>))}
                 </div>
             </div>
         );

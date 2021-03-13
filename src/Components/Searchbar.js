@@ -1,28 +1,18 @@
 import React, { Component } from "react";
-//import ReactDom from "react-dom";
 import "../Styles/Searchbar.css";
-import { Input, Search } from 'semantic-ui-react';
 
 //https://www.emgoto.com/react-search-bar/ tutorial that helped make searchbar
-const Searchbar = () => (
-  
-  <div className="searchbar">
-    <form action="/" method="get">
-      <label htmlFor="header-search">
-        <span className="visually-hidden">Search for books</span>
-      </label>
-
-      <input
-        type="text"
-        id="header-search"
-        placeholder="Search for books"
-        name="s"
-      />
-
-      <button type="submit">Search</button>
-    </form>
-  </div> //
-
-);
+class Searchbar extends Component{
+  render() {
+    return(
+      <div className="searchbar">
+        <form className="standard-search-form" onSubmit={this.props.handleSearchSubmit}>
+          <input className="search-input" name="searchInput" onChange={this.props.handleFormChange} value={this.props.formValue} placeholder="Search by title, author, or ISBN"/>
+          <input className="search-button" type="submit" value="Search"/>
+        </form>
+      </div>
+    );
+  }
+}
 
 export default Searchbar;
