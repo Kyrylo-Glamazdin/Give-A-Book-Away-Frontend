@@ -4,8 +4,10 @@ import Post from "./Components/Post";
 import Navbar from "./Components/Navbar.js";
 import Searchbar from "./Components/Searchbar.js";
 import BookList from "./Components/BookList.js";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./Components/login/SignUp";
+
+import SelectedBookPage from "./Components/SelectedBookPage";
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const SignUpComponent = () => <SignUp />;
+    const SelectedBookPageComponent = () => <SelectedBookPage />;
     return (
       <div>
         <Router>
@@ -25,6 +28,7 @@ class App extends Component {
             <Route exact path="/" component={BookListComponent} />
             <Route exact path="/post" component={PostComponent} />
             <Route exact path="/signup" component={SignUpComponent} />
+            <Route exact path="/inbox" component={SelectedBookPageComponent} />
           </Switch>
         </Router>
       </div>

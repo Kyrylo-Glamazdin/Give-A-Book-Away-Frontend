@@ -1,0 +1,34 @@
+.a-book {
+  overflow-y: scroll;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.description {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+}
+
+.author-name {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+}
+.isbn {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+}
+
+.location {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+}
+.test {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+  margin-bottom: 40px;
+}
