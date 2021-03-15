@@ -6,6 +6,7 @@ import Searchbar from "./Components/Searchbar.js";
 import BookList from "./Components/BookList.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./Components/login/SignUp";
+import Profile from "./Components/ProfilePage.js";
 
 import SelectedBookPage from "./Components/SelectedBookPage";
 
@@ -19,6 +20,7 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const SignUpComponent = () => <SignUp />;
+    const ProfileComponent = () => <Profile />;
     const SelectedBookPageComponent = () => <SelectedBookPage />;
     return (
       <div>
@@ -29,6 +31,7 @@ class App extends Component {
             <Route exact path="/post" component={PostComponent} />
             <Route exact path="/signup" component={SignUpComponent} />
             <Route exact path="/inbox" component={SelectedBookPageComponent} />
+            <Route exact path="/profile" component={ProfileComponent} />
           </Switch>
         </Router>
       </div>
