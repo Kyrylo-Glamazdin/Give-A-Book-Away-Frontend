@@ -53,6 +53,8 @@ const booksReducer = (oldBooks = books, action) => {
             return oldBooks;
         case "DELETE_BOOK":
             return oldBooks.filter(book => (book.id !== action.payload.id));
+        case "CLEAR_BOOKS_TEMPORARY":
+            return [];
         default:
             return oldBooks;
     }
