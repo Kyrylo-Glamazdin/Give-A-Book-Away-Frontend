@@ -26,6 +26,13 @@ export const deleteBook = book => {
     };
 };
 
+export const clearBooksTemporary = () => {
+    return {
+        type: "CLEAR_BOOKS_TEMPORARY",
+        payload: {}
+    }
+}
+
 export const setUser = user => {
     return {
         type: "SET_USER",
