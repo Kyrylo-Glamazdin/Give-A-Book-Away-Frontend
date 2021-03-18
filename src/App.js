@@ -7,12 +7,44 @@ import BookList from "./Components/BookList.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./Components/login/SignUp";
 import Profile from "./Components/ProfilePage.js";
+import {connect} from 'react-redux';
+import axios from 'axios';
+import {postBook, addUser} from './Actions';
 
 import SelectedBookPage from "./Components/SelectedBookPage";
 
 class App extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.fetchUsers();
+    this.fetchBooks();
+  }
+
+  fetchUsers = async () => {
+    axios.get("http://localhost:3500/api/book/")
+    .then(response => {
+      for (let i = 0; i < response.data.length; i++) {
+        this.props.addUser(response.data[i]);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  fetchBooks = async () => {
+    axios.get("http://localhost:3500/api/book/")
+    .then(response => {
+      for (let i = 0; i < response.data.length; i++) {
+        this.props.postBook(response.data[i]);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -39,4 +71,14 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    users: state.users,
+    books: state.books
+  }
+}
+
+export default connect (mapStateToProps, {
+  postBook,
+  addUser
+})(App);
