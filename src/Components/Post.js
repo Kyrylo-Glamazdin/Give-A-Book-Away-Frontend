@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
 import '../Styles/PostButtons.css';
 import Upload from './upload'
 import DropdownExampleSearchSelection from './searchdropbox'
@@ -10,12 +9,12 @@ function Post() {
   return (
     <div>
       <div className='layout'>
-            <div className='keys'>
-              <Upload/>
-              <DropdownExampleSearchSelection/>
-              <DropdownExampleSelection/>
-              <Buttons/>
-      </div>
+        <div className='keys'>
+          <Upload/>
+          <DropdownExampleSearchSelection/>
+          <DropdownExampleSelection/>
+          <Buttons/>
+        </div>
       </div>
     </div>
   );

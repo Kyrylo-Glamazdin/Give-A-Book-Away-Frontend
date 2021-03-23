@@ -11,7 +11,8 @@ class BookList extends Component {
         super(props);
 
         this.state = {
-            searchInput: ""
+            searchInput: "",
+            searchBooks: []
         }
     }
 
@@ -23,28 +24,44 @@ class BookList extends Component {
 
     handleSearchSubmit = async event => {
         event.preventDefault();
-        let booksKey = await axios.get("http://localhost:3500/api/book/key");
-        booksKey = booksKey.data;
-        await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + this.state.searchInput + "&key=" +booksKey)
-        .then(result => {
-            this.props.clearBooksTemporary();
-            for (let i = 0; i < result.data.items.length; i++) {
-                let newBook = {
-                    title: result.data.items[i].volumeInfo.title,
-                    author: result.data.items[i].volumeInfo.authors[0],
-                    isbn: result.data.items[i].volumeInfo.industryIdentifiers[0].identifier,
-                    preview_image: result.data.items[i].volumeInfo.imageLinks.thumbnail
+        if(this.state.searchInput) {
+            let booksKey = await axios.get("http://localhost:3500/api/book/key");
+            await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + this.state.searchInput + "&key=" + booksKey.data)
+            .then(result => {
+                let books = [];
+                for (let i = 0; i < result.data.items.length; i++) {
+                    let temp = result.data.items[i].volumeInfo;
+                    let newBook = {
+                        title: temp.title,
+                        author: temp.authors ? temp.authors[0]: "",
+                        isbn: temp.industryIdentifiers? temp.industryIdentifiers[0].identifier:"",
+                        preview_image: temp.imageLinks?.thumbnail
+                    }
+                    books.push(newBook)
                 }
-                this.props.postBook(newBook)
-            }
-        })
-        .catch(err => {console.log(err)})
+                this.setState({searchBooks: books})
+            })
+            .catch(err => {console.log(err)})
+        } else {
+            alert("please input search key.");
+        }
+    }
+
+    handleSearchBook(){
+        this.setState({searchBooks: []})
     }
 
     render() {
         return(
             <div>
-                <Searchbar handleFormChange={this.handleFormChange} handleSearchSubmit={this.handleSearchSubmit} formValue={this.state.searchInput} />
+                <Searchbar 
+                    handleFormChange={this.handleFormChange} 
+                    handleSearchSubmit={this.handleSearchSubmit} 
+                    handleSearchBook={this.handleSearchBook} 
+                    formValue={this.state.searchInput} 
+                    searchBooks={this.state.searchBooks} 
+                    me={this}
+                />
                 <div className="book-grid">
                     {this.props.books.map(book => (<BookItem key={"book"+book.id} book={book}/>))}
                 </div>
@@ -61,5 +78,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     postBook,
-    clearBooksTemporary
+    clearBooksTemporary,
 })(BookList);

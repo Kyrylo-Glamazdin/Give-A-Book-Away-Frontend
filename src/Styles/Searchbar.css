@@ -44,3 +44,18 @@
 .search-button:hover {
   background-color: rgb(173, 13, 2);
 }
+.dropdown-menu{
+  position: unset !important;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  width: 630px;
+}
+.dropdown-item{
+  cursor: pointer;
+}
+.height-0{
+  height: 0;
+}
+/* .search-book > img, .search-book > p{
+  float: left
+} */

@@ -9,6 +9,7 @@ let books = [
 ];
 
 let currentUser = {id: 0, name: "Guest", username: "guest", zipcode: "11111"};
+let currentBook = {};
 
 let nextUserId = 7;
 let nextBookId = 8;
@@ -58,8 +59,18 @@ const currentUserReducer = (curUser = currentUser, action) => {
     }
 }
 
+const currentBookReducer = (curBook = currentBook, action) => {
+    switch (action.type) {
+        case "SET_BOOK":
+            return action.payload;
+        default:
+            return curBook;
+    }
+}
+
 export default combineReducers({
     users: usersReducer,
     books: booksReducer,
-    currentUser: currentUserReducer
+    currentUser: currentUserReducer,
+    currentBook: currentBookReducer
 });

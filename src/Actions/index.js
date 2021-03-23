@@ -39,3 +39,10 @@ export const setUser = user => {
         payload: user
     };
 };
+
+export const setBook = book => {
+    return {
+        type: "SET_BOOK",
+        payload: book
+    };
+};

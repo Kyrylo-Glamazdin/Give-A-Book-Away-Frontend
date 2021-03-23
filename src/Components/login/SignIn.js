@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import "../../Styles/SignIn.css";
 
-export default function SignUp() {
+export default function SignIn() {
 
     const history = useHistory();
 
