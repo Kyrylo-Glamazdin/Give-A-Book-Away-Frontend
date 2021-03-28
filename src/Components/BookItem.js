@@ -27,7 +27,7 @@ export default function BookItem(props) {
                     {props.book.author}
                 </div>
                 <div className="book-item-distance">
-                    3.2 miles from you
+                    {props.book.distance} miles from you
                 </div>
             </div>
         </div>

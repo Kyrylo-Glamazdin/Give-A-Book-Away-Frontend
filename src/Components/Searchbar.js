@@ -9,8 +9,13 @@ class Searchbar extends Component{
   fetchBooks(book){
     this.props.clearBooksTemporary();
     this.props.me.handleSearchBook();
-    axios.get(`http://localhost:3500/api/book/${book.isbn}`)
+    let bookAndZipObject = {
+      book: book,
+      zipcode: this.props.currentUser.zipcode
+    }
+    axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
     .then(response => {
+      console.log(response.data)
       for (let i = 0; i < response.data.length; i++) {
         this.props.postBook(response.data[i]);
       }
@@ -60,6 +65,7 @@ class Searchbar extends Component{
 
 const mapStateToProps = (state) => {
   return {
+    currentUser: state.currentUser
   };
 }
 
