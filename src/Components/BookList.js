@@ -43,7 +43,7 @@ class BookList extends Component {
             })
             .catch(err => {console.log(err)})
         } else {
-            alert("please input search key.");
+            alert("Please input search key.");
         }
     }
 
