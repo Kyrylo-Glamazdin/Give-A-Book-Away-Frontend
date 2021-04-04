@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   fetchUsers = async () => {
-    axios.get("http://localhost:3500/api/book/")
+    axios.get("http://localhost:3500/api/user/")
     .then(response => {
       for (let i = 0; i < response.data.length; i++) {
         this.props.addUser(response.data[i]);
@@ -34,7 +34,10 @@ class App extends Component {
   }
 
   fetchBooks = async () => {
-    axios.get("http://localhost:3500/api/book/")
+    let req = {
+      zipcode: this.props.currentUser.zipcode 
+    }
+    axios.post("http://localhost:3500/api/book/recommended", req)
     .then(response => {
       for (let i = 0; i < response.data.length; i++) {
         this.props.postBook(response.data[i]);
@@ -44,6 +47,8 @@ class App extends Component {
       console.log(err);
     })
   }
+
+  
 
   render() {
     const NavbarComponent = () => <Navbar />;
@@ -75,7 +80,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     users: state.users,
-    books: state.books
+    books: state.books,
+    currentUser: state.currentUser
   }
 }
 
