@@ -8,18 +8,13 @@ let books = [
 
 ];
 
-let currentUser = {id: 0, name: "Guest", username: "guest", zipcode: "11111"};
+let currentUser = {id: 0, name: "Guest", username: "guest", zipcode: "10065"};
 let currentBook = {};
-
-let nextUserId = 7;
-let nextBookId = 8;
 
 const usersReducer = (oldUsers = users, action) => {
     switch (action.type) {
         case "ADD_USER":
             let newUser = action.payload;
-            newUser.id = nextUserId;
-            nextUserId++;
             return oldUsers.concat(newUser);
         default:
             return oldUsers;
@@ -30,8 +25,6 @@ const booksReducer = (oldBooks = books, action) => {
     switch(action.type) {
         case "POST_BOOK":
             let newBook = action.payload;
-            newBook.id = nextBookId;
-            nextBookId++;
             return oldBooks.concat(newBook);
         case "EDIT_BOOK":
             for (let i = 0; i < oldBooks.length; i++) {
