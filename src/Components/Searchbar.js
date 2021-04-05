@@ -7,22 +7,38 @@ import axios from 'axios';
 class Searchbar extends Component{
 
   fetchBooks(book){
-    this.props.clearBooksTemporary();
-    this.props.me.handleSearchBook();
-    let bookAndZipObject = {
-      book: book,
-      zipcode: this.props.currentUser.zipcode
-    }
-    axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
-    .then(response => {
-      console.log(response.data)
-      for (let i = 0; i < response.data.length; i++) {
-        this.props.postBook(response.data[i]);
+    if (this.props.option === "search") {
+      this.props.clearBooksTemporary();
+      this.props.me.handleSearchBook();
+      let bookAndZipObject = {
+        book: book,
+        zipcode: this.props.currentUser.zipcode,
+        id: this.props.currentUser.id
       }
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
+      .then(response => {
+        console.log(response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          this.props.postBook(response.data[i]);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+    else {
+      let bookAndUserObject = {
+        book: book,
+        user: this.props.currentUser
+      }
+      axios.post('http://localhost:3500/api/book/post', bookAndUserObject)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   }
 
   render() {

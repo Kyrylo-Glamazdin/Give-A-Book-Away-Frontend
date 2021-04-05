@@ -62,6 +62,7 @@ handleSearchBook(){
           handleSearchBook={this.handleSearchBook} 
           formValue={this.state.searchInput} 
           searchBooks={this.state.searchBooks} 
+          option="post"
           me={this}
         />
         <div className='layout'>

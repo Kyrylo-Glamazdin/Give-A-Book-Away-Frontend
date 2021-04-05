@@ -60,6 +60,7 @@ class BookList extends Component {
                     handleSearchBook={this.handleSearchBook} 
                     formValue={this.state.searchInput} 
                     searchBooks={this.state.searchBooks} 
+                    option="search"
                     me={this}
                 />
                 <div className="book-grid">

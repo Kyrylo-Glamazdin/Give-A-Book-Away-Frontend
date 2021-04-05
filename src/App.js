@@ -35,6 +35,7 @@ class App extends Component {
 
   fetchBooks = async () => {
     let req = {
+      id: this.props.currentUser.id,
       zipcode: this.props.currentUser.zipcode 
     }
     axios.post("http://localhost:3500/api/book/recommended", req)
@@ -70,6 +71,15 @@ class App extends Component {
             <Route path="/post" component={PostComponent} />
             <Route path="/inbox" component={SelectedBookPageComponent} />
             <Route path="/profile" component={ProfileComponent} />
+            {this.props.books.map(book => {
+              return (
+                <Route path={"/book/" + book.id} 
+                  render={() => {
+                    return <SelectedBookPage key={"bookinlist"+book.id} book={book}/>
+                  }}
+                />
+              )
+            })}
           </Switch>
         </Router>
       </div>

@@ -8,7 +8,7 @@ let books = [
 
 ];
 
-let currentUser = {id: 0, name: "Guest", username: "guest", zipcode: "10065"};
+let currentUser = {id: 2, name: "User 2", username: "user_2", zipcode: "10012"};
 let currentBook = {};
 
 const usersReducer = (oldUsers = users, action) => {

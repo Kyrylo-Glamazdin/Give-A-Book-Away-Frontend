@@ -1,35 +1,48 @@
-import React from 'react'
-import { setBook } from '../Actions';
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, {Component} from 'react'
 import '../Styles/BookItem.css';
+import {Link} from 'react-router-dom';
 
-export default function BookItem(props) {
-    
-    const dispatch = useDispatch();
-    const history = useHistory();
+class BookItem extends Component {
+    constructor(props) {
+        super(props)
 
-    const gotoPage = (e) => {
-        dispatch(setBook(props.book))
-        history.push("/inbox")
+        this.state = {
+            approximateDistance: "In your area"
+        }
     }
 
-    return (
-        <div className="book-item" onClick={gotoPage}>
-            <div className="book-item-img-div">
-                <img src = {props.book.preview_image} alt=""/>
+    componentDidMount() {
+        if (this.props.book.distance !== "0.0") {
+            this.setState({
+                approximateDistance: this.props.book.distance + " miles from you"
+            })
+        }
+    }
+
+    render() {
+        return (
+            <div className="book-item">
+                <Link to={"/book/" + this.props.book.id} className="book-link">
+                    <div className="book-item-img-div">
+                        <img src = {this.props.book.preview_image} alt=""/>
+                    </div>
+                </Link>
+                <div className="book-item-info">
+                    <Link to={"/book/" + this.props.book.id} className="book-link">
+                        <div className="book-item-title">
+                            {this.props.book.title}
+                        </div>
+                    </Link>
+                    <div className="book-item-author">
+                        {this.props.book.author}
+                    </div>
+                    <div className="book-item-distance">
+                        {this.state.approximateDistance}
+                    </div>
+                </div>
             </div>
-            <div className="book-item-info">
-                <div className="book-item-title">
-                    {props.book.title}
-                </div>
-                <div className="book-item-author">
-                    {props.book.author}
-                </div>
-                <div className="book-item-distance">
-                    {props.book.distance} miles from you
-                </div>
-            </div>
-        </div>
-    );
+        );
+    }
 }
+
+export default BookItem;
