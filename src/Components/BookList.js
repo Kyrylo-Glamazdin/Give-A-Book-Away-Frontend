@@ -22,6 +22,10 @@ class BookList extends Component {
         })
     }
 
+    componentDidMount(){
+        console.log(this.props.currentUser)
+    }
+
     handleSearchSubmit = async event => {
         event.preventDefault();
         if(this.state.searchInput) {
@@ -73,7 +77,8 @@ class BookList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        books: state.books
+        books: state.books,
+        currentUser: state.currentUser
     };
 }
 

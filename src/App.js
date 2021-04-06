@@ -17,37 +17,37 @@ import SelectedBookPage from "./Components/SelectedBookPage";
 class App extends Component {
 
   componentDidMount() {
-    this.fetchUsers();
-    this.fetchBooks();
+    // this.fetchUsers();
+    // this.fetchBooks();
   }
 
-  fetchUsers = async () => {
-    axios.get("http://localhost:3500/api/user/")
-    .then(response => {
-      for (let i = 0; i < response.data.length; i++) {
-        this.props.addUser(response.data[i]);
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
+  // fetchUsers = async () => {
+  //   axios.get("http://localhost:3500/api/user/")
+  //   .then(response => {
+  //     for (let i = 0; i < response.data.length; i++) {
+  //       this.props.addUser(response.data[i]);
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  // }
 
-  fetchBooks = async () => {
-    let req = {
-      id: this.props.currentUser.id,
-      zipcode: this.props.currentUser.zipcode 
-    }
-    axios.post("http://localhost:3500/api/book/recommended", req)
-    .then(response => {
-      for (let i = 0; i < response.data.length; i++) {
-        this.props.postBook(response.data[i]);
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
+  // fetchBooks = async () => {
+  //   let req = {
+  //     id: this.props.currentUser.id,
+  //     zipcode: this.props.currentUser.zipcode 
+  //   }
+  //   axios.post("http://localhost:3500/api/book/recommended", req)
+  //   .then(response => {
+  //     for (let i = 0; i < response.data.length; i++) {
+  //       this.props.postBook(response.data[i]);
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  // }
 
   
 
