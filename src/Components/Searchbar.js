@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import "../Styles/Searchbar.css";
-import {connect} from 'react-redux';
-import {postBook, clearBooksTemporary} from '../Actions';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import { Row } from "react-bootstrap";
+import "../Styles/Searchbar.css";
+import { postBook, clearBooksTemporary } from '../Actions';
 
 class Searchbar extends Component{
 
@@ -43,6 +44,9 @@ class Searchbar extends Component{
 
   render() {
     let searchBooks = this.props.searchBooks;
+
+    console.log(searchBooks, "searchBooks")
+
     return(
       <>
         <div className="searchbar">
@@ -64,9 +68,16 @@ class Searchbar extends Component{
               >
                 {
                   searchBooks.map((item, key) => (
-                    <div key={key} className="p-2 search-book" onClick = {() => this.fetchBooks(item)}>
-                      <p className="dropdown-item">{item.title}</p>
-                    </div>
+                    <Row key={key} className="search-book mt-3 ml-1 p-1" onClick = {() => this.fetchBooks(item)}>
+                      <div>
+                        <img className="ml-5" src={item.preview_image} alt =""></img>
+                        <div className="pl-3 dropdown-letter">
+                          <p>{`${item.title}`}</p>
+                          <p>{`${item.author}`}</p>
+                          <p>{`${item.isbn}`}</p>
+                        </div>
+                      </div>
+                    </Row>
                   ))
                 }
               </div>

@@ -50,12 +50,24 @@
   margin: 0px;
   width: 630px;
 }
-.dropdown-item{
+.search-book {
   cursor: pointer;
+  width: 100%;
+}
+.search-book:hover{
+  background-color: grey;
+}
+.search-book >div > img{
+  width: 60px;
+  height: 100%;
+}
+.search-book > div > .dropdown-letter, .search-book > div > img{
+  float: left;
 }
 .height-0{
   height: 0;
 }
-/* .search-book > img, .search-book > p{
-  float: left
-} */
+.dropdown-letter{
+  margin: 0 !important;
+  padding: 0;
+}

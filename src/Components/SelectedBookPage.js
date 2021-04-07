@@ -3,10 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
 
 class SelectedBookPage extends Component{
-  // constructor(props) {
-  //   super(props)
-  // }
-
 
   render() {
     return (
