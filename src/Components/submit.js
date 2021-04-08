@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../Styles/PostButtons.css';
 
 
 
-const Buttons=()=> {
-    function clickMe() {
-        alert('yay');
+class Buttons extends Component {
+    render(){
+        return (
+                    <button className='button' onClick={this.props.confirmBookPost}>
+                        Post Book
+                    </button>
+        );
     }
-    return (
-                <button className='button' onClick={clickMe}>
-                    Post Book
-                </button>
-    );
-    
   }
 export default Buttons;

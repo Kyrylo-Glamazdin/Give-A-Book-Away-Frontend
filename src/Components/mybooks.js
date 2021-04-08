@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Container, Image, Row, ThemeProvider } from "react-bootstrap";
+import { Col, Container, Row} from "react-bootstrap";
 import RemoveButton from './removebook'
 import {connect} from 'react-redux';
 import {removePostedBook} from '../Actions'

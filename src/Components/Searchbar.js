@@ -27,19 +27,20 @@ class Searchbar extends Component{
         console.log(err);
       })
     }
-    else {
-      let bookAndUserObject = {
-        book: book,
-        user: this.props.currentUser
-      }
-      axios.post('http://localhost:3500/api/book/post', bookAndUserObject)
-      .then(response => {
-        this.props.addPostedBook(response.data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    }
+    // else {
+    //   this.props.me.handleSearchBook();
+    //   let bookAndUserObject = {
+    //     book: book,
+    //     user: this.props.currentUser
+    //   }
+    //   axios.post('http://localhost:3500/api/book/post', bookAndUserObject)
+    //   .then(response => {
+    //     this.props.addPostedBook(response.data)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
+    // }
   }
 
   render() {
@@ -68,7 +69,7 @@ class Searchbar extends Component{
               >
                 {
                   searchBooks.map((item, key) => (
-                    <Row key={key} className="search-book mt-3 ml-1 p-1" onClick = {() => this.fetchBooks(item)}>
+                    <Row key={key} className="search-book mt-3 ml-1 p-1" onClick = {() => this.props.setSelectedBook(item)}>
                       <div>
                         <img className="ml-5" src={item.preview_image} alt =""></img>
                         <div className="pl-3 dropdown-letter">
