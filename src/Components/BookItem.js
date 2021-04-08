@@ -12,7 +12,12 @@ class BookItem extends Component {
     }
 
     componentDidMount() {
-        if (this.props.book.distance !== "0.0") {
+        if (this.props.book.owner === "self") {
+            this.setState({
+                approximateDistance: ""
+            })
+        }
+        else if (this.props.book.distance !== "0.0") {
             this.setState({
                 approximateDistance: this.props.book.distance + " miles from you"
             })

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
-import { postBook, clearBooksTemporary } from '../Actions';
+import { postBook, clearBooksTemporary, addPostedBook } from '../Actions';
 
 class Searchbar extends Component{
 
@@ -34,7 +34,7 @@ class Searchbar extends Component{
       }
       axios.post('http://localhost:3500/api/book/post', bookAndUserObject)
       .then(response => {
-        console.log(response.data)
+        this.props.addPostedBook(response.data)
       })
       .catch(err => {
         console.log(err);
@@ -99,4 +99,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   postBook,
   clearBooksTemporary,
+  addPostedBook
 })(Searchbar);

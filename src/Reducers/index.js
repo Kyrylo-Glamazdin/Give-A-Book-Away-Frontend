@@ -8,6 +8,10 @@ let books = [
 
 ];
 
+let postedBooks = [
+
+];
+
 let currentUser = {};
 let currentBook = {};
 
@@ -61,9 +65,24 @@ const currentBookReducer = (curBook = currentBook, action) => {
     }
 }
 
+const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
+    switch(action.type) {
+        case "ADD_POSTED_BOOK":
+            return oldPostedBooks.concat(action.payload);
+        case "SET_POSTED_BOOKS":
+            return action.payload
+        case "REMOVE_POSTED_BOOK":
+            return oldPostedBooks.filter(book => (book.id !== action.payload.id))
+        case "CLEAR_POSTED_BOOKS":
+            return [];
+        default: return oldPostedBooks
+    }
+}
+
 export default combineReducers({
     users: usersReducer,
     books: booksReducer,
     currentUser: currentUserReducer,
-    currentBook: currentBookReducer
+    currentBook: currentBookReducer,
+    postedBooks: postedBooksReducer
 });

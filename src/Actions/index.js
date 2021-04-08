@@ -46,3 +46,31 @@ export const setBook = book => {
         payload: book
     };
 };
+
+export const addPostedBook = book => {
+    return {
+        type: "ADD_POSTED_BOOK",
+        payload: book
+    };
+};
+
+export const setPostedBooks = books => {
+    return {
+        type: "SET_POSTED_BOOKS",
+        payload: books
+    };
+};
+
+export const removePostedBook = book => {
+    return {
+        type: "REMOVE_POSTED_BOOK",
+        payload: book
+    };
+};
+
+export const clearPostedBooks = () => {
+    return {
+        type: "CLEAR_POSTED_BOOKS",
+        payload: []
+    };
+};

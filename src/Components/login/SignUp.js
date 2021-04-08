@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {setUser, postBook, clearBooksTemporary} from '../../Actions'
+import {setUser, postBook, clearBooksTemporary, clearPostedBooks} from '../../Actions'
 
 class SignUp extends Component {
     constructor(props){
@@ -60,6 +60,7 @@ class SignUp extends Component {
                 this.props.clearBooksTemporary()
                 const user = response.data.newUser
                 this.props.setUser(user)
+                this.props.clearPostedBooks()
                 this.fetchBooks(user.id, user.zipcode)
             }
             else {
@@ -248,4 +249,5 @@ export default connect(mapStateToProps, {
     clearBooksTemporary,
     setUser,
     postBook,
+    clearPostedBooks
 })(SignUp);

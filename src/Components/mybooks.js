@@ -1,57 +1,49 @@
-import React, { useState } from 'react'
-import { Col, Container, Image, Row } from "react-bootstrap";
+import React, { Component } from 'react'
+import { Col, Container, Image, Row, ThemeProvider } from "react-bootstrap";
 import RemoveButton from './removebook'
+import {connect} from 'react-redux';
+import {removePostedBook} from '../Actions'
+import BookItem from './BookItem';
+import axios from 'axios';
 
 import "../Styles/BookList.css"
+class MyBooks extends Component {
 
-const searchData = [
-    
-    {
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVMzIsRW3aVyq3JKEkGST6ogEe09honlpfZQ&usqp=CAU'
-    },
-    
-    {
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU7gvR8b4uAN9pyiBoz7F2UIxIfi9opCeZ4Q&usqp=CAU'
-    },
-    
-    {
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU7gvR8b4uAN9pyiBoz7F2UIxIfi9opCeZ4Q&usqp=CAU'
+    removeBook = book => {
+        axios.delete(`http://localhost:3500/api/book/${book.id}`)
+        .then(this.props.removePostedBook(book))
+        .catch(err => console.log(err))
     }
-]
-const MyBooks = () => {
-    // const [searchKey, setSearchKey] = useState('');
-    // eslint-disable-next-line
-    const [bookList, setBookList] = useState(searchData);
-    // const onChangeSearch = (e) => {
-    //     setSearchKey(e.target.value)
-    // }
 
-    // const onKeyDown = (e) => {
-    //     if(e.key === "Enter"){
-    //         // to backend
-    //     }
-    // }
-
-    return (
-        <>
-            <div className="list-box m-2 py-5">
-                <Container >
-                    <Row className="py-5">
-                        {bookList.map((item, key) => {
-                            return (
-                            <Col key={key} md={3} sm={6} className="list py-3">
-                                <div className="imagebox m-auto">
-                                    <Image thumbnail className="list-item" src={item.img} />
-                                    <RemoveButton/>
-                                </div>
-                            </Col>
-                            )
-                        })}
-                    </Row>
-                </Container>
-            </div>
-        </>
-    )
+    render() {
+        return (
+                <div className="list-box m-2 py-5">
+                    <Container >
+                        <Row className="py-5">
+                            {this.props.postedBooks.map((item, key) => {
+                                item.owner="self"
+                                return (
+                                <Col key={key} md={3} sm={6} className="list py-3">
+                                    <div className="imagebox m-auto">
+                                        <BookItem book={item} />
+                                        <RemoveButton removeBook={() => this.removeBook(item)} />
+                                    </div>
+                                </Col>
+                                )
+                            })}
+                        </Row>
+                    </Container>
+                </div>
+        )
+    }
 }
 
-export default MyBooks;
+const mapStateToProps = (state) => {
+    return {
+        postedBooks: state.postedBooks
+    };
+}
+
+export default connect(mapStateToProps, {
+    removePostedBook
+})(MyBooks);

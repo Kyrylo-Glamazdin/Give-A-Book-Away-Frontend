@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Card, Col, Form,Row} from 'react-bootstrap'
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {setUser, postBook, clearBooksTemporary} from '../../Actions'
+import {setUser, postBook, clearBooksTemporary, setPostedBooks} from '../../Actions'
 import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
 import "../../Styles/SignIn.css";
@@ -36,8 +36,9 @@ class SignIn extends Component {
             if(data.status) {
                 this.props.clearBooksTemporary()
                 const user = response.data.data
-                this.props.setUser(user)
                 this.fetchBooks(user.id, user.zipcode)
+                this.fetchPostedBooks(user.id)
+                this.props.setUser(user)
             } else {
                 alert(data.message);
             }
@@ -74,6 +75,14 @@ class SignIn extends Component {
         .catch(err => {
           console.log(err);
         })
+      }
+
+      fetchPostedBooks = async (loggedInUserId) => {
+          axios.get(`http://localhost:3500/api/book/${loggedInUserId}`)
+          .then(response => {
+              this.props.setPostedBooks(response.data)
+          })
+          .catch(err => console.log(err))
       }
 
     render() {
@@ -149,4 +158,5 @@ export default connect(mapStateToProps, {
     clearBooksTemporary,
     setUser,
     postBook,
+    setPostedBooks
 })(SignIn);

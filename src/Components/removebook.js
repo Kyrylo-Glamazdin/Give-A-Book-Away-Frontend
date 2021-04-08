@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import "../Styles/ProfilePage.css"
 
-
-
-const RemoveButton=()=> {
-    function clickMe() {
-        alert('book ded');
+class RemoveButton extends Component {
+    render(){
+        return (
+                    <button className='button1' onClick={this.props.removeBook}>
+                        Remove Book
+                    </button>
+        );
     }
-    return (
-                <button className='button1' onClick={clickMe}>
-                    Remove Book
-                </button>
-    );
-    
   }
+
 export default RemoveButton;

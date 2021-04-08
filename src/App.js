@@ -58,7 +58,6 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
-    const SelectedBookPageComponent = () => <SelectedBookPage />;
     return (
       <div>
         <Router>
@@ -69,13 +68,12 @@ class App extends Component {
             <Route path="/signin" component={SignInComponent} />
             <Route path="/signup" component={SignUpComponent} />
             <Route path="/post" component={PostComponent} />
-            <Route path="/inbox" component={SelectedBookPageComponent} />
             <Route path="/profile" component={ProfileComponent} />
             {this.props.books.map(book => {
               return (
                 <Route path={"/book/" + book.id} 
                   render={() => {
-                    return <SelectedBookPage key={"bookinlist"+book.id} book={book}/>
+                    return <SelectedBookPage key={"listedbook"+book.id} book={book}/>
                   }}
                 />
               )
