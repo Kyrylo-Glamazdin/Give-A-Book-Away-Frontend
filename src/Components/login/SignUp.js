@@ -3,7 +3,8 @@ import { Button, Card, Col, Form} from 'react-bootstrap'
 import axios from 'axios';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {setUser, postBook, addUser} from '../../Actions'
+import {Link} from 'react-router-dom';
+import {setUser, postBook, clearBooksTemporary} from '../../Actions'
 
 class SignUp extends Component {
     constructor(props){
@@ -18,7 +19,6 @@ class SignUp extends Component {
             confirmPassword: "",
             zip: "",
             validated: false,
-            redirect: false,
             newUser: {}
         }
     }
@@ -57,6 +57,7 @@ class SignUp extends Component {
         axios.post("http://localhost:3500/api/auth/signup", newUser)
         .then(response => {
             if (response.data.status) {
+                this.props.clearBooksTemporary()
                 const user = response.data.newUser
                 this.props.setUser(user)
                 this.fetchBooks(user.id, user.zipcode)
@@ -71,17 +72,6 @@ class SignUp extends Component {
                 return;
             }
         })
-        .then(() => {
-            console.log(this.props.currentUser)
-            this.fetchUsers()
-            //this.fetchBooks()
-        }
-        )
-        .then(
-            this.setState({
-                redirect: true
-            })
-        )
         .catch(err => console.log(err))
     };
 
@@ -101,17 +91,17 @@ class SignUp extends Component {
         })
       }
 
-      fetchUsers = async () => {
-        axios.get("http://localhost:3500/api/user/")
-        .then(response => {
-          for (let i = 0; i < response.data.length; i++) {
-            this.props.addUser(response.data[i]);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-      }
+    //   fetchUsers = async () => {
+    //     axios.get("http://localhost:3500/api/user/")
+    //     .then(response => {
+    //       for (let i = 0; i < response.data.length; i++) {
+    //         this.props.addUser(response.data[i]);
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
+    //   }
 
     handleFormChange = event => {
         this.setState({
@@ -120,10 +110,10 @@ class SignUp extends Component {
     }
 
     render() {
-        if (this.state.redirect) {
+        if (this.props.currentUser.id) {
             return(
                 <Redirect to = "/home/"/>
-            );
+            )
         }
         return (
             <Card border="primary mx-auto" style={{ width: '400px', padding: '40px 20px', marginTop: 'calc(50vh - 250px)' }}>
@@ -231,6 +221,14 @@ class SignUp extends Component {
                         </Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
+                    <Form.Row className = "p-2">
+                    <Col>
+                        <p className = "float-left">Already have an account?</p>
+                        <Link to="/">
+                        <p className="red-color float-left ml-3">Log in</p>
+                        </Link>
+                    </Col>
+                    </Form.Row>
                     <Button style={{width: '100%'}} type='submit' variant="danger" className='rounded-pill'>Sign Up</Button>
                 </Form>
             </Card>
@@ -247,7 +245,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
+    clearBooksTemporary,
     setUser,
     postBook,
-    addUser
 })(SignUp);
