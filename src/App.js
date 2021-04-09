@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 // import axios from 'axios';
 import {postBook, addUser} from './Actions';
 import SelectedBookPage from "./Components/SelectedBookPage";
-
+import './Styles/design.css'
 
 class App extends Component {
 
@@ -59,7 +59,7 @@ class App extends Component {
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
     return (
-      <div>
+      <div className = "design">
         <Router>
           <NavbarComponent />
           <Switch>

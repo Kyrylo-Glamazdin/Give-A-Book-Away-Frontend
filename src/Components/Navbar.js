@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import logo from '../Styles/GiveaBook.png'
 import '../Styles/Navbar.css';
 
 class Navbar extends Component {
     render() {
         return (
             <div className="navbar">
-                <div className="site-title">
-                    <Link className="navbutton-left" to="/home">Give a Book Away</Link>
+                <div className="logo">
+                    
+                    <Link className="navbutton-left" to="/home">
+                    
+                    <img className= "logo" src={logo} alt= "logo"></img>
+                    
+                    </Link>
                 </div>
                 <div className="button-group">
                     <Link className="navbutton" to="/home">Home</Link>

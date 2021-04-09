@@ -1,21 +1,21 @@
 .navbar {
-    background-color: rgb(173, 13, 2);
-    height: 75px;
-    font-size: 32px;
+    background-color: #ffffff;
+    height: 65px;
+    font-size: 22px;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .navbutton {
-    color: whitesmoke;
+    color: #7e947a;
     text-decoration: none;
     margin-right: 35px;
 }
 
-.site-title {
-    display: inline-block;
-    color: whitesmoke;
-    margin-left: 35px;
+.logo {
+    
+    max-width: 50%;
 }
 
 .button-group {
