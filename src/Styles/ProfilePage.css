@@ -4,10 +4,10 @@
   padding: 5px;
   position: relative;
   left: 25%;
-  background-color: #c6d9f1;
+  background-color: #7e947a;
   border-radius: 3px;
   border: 1px solid #7e947a;
-  background-color: transparent;
+  background-color: #7e947a;
   font-size: 1rem;
   color: white;
   background-image: linear-gradient(
@@ -30,4 +30,10 @@
 }
 .log-out {
   margin-left: 15px;
+}
+button.button20 {
+  background-color: #7e947a;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid #7e947a;
 }
