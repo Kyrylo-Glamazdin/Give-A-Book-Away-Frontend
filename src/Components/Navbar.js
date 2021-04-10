@@ -44,10 +44,10 @@ class Navbar extends Component {
                     </Link>
                 </div>
                 <div className="button-group">
-                    <Link className="navbutton" to="/home">Home</Link>
-                    <Link className="navbutton" to="/post">Post</Link>
-                    <Link className="navbutton" to="/inbox/">Inbox</Link>
-                    <Link className="navbutton" to="/profile/">Profile</Link>
+                    <Link className="navbutton" to="/home">HOME</Link>
+                    <Link className="navbutton" to="/post">POST</Link>
+                    <Link className="navbutton" to="/inbox/">INBOX</Link>
+                    <Link className="navbutton" to="/profile/">PROFILE</Link>
                 </div>
             </div>
         );
