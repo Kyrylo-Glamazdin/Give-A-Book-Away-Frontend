@@ -3,6 +3,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
 
 class SelectedBookPage extends Component{
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      fullLocation: ""
+    }
+  }
+
+  componentDidMount() {
+    let fullLocation = this.props.book.city + " "
+    + this.props.book.state + " ("
+    + this.props.book.zipcode + ")"
+    this.setState({fullLocation})
+    console.log(this.props.book)
+  }
 
   render() {
     return (
@@ -25,22 +40,27 @@ class SelectedBookPage extends Component{
         </div>
 
         <div className="location">
-          <h5 className="distence">
-            Location: 11375
-          </h5>
-        </div>
-        
-        <div className="description">
-          <h5 className="desc">
-          Description:
+          <h5 className="distance">
+            Location: {this.state.fullLocation}
           </h5>
         </div>
 
-        <div className="test">
-          <h5 className="atest">
-            Testing: 
+        <div className="description">
+          <h5 className="desc">
+            Posted by: {this.props.book.user}
           </h5>
         </div>
+
+        <button>
+          Contact owner
+        </button>
+        
+        {/* Uncomment after presentation */}
+        {/* <div className="description">
+          <h5 className="desc">
+          Description:
+          </h5>
+        </div> */}
       </div>
     )
   }
