@@ -24,11 +24,13 @@
 .book-item-title {
     margin-top: 5px;
     font-size: 18px;
+    color: #ffffff;
 }
 
 .book-item-author {
     margin-top: 3px;
     font-size: 13px;
+    color: #e8fff9;
 }
 
 .book-item-distance {
