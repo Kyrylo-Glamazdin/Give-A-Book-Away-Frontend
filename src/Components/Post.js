@@ -129,11 +129,11 @@ handleSearchBook(){
     return (
       <div>
         <h1 className="heading"> Give Your Book Away</h1>
+        
         {this.state.selectedBookItem}
-        <div className='layout'>
-          <div className='keys'>
-            {/*<Upload/>*/}
-            <Searchbar 
+
+        <div className="searchButtonPost">
+        <Searchbar 
           handleFormChange={this.handleFormChange} 
           handleSearchSubmit={this.handleSearchSubmit} 
           handleSearchBook={this.handleSearchBook} 
@@ -143,7 +143,10 @@ handleSearchBook(){
           option="post"
           me={this}
         />
-            
+        </div>
+        <div className='layout'>
+          <div className='keys'>
+            {/*<Upload/>*/}
             <Buttons confirmBookPost={this.confirmBookPost}/>
             <div>
               {this.state.errorMessage}
