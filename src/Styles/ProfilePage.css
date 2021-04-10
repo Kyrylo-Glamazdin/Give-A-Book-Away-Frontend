@@ -1,23 +1,33 @@
+.button1 {
+  height: 30px;
+  margin-top: 5px;
+  padding: 5px;
+  position: relative;
+  left: 25%;
+  background-color: #c6d9f1;
+  border-radius: 3px;
+  border: 1px solid #7e947a;
+  background-color: transparent;
+  font-size: 1rem;
+  color: white;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 50%,
+    rgba(0, 0, 0, 0.04)
+  );
+}
 
-.button1{
-    height: 30px;
-    margin-top: 5px;
-    padding: 5px;
-    position:relative;
-    left: 25%;
-    background-color: seashell;
-    border-radius: 3px;
-    border:1px solid #c4c4c4;
-    background-color: transparent;
-    font-size: 1rem;
-    color: #333;
-    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
-    
-  
-  }
-  
-  .button1:hover{
-   background-color:pink;
-   
-  }
-  
+.button1:hover {
+  background-color: #cccc;
+}
+.profile-title {
+  color: whitesmoke;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  margin-top: 25px;
+}
+.log-out {
+  margin-left: 15px;
+}
