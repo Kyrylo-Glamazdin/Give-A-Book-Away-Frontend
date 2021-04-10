@@ -34,11 +34,11 @@ setSelectedBook = book => {
     this.setState({
       selectedBook: book,
       selectedBookItem: <div>
-        <div> 
-          You selected:
+        <div className="selecttext"> 
+          You Selected:
         </div>
           <Row key={"selectedBook"} className="search-book mt-3 ml-1 p-1">
-            <div>
+            <div className="selectedbook">
               <img className="ml-5" src={book.preview_image} alt =""></img>
               <div className="pl-3 dropdown-letter">
                 <p>{`${book.title}`}</p>
@@ -48,8 +48,8 @@ setSelectedBook = book => {
             </div>
           </Row>
           <div>
-            <button onClick={() => this.setSelectedBook({})}>
-              Remove selection
+            <button className="remoofbutton"onClick={() => this.setSelectedBook({})}>
+              Remove Selection
             </button>
           </div>
         </div>
@@ -128,7 +128,12 @@ handleSearchBook(){
   render() {
     return (
       <div>
-        <Searchbar 
+        <h1> Give Your Book Away</h1>
+        {this.state.selectedBookItem}
+        <div className='layout'>
+          <div className='keys'>
+            {/*<Upload/>*/}
+            <Searchbar 
           handleFormChange={this.handleFormChange} 
           handleSearchSubmit={this.handleSearchSubmit} 
           handleSearchBook={this.handleSearchBook} 
@@ -138,11 +143,7 @@ handleSearchBook(){
           option="post"
           me={this}
         />
-        {this.state.selectedBookItem}
-        <div className='layout'>
-          <div className='keys'>
-            <Upload/>
-            {/* <DropdownExampleSelection/> */}
+            
             <Buttons confirmBookPost={this.confirmBookPost}/>
             <div>
               {this.state.errorMessage}
