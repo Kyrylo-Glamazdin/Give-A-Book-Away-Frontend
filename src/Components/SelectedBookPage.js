@@ -2,21 +2,25 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
 
-class SelectedBookPage extends Component{
+class SelectedBookPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      fullLocation: ""
-    }
+      fullLocation: "",
+    };
   }
 
   componentDidMount() {
-    let fullLocation = this.props.book.city + " "
-    + this.props.book.state + " ("
-    + this.props.book.zipcode + ")"
-    this.setState({fullLocation})
-    console.log(this.props.book)
+    let fullLocation =
+      this.props.book.city +
+      " " +
+      this.props.book.state +
+      " (" +
+      this.props.book.zipcode +
+      ")";
+    this.setState({ fullLocation });
+    console.log(this.props.book);
   }
 
   render() {
@@ -24,7 +28,7 @@ class SelectedBookPage extends Component{
       <div className="a-book">
         <div className="book-title">
           <h1>{this.props.book.title}</h1>
-          <img src={this.props.book.preview_image} alt=""/>
+          <img src={this.props.book.preview_image} alt="" />
         </div>
 
         <div className="author-name">
@@ -34,27 +38,21 @@ class SelectedBookPage extends Component{
         </div>
 
         <div className="isbn">
-          <h5 className="isbn-num">
-            ISBN: {this.props.book.isbn}
-          </h5>
+          <h5 className="isbn-num">ISBN: {this.props.book.isbn}</h5>
         </div>
 
         <div className="location">
-          <h5 className="distance">
-            Location: {this.state.fullLocation}
-          </h5>
+          <h5 className="distance">Location: {this.state.fullLocation}</h5>
         </div>
 
         <div className="description">
-          <h5 className="desc">
-            Posted by: {this.props.book.user}
-          </h5>
+          <h5 className="desc">Posted by: {this.props.book.user}</h5>
         </div>
 
-        <button>
+        <button type="button" class="button10">
           Contact owner
         </button>
-        
+
         {/* Uncomment after presentation */}
         {/* <div className="description">
           <h5 className="desc">
@@ -62,7 +60,7 @@ class SelectedBookPage extends Component{
           </h5>
         </div> */}
       </div>
-    )
+    );
   }
 }
 

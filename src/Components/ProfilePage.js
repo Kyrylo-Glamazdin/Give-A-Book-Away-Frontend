@@ -17,7 +17,9 @@ class Profile extends Component {
         <div>
           <div className="log-out">
             <Link to="/">
-              <button onClick={this.logout}>Log Out</button>
+              <button type="button" class="button20" onClick={this.logout}>
+                Log Out
+              </button>
             </Link>
           </div>
         </div>
