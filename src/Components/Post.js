@@ -128,7 +128,7 @@ handleSearchBook(){
   render() {
     return (
       <div>
-        <h1> Give Your Book Away</h1>
+        <h1 className="heading"> Give Your Book Away</h1>
         {this.state.selectedBookItem}
         <div className='layout'>
           <div className='keys'>
