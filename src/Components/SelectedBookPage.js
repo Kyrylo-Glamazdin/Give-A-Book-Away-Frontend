@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
+import { connect } from 'react-redux';
+import {Redirect} from 'react-router';
 
 class SelectedBookPage extends Component {
   constructor(props) {
@@ -24,6 +26,11 @@ class SelectedBookPage extends Component {
   }
 
   render() {
+    if (!this.props.currentUser.id) {
+      return (
+          <Redirect to="/"/>
+      )
+    }
     return (
       <div className="a-book">
         <div className="book-title">
@@ -64,4 +71,11 @@ class SelectedBookPage extends Component {
   }
 }
 
-export default SelectedBookPage;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser
+  };
+}
+
+export default connect(mapStateToProps, {
+})(SelectedBookPage);

@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import '../Styles/PostButtons.css';
-import Upload from './upload'
+// import Upload from './upload'
 import { connect } from 'react-redux';
 import {addPostedBook} from '../Actions'
 //import DropdownExampleSelection from './condition'
 import Searchbar from './Searchbar.js';
 import Buttons from './submit';
 import { Row } from "react-bootstrap";
+import {Redirect} from 'react-router';
 import axios from 'axios';
 
 class Post extends Component {
@@ -126,6 +127,11 @@ handleSearchBook(){
 }
 
   render() {
+    if (!this.props.currentUser.id) {
+      return (
+          <Redirect to="/"/>
+      )
+    }
     return (
       <div>
         <h1 className="heading"> Give Your Book Away</h1>

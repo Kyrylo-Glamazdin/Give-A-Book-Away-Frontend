@@ -4,6 +4,7 @@ import {postBook, clearBooksTemporary} from '../Actions';
 import Searchbar from './Searchbar.js';
 import BookItem from './BookItem.js';
 import axios from 'axios';
+import {Redirect} from 'react-router';
 import "../Styles/BookList.css"
 
 class BookList extends Component {
@@ -56,6 +57,11 @@ class BookList extends Component {
     }
 
     render() {
+        if (!this.props.currentUser.id) {
+            return (
+                <Redirect to="/"/>
+            )
+        }
         return(
             <div>
                 <Searchbar 
