@@ -13,6 +13,9 @@ import {connect} from 'react-redux';
 import {postBook, addUser} from './Actions';
 import SelectedBookPage from "./Components/SelectedBookPage";
 import './Styles/design.css'
+import Inbox from "./Components/Inbox";
+import socket from './socket.js';
+
 
 class App extends Component {
 
@@ -58,6 +61,7 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
+    const InboxComponent = () => <Inbox />
     return (
       <div className = "design">
         <Router>
@@ -69,6 +73,7 @@ class App extends Component {
             <Route path="/signup" component={SignUpComponent} />
             <Route path="/post" component={PostComponent} />
             <Route path="/profile" component={ProfileComponent} />
+            <Route path="/inbox" component={InboxComponent} socket={socket} />
             {this.props.books.map(book => {
               return (
                 <Route path={"/book/" + book.id} 
