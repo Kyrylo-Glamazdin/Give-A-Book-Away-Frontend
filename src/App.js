@@ -61,7 +61,7 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
-    const InboxComponent = () => <Inbox />
+    const InboxComponent = () => <Inbox socket={socket} />
     return (
       <div className = "design">
         <Router>
@@ -73,7 +73,7 @@ class App extends Component {
             <Route path="/signup" component={SignUpComponent} />
             <Route path="/post" component={PostComponent} />
             <Route path="/profile" component={ProfileComponent} />
-            <Route path="/inbox" component={InboxComponent} socket={socket} />
+            <Route path="/inbox" component={InboxComponent} />
             {this.props.books.map(book => {
               return (
                 <Route path={"/book/" + book.id} 

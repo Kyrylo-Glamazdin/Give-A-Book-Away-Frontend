@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import {combineReducers} from 'redux';
 
 let users = [
@@ -12,14 +13,25 @@ let postedBooks = [
 
 ];
 
+let chats = [
+    {id: 1, userOneId: 1, userTwoId: 2},
+    {id: 2, userOneId: 1, userTwoId: 3},
+    {id: 3, userOneId: 3, userTwoId: 2}
+];
+
 let currentUser = {};
 let currentBook = {};
+let currentChat = {};
+
+let redirectRequired = false;
 
 const usersReducer = (oldUsers = users, action) => {
     switch (action.type) {
         case "ADD_USER":
             let newUser = action.payload;
             return oldUsers.concat(newUser);
+        case "CLEAR_USERS":
+            return [];
         default:
             return oldUsers;
     }
@@ -79,10 +91,42 @@ const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
     }
 }
 
+const chatsReducer = (oldChats = chats, action) => {
+    switch(action.type) {
+        case "ADD_CHAT":
+            return oldChats.concat(action.payload);
+        case "CLEAR_CHATS":
+            return [];
+        default: return oldChats
+    }
+}
+
+const currentChatReducer = (curChat = currentChat, action) => {
+    switch (action.type) {
+        case "SET_CHAT":
+            return action.payload;
+        default:
+            return curChat;
+    }
+}
+
+const redirectRequiredReducer = (oldRedirectRequired = redirectRequired, action) => {
+    switch (action.type) {
+        case "INITIATE_REDIRECT":
+            return true
+        case "CANCEL_REDIRECT":
+            return false
+        default: return oldRedirectRequired
+    }
+}
+
 export default combineReducers({
     users: usersReducer,
     books: booksReducer,
     currentUser: currentUserReducer,
     currentBook: currentBookReducer,
-    postedBooks: postedBooksReducer
+    postedBooks: postedBooksReducer,
+    chats: chatsReducer,
+    currentChat: currentChatReducer,
+    redirect: redirectRequiredReducer
 });
