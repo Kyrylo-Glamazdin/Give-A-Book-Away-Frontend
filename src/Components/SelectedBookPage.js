@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
 import { connect } from 'react-redux';
 import {Redirect} from 'react-router';
+import { Link } from "react-router-dom";
+import {setChat, initiateRedirect, cancelRedirect} from "../Actions";
 
 class SelectedBookPage extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class SelectedBookPage extends Component {
   }
 
   componentDidMount() {
+    this.props.cancelRedirect();
     let fullLocation =
       this.props.book.city +
       " " +
@@ -22,13 +25,29 @@ class SelectedBookPage extends Component {
       this.props.book.zipcode +
       ")";
     this.setState({ fullLocation });
-    console.log(this.props.book);
+  }
+
+  findChat = otherUserId => {
+    for (let i = 0; i < this.props.chats.length; i++) {
+      if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
+        this.props.setChat(this.props.chats[i])
+        this.props.initiateRedirect()
+        break
+      }
+    }
+    //CREATE NEW CHAT, THEN
+    this.props.initiateRedirect()
   }
 
   render() {
     if (!this.props.currentUser.id) {
       return (
           <Redirect to="/"/>
+      )
+    }
+    else if (this.props.redirect) {
+      return (
+        <Redirect to="/inbox"/>
       )
     }
     return (
@@ -53,10 +72,10 @@ class SelectedBookPage extends Component {
         </div>
 
         <div className="description">
-          <h5 className="desc">Posted by: {this.props.book.user}</h5>
+          <h5 className="desc">Posted by: {this.props.book.username}</h5>
         </div>
 
-        <button type="button" class="button10">
+        <button type="button" className="button10" onClick={() => this.findChat(this.props.book.userOwnerId)}>
           Contact owner
         </button>
 
@@ -73,9 +92,14 @@ class SelectedBookPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    chats: state.chats,
+    redirect: state.redirect
   };
 }
 
 export default connect(mapStateToProps, {
+  setChat,
+  initiateRedirect,
+  cancelRedirect
 })(SelectedBookPage);

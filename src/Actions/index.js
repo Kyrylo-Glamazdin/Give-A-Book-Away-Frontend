@@ -5,6 +5,13 @@ export const addUser = user => {
     };
 };
 
+export const clearUsers = () => {
+    return {
+        type: "CLEAR_USERS",
+        payload: {}
+    };
+};
+
 export const postBook = book => {
     return {
         type: "POST_BOOK",
@@ -72,5 +79,40 @@ export const clearPostedBooks = () => {
     return {
         type: "CLEAR_POSTED_BOOKS",
         payload: []
+    };
+};
+
+export const addChat = chat => {
+    return {
+        type: "ADD_CHAT",
+        payload: chat
+    };
+};
+
+export const clearChats = () => {
+    return {
+        type: "CLEAR_CHATS",
+        payload: {}
+    };
+};
+
+export const setChat = chat => {
+    return {
+        type: "SET_CHAT",
+        payload: chat
+    };
+};
+
+export const initiateRedirect = () => {
+    return {
+        type: "INITIATE_REDIRECT",
+        payload: {}
+    };
+};
+
+export const cancelRedirect = () => {
+    return {
+        type: "CANCEL_REDIRECT",
+        payload: {}
     };
 };

@@ -7,6 +7,10 @@ import {
   postBook,
   clearBooksTemporary,
   setPostedBooks,
+  addUser,
+  clearUsers,
+  addChat,
+  clearChats
 } from "../../Actions";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
@@ -41,9 +45,12 @@ class SignIn extends Component {
         let data = response.data;
         if (data.status) {
           this.props.clearBooksTemporary();
+          this.props.clearUsers();
+          this.props.clearChats();
           const user = response.data.data;
           this.fetchBooks(user.id, user.zipcode);
           this.fetchPostedBooks(user.id);
+          this.fetchChats(user.id)
           this.props.setUser(user);
         } else {
           alert(data.message);
@@ -92,6 +99,33 @@ class SignIn extends Component {
       })
       .catch((err) => console.log(err));
   };
+
+  fetchChats = async (loggedInUserId) => {
+    axios.get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
+    .then(response => {
+      let chatData = response.data
+      for (let i = 0; i < chatData.length; i++) {
+        if (chatData[i].userOneId === loggedInUserId) {
+          this.fetchUser(chatData[i].userTwoId)
+        }
+        else if (chatData[i].userTwoId === loggedInUserId){
+          this.fetchUser(chatData[i].userOneId)
+        }
+        else {
+          console.log("Couldn't fetch user")
+        }
+        this.props.addChat(chatData[i])
+      }
+    })
+  }
+
+  fetchUser = async (userId) => {
+    axios.get(`http://localhost:3500/api/user/${userId}`)
+    .then(response => {
+      let userData = response.data
+      this.props.addUser(userData)
+    })
+  }
 
   render() {
     if (this.props.currentUser.id) {
@@ -183,4 +217,8 @@ export default connect(mapStateToProps, {
   setUser,
   postBook,
   setPostedBooks,
+  addUser,
+  clearUsers,
+  addChat,
+  clearChats
 })(SignIn);
