@@ -45,8 +45,8 @@ class SignIn extends Component {
         let data = response.data;
         if (data.status) {
           this.props.clearBooksTemporary();
-          this.props.clearUsers();
-          this.props.clearChats();
+          //this.props.clearUsers();
+          // this.props.clearChats();
           const user = response.data.data;
           this.fetchBooks(user.id, user.zipcode);
           this.fetchPostedBooks(user.id);

@@ -3,31 +3,20 @@ import ChatList from './ChatList';
 import ConversationWindow from './ConversationWindow';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router';
-import {cancelRedirect} from "../Actions";
-
-let chatData = [
-    {id: 1, users: [1, 3]},
-    {id: 2, users: [2, 3]},
-    {id: 3, users: [1, 2]}
-]
+import {cancelRedirect, setChat, addChat} from "../Actions";
+import axios from 'axios';
 
 let chatLineData = [
-    {id: 1, chatId: 1, userId: 1, lineText: "Hello, User 3!", createdAt: 1618504133},
-    {id: 2, chatId: 2, userId: 2, lineText: "Just a casual conversation", createdAt: 1618504133},
-    {id: 3, chatId: 3, userId: 1, lineText: "Test chat 2!", createdAt: 1618504226},
-    {id: 4, chatId: 2, userId: 3, lineText: "It is! How are you?", createdAt: 1618504170},
-    {id: 5, chatId: 1, userId: 3, lineText: "Hello, User 1!", createdAt: 1618504151},
-    {id: 6, chatId: 1, userId: 1, lineText: "Hello again, User 3!", createdAt: 1618504170},
-    {id: 7, chatId: 2, userId: 3, lineText: "Left on read? Really?", createdAt: 1618504244},
-    {id: 8, chatId: 3, userId: 2, lineText: "Test chat 2 user 2!", createdAt: 1618504234},
-    {id: 9, chatId: 2, userId: 2, lineText: "Sorry, I was busy", createdAt: 1618504261},
-    {id: 10, chatId: 1, userId: 3, lineText: "Hello again, User 1!", createdAt: 1618504207}
-]
-
-let chatUserData = [
-    {id: 1, username: "User_1"},
-    {id: 2, username: "User_2"},
-    {id: 3, username: "User_3"}
+    {id: 1, chatId: 1, userId: 1, lineText: "Hello, User 3!", time: 1618504133},
+    {id: 2, chatId: 2, userId: 2, lineText: "Just a casual conversation", time: 1618504133},
+    {id: 3, chatId: 3, userId: 1, lineText: "Test chat 2!", time: 1618504226},
+    {id: 4, chatId: 2, userId: 3, lineText: "It is! How are you?", time: 1618504170},
+    {id: 5, chatId: 1, userId: 3, lineText: "Hello, User 1!", time: 1618504151},
+    {id: 6, chatId: 1, userId: 1, lineText: "Hello again, User 3!", time: 1618504170},
+    {id: 7, chatId: 2, userId: 3, lineText: "Left on read? Really?", time: 1618504244},
+    {id: 8, chatId: 3, userId: 2, lineText: "Test chat 2 user 2!", time: 1618504234},
+    {id: 9, chatId: 2, userId: 2, lineText: "Sorry, I was busy", time: 1618504261},
+    {id: 10, chatId: 1, userId: 3, lineText: "Hello again, User 1!", time: 1618504207}
 ]
 
 class Inbox extends Component {
@@ -36,6 +25,7 @@ class Inbox extends Component {
 
         this.state = {
             chatIconData: [],
+            currentConversationUsername: "",
             currentConversation: [],
             currentConversationId: 0,
             message: ""
@@ -45,28 +35,37 @@ class Inbox extends Component {
     componentDidMount() {
         this.props.cancelRedirect()
         this.buildChatIconData();
+        this.openConversation();
 
         this.props.socket.on('message', message => {
+            console.log("received")
             this.outputMessage(message)
         })
     }
 
+    componentWillUnmount() {
+        this.props.setChat({})
+        if (this.state.currentConversationId !== 0) {
+            this.leaveRoom(this.state.currentConversationId)
+        }
+    }
+
     buildChatIconData = () => {
         let chatIconData = []
-        for (let i = 0; i < chatData.length; i++) {
+        for (let i = 0; i < this.props.chats.length; i++) {
             let otherUserName = ""
-            if (chatData[i].users[0] == this.props.currentUser.id) {
-                otherUserName = this.findUsernameById(chatData[i].users[1]);
+            if (this.props.chats[i].userOneId == this.props.currentUser.id) {
+                otherUserName = this.findUsernameById(this.props.chats[i].userTwoId);
             }
-            else if (chatData[i].users[1] == this.props.currentUser.id) {
-                otherUserName = this.findUsernameById(chatData[i].users[0]);
+            else if (this.props.chats[i].userTwoId == this.props.currentUser.id) {
+                otherUserName = this.findUsernameById(this.props.chats[i].userOneId);
             }
             if (otherUserName==="") {
                 continue
             }
             let latestChatLine = this.findLatestChatLine(i + 1)
             let chatDataItem = {
-                id: chatData[i].id,
+                id: this.props.chats[i].id,
                 username: otherUserName,
                 updatedAt: latestChatLine.latestTime,
                 lineText: latestChatLine.latestLine
@@ -74,16 +73,26 @@ class Inbox extends Component {
             chatIconData.push(chatDataItem)
         }
         chatIconData.sort((a,b) => (a.latestTime > b.latestTime) ? 1 : -1)
-        console.log(chatIconData)
         this.setState({
             chatIconData
         })
     }
 
+    openConversation = () => {
+        if (this.props.currentChat.new) {
+            let otherUserId = this.props.currentChat.userTwoId;
+            axios.get(`http://localhost:3500/api/user/${otherUserId}`)
+            .then(response => {
+                let userData = response.data
+                this.setState({currentConversationUsername: userData.username})
+            })
+        }
+    }
+
     findUsernameById = id => {
-        for (let i = 0; i < chatUserData.length; i++) {
-            if (chatUserData[i].id == id) {
-                return chatUserData[i].username
+        for (let i = 0; i < this.props.users.length; i++) {
+            if (this.props.users[i].id == id) {
+                return this.props.users[i].username
             }
         }
     }
@@ -93,9 +102,9 @@ class Inbox extends Component {
         let latestTime = 0;
         for (let i = 0; i < chatLineData.length; i++) {
             if (chatLineData[i].chatId == id) {
-                if (chatLineData[i].createdAt > latestTime) {
+                if (chatLineData[i].time > latestTime) {
                     latestLine = chatLineData[i].lineText
-                    latestTime = chatLineData[i].createdAt
+                    latestTime = chatLineData[i].time
                 }
             }
         }
@@ -113,14 +122,27 @@ class Inbox extends Component {
                 fullConversation.push(chatLineData[i])
             }
         }
-        fullConversation.sort((a,b) => (a.createdAt > b.createdAt) ? 1 : -1)
+        fullConversation.sort((a,b) => (a.time > b.time) ? 1 : -1)
+
+        let conversationUsername = ""
+
+        let curChat = this.findChatById(conversationId)
+
+        if (curChat.userOneId === this.props.currentUser.id) {
+            conversationUsername = this.findUsernameById(curChat.userTwoId)
+        }
+        else if (curChat.userTwoId === this.props.currentUser.id) {
+            conversationUsername = this.findUsernameById(curChat.userOneId)
+        }
         this.setState({
             currentConversationId: conversationId,
-            currentConversation: fullConversation
+            currentConversation: fullConversation,
+            currentConversationUsername: conversationUsername
         })
     }
 
     handleChatFormChange = event => {
+        console.log(this.state)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -128,28 +150,102 @@ class Inbox extends Component {
 
     handleChatFormSubmit = event => {
         event.preventDefault()
-        let messageObject = {
-            chatId: this.state.currentConversationId,
-            username: this.props.currentUser.username,
-            lineText: this.state.message
+        let currentMessage = this.state.message
+        let currentConversationId = this.state.currentConversationId
+        //message to a new user
+        if (this.state.currentConversationId === 0) {
+            let newChatObject = {
+                userOneId: this.props.currentUser.id,
+                userTwoId: this.props.currentChat.userTwoId
+            }
+            axios.post("http://localhost:3500/api/inbox/chat", newChatObject)
+            .then(newChat => {
+                this.props.addChat(newChat.data)
+                this.props.setChat(newChat.data)
+                this.changeRoom(newChat.data.id)
+                console.log(this.state.message)
+                let messageObject = {
+                    id: this.props.currentUser.id,
+                    username: this.props.currentUser.username,
+                    lineText: currentMessage,
+                    conversationId: newChat.data.id
+                }
+                console.log("message: ")
+                console.log(messageObject)
+                console.log("emitted")
+                this.props.socket.emit('chatMessage', messageObject)
+                this.setState({
+                    currentConversationId: newChat.data.id,
+                    message: ''
+                })
+            })
+            // .then(() => {
+                
+            // })
         }
-        this.props.socket.emit('chatMessage', messageObject)
-        this.setState({
-            message: ''
-        })
+        else {
+            let messageObject = {
+                id: this.props.currentUser.id,
+                username: this.props.currentUser.username,
+                lineText: this.state.message,
+                conversationId: currentConversationId
+            }
+            this.props.socket.emit('chatMessage', messageObject)
+            this.setState({
+                message: ''
+            })
+        }
     }
 
     outputMessage = messageObject => {
-        let curConversation = this.state.currentConversation
-        let newLine = {
-            lineText: messageObject.line,
-            createdAt: messageObject.createdAt,
-            username: messageObject.username
+        console.log("output")
+        console.log(messageObject)
+        if (messageObject.id === this.props.currentUser.id) {
+            console.log("this user")
+            let newMessageObject = {
+                chatId: messageObject.conversationId,
+                userId: this.props.currentUser.id,
+                lineText: messageObject.line,
+                time: messageObject.time
+            }
+            console.log("posting")
+            axios.post("http://localhost:3500/api/inbox/chatline", newMessageObject)
+            .then(response => {
+                console.log("done posting")
+                let curConversation = this.state.currentConversation
+                let postedMessage = response.data
+                let newLine = {
+                    lineText: postedMessage.lineText,
+                    time: postedMessage.time,
+                    username: this.props.currentUser.username
+                }
+                curConversation.push(newLine)
+                this.setState({
+                    currentConversation: curConversation,
+                })
+            })
+            .catch(() => console.log("Could not send message"))
         }
-        curConversation.push(newLine)
-        this.setState({
-            currentConversation: curConversation,
-        })
+        else {
+            let curConversation = this.state.currentConversation
+            let newLine = {
+                lineText: messageObject.line,
+                time: messageObject.time,
+                username: messageObject.username
+            }
+            curConversation.push(newLine)
+            this.setState({
+                currentConversation: curConversation,
+            })
+        }
+    }
+
+    findChatById = chatId => {
+        for (let i = 0; i < this.props.chats.length; i++) {
+            if (this.props.chats[i].id === chatId) {
+                return this.props.chats[i]
+            }
+        }
     }
 
     changeRoom = roomId => {
@@ -159,6 +255,7 @@ class Inbox extends Component {
 
     joinRoom = roomId => {
         this.props.socket.emit('joinRoom', roomId)
+        console.log("joining room " + roomId)
     }
 
     leaveRoom = roomId => {
@@ -181,6 +278,7 @@ class Inbox extends Component {
                 />
                 <ConversationWindow 
                 conversation={this.state.currentConversation} 
+                conversationUsername={this.state.currentConversationUsername}
                 handleChatFormChange={this.handleChatFormChange} 
                 handleChatFormSubmit={this.handleChatFormSubmit}
                 message={this.state.message}
@@ -192,10 +290,15 @@ class Inbox extends Component {
 
 const mapStateToProps = state => {
     return {
-      currentUser: state.currentUser
+      currentUser: state.currentUser,
+      currentChat: state.currentChat,
+      users: state.users,
+      chats: state.chats
     }
   }
   
   export default connect (mapStateToProps, {
+      setChat,
+      addChat,
     cancelRedirect
   })(Inbox);
