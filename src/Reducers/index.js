@@ -1,8 +1,9 @@
-import { act } from 'react-dom/test-utils';
 import {combineReducers} from 'redux';
 
 let users = [
-    
+    {id: 1, username: 'User_1'},
+    {id: 2, username: 'User_2'},
+    {id: 3, username: 'User_3'},
 ];
 
 let books = [

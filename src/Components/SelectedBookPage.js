@@ -28,15 +28,27 @@ class SelectedBookPage extends Component {
   }
 
   findChat = otherUserId => {
+    let foundChat = false;
     for (let i = 0; i < this.props.chats.length; i++) {
       if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
+        foundChat = true
         this.props.setChat(this.props.chats[i])
         this.props.initiateRedirect()
-        break
+        break;
       }
     }
-    //CREATE NEW CHAT, THEN
-    this.props.initiateRedirect()
+    if (foundChat) {
+      return
+    }
+    else {
+      let newChat = {
+        userOneId: this.props.currentUser.id,
+        userTwoId: otherUserId,
+        new: true
+      }
+      this.props.setChat(newChat)
+      this.props.initiateRedirect()
+    }
   }
 
   render() {
