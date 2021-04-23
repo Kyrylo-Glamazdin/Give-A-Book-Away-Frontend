@@ -39,7 +39,6 @@ class SignUp extends Component {
             this.setValidated(false);
             return;
         }
-        console.log("here")
         this.setValidated(true);
 
         if(this.state.password !== this.state.confirmPassword) {
@@ -73,7 +72,7 @@ class SignUp extends Component {
                 return;
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {})
     };
 
     fetchBooks = async (id, zipcode) => {
@@ -88,7 +87,6 @@ class SignUp extends Component {
           }
         })
         .catch(err => {
-          console.log(err);
         })
       }
 
@@ -100,7 +98,6 @@ class SignUp extends Component {
     //       }
     //     })
     //     .catch(err => {
-    //       console.log(err);
     //     })
     //   }
 

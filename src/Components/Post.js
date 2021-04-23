@@ -86,7 +86,6 @@ confirmBookPost = () => {
     book: this.state.selectedBook,
     user: this.props.currentUser
   }
-  console.log(bookAndUserObject)
   axios.post('http://localhost:3500/api/book/post', bookAndUserObject)
   .then(response => {
     this.props.addPostedBook(response.data)

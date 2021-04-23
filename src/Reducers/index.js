@@ -14,6 +14,12 @@ let postedBooks = [
 
 ];
 
+let similarBooksState = {
+    similarBooks: [
+        
+    ]
+};
+
 let chats = [
     {id: 1, userOneId: 1, userTwoId: 2},
     {id: 2, userOneId: 1, userTwoId: 3},
@@ -92,6 +98,15 @@ const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
     }
 }
 
+const similarBooksReducer = (oldSimilarBooks = similarBooksState, action) => {
+    switch(action.type) {
+        case "CHANGE_SIMILAR_BOOK":
+            return { ...oldSimilarBooks, similarBooks: action.payload }
+        default:
+            return oldSimilarBooks;
+    }
+}
+
 const chatsReducer = (oldChats = chats, action) => {
     switch(action.type) {
         case "ADD_CHAT":
@@ -127,6 +142,7 @@ export default combineReducers({
     currentUser: currentUserReducer,
     currentBook: currentBookReducer,
     postedBooks: postedBooksReducer,
+    similarBooks: similarBooksReducer,
     chats: chatsReducer,
     currentChat: currentChatReducer,
     redirect: redirectRequiredReducer

@@ -32,7 +32,6 @@ class App extends Component {
   //     }
   //   })
   //   .catch(err => {
-  //     console.log(err);
   //   })
   // }
 
@@ -48,7 +47,6 @@ class App extends Component {
   //     }
   //   })
   //   .catch(err => {
-  //     console.log(err);
   //   })
   // }
 

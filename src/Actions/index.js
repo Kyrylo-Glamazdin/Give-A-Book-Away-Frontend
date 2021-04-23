@@ -116,3 +116,10 @@ export const cancelRedirect = () => {
         payload: {}
     };
 };
+
+export const postSimilarBook = (payload) => {
+    return {
+        type: "CHANGE_SIMILAR_BOOK",
+        payload
+    }
+}

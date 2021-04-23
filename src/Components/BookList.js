@@ -24,7 +24,6 @@ class BookList extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.currentUser)
     }
 
     handleSearchSubmit = async event => {
@@ -46,7 +45,7 @@ class BookList extends Component {
                 }
                 this.setState({searchBooks: books})
             })
-            .catch(err => {console.log(err)})
+            .catch(err => {})
         } else {
             alert("Please input search key.");
         }
@@ -74,8 +73,27 @@ class BookList extends Component {
                     me={this}
                 />
                 <div className="book-grid">
-                    {this.props.books.map(book => (<BookItem key={"book"+book.id} book={book}/>))}
+                    {
+                        this.props.books.map((book, key) => (
+                            <BookItem key={key} book={book}/>
+                        ))
+                    }
                 </div>
+                {
+                    this.props.similarBooks && this.props.similarBooks.length ? 
+                        <React.Fragment>
+                            <div className = "similar-book">
+                                <p>Similar Books</p>
+                            </div>
+                            <div className="book-grid">
+                                {
+                                    this.props.similarBooks.map((book, key) => (
+                                        <BookItem key={key} book={book} />
+                                    ))
+                                }
+                            </div>
+                        </React.Fragment> : null
+                }
             </div>
         );
     }
@@ -84,7 +102,8 @@ class BookList extends Component {
 const mapStateToProps = (state) => {
     return {
         books: state.books,
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        similarBooks: state.similarBooks.similarBooks
     };
 }
 

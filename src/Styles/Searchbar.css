@@ -75,3 +75,15 @@ input:focus {
   margin: 0 !important;
   padding: 0;
 }
+
+.similar-book {
+  display: flex;
+  justify-content: center;
+  padding-right: 3rem;
+}
+
+.similar-book > p {
+  font-size: large;
+  font-weight: bold;
+  color: white;
+}
