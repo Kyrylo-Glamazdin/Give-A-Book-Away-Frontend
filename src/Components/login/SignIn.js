@@ -10,7 +10,8 @@ import {
   addUser,
   clearUsers,
   addChat,
-  clearChats
+  clearChats,
+  addBookOwner,
 } from "../../Actions";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
@@ -50,7 +51,7 @@ class SignIn extends Component {
           const user = response.data.data;
           this.fetchBooks(user.id, user.zipcode);
           this.fetchPostedBooks(user.id);
-          this.fetchChats(user.id)
+          this.fetchChats(user.id);
           this.props.setUser(user);
         } else {
           alert(data.message);
@@ -83,6 +84,8 @@ class SignIn extends Component {
       .post("http://localhost:3500/api/book/recommended", req)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
+          let bookOwner = response.data[i].user;
+          this.props.addBookOwner(bookOwner);
           this.props.postBook(response.data[i]);
         }
       })
@@ -101,31 +104,29 @@ class SignIn extends Component {
   };
 
   fetchChats = async (loggedInUserId) => {
-    axios.get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
-    .then(response => {
-      let chatData = response.data
-      for (let i = 0; i < chatData.length; i++) {
-        if (chatData[i].userOneId === loggedInUserId) {
-          this.fetchUser(chatData[i].userTwoId)
+    axios
+      .get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
+      .then((response) => {
+        let chatData = response.data;
+        for (let i = 0; i < chatData.length; i++) {
+          if (chatData[i].userOneId === loggedInUserId) {
+            this.fetchUser(chatData[i].userTwoId);
+          } else if (chatData[i].userTwoId === loggedInUserId) {
+            this.fetchUser(chatData[i].userOneId);
+          } else {
+            console.log("Couldn't fetch user");
+          }
+          this.props.addChat(chatData[i]);
         }
-        else if (chatData[i].userTwoId === loggedInUserId){
-          this.fetchUser(chatData[i].userOneId)
-        }
-        else {
-          console.log("Couldn't fetch user")
-        }
-        this.props.addChat(chatData[i])
-      }
-    })
-  }
+      });
+  };
 
   fetchUser = async (userId) => {
-    axios.get(`http://localhost:3500/api/user/${userId}`)
-    .then(response => {
-      let userData = response.data
-      this.props.addUser(userData)
-    })
-  }
+    axios.get(`http://localhost:3500/api/user/${userId}`).then((response) => {
+      let userData = response.data;
+      this.props.addUser(userData);
+    });
+  };
 
   render() {
     if (this.props.currentUser.id) {
@@ -220,5 +221,6 @@ export default connect(mapStateToProps, {
   addUser,
   clearUsers,
   addChat,
-  clearChats
+  clearChats,
+  addBookOwner,
 })(SignIn);

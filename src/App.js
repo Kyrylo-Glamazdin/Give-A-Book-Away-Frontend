@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route  } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Post from "./Components/Post";
 import Navbar from "./Components/Navbar.js";
 // import Searchbar from "./Components/Searchbar.js";
@@ -8,17 +8,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SignIn from "./Components/login/SignIn";
 import SignUp from "./Components/login/SignUp";
 import Profile from "./Components/ProfilePage.js";
-import {connect} from 'react-redux';
+import OtherUsers from "./Components/OtherUsers.js";
+import { connect } from "react-redux";
 // import axios from 'axios';
-import {postBook, addUser} from './Actions';
+import { postBook, addUser } from "./Actions";
 import SelectedBookPage from "./Components/SelectedBookPage";
-import './Styles/design.css'
+import "./Styles/design.css";
 import Inbox from "./Components/Inbox";
-import socket from './socket.js';
-
+import socket from "./socket.js";
 
 class App extends Component {
-
   componentDidMount() {
     // this.fetchUsers();
     // this.fetchBooks();
@@ -38,7 +37,7 @@ class App extends Component {
   // fetchBooks = async () => {
   //   let req = {
   //     id: this.props.currentUser.id,
-  //     zipcode: this.props.currentUser.zipcode 
+  //     zipcode: this.props.currentUser.zipcode
   //   }
   //   axios.post("http://localhost:3500/api/book/recommended", req)
   //   .then(response => {
@@ -50,8 +49,6 @@ class App extends Component {
   //   })
   // }
 
-  
-
   render() {
     const NavbarComponent = () => <Navbar />;
     const SignInComponent = () => <SignIn />;
@@ -59,28 +56,64 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
-    const InboxComponent = () => <Inbox socket={socket} />
+    const InboxComponent = () => <Inbox socket={socket} />;
+    const OtherUsersComponent = () => <OtherUsers />;
     return (
-      <div className = "design">
+      <div className="design">
         <Router>
           <NavbarComponent />
           <Switch>
+                        
             <Route exact path="/" component={SignInComponent} />
+                        
             <Route path="/home" component={BookListComponent} />
+                        
             <Route path="/signin" component={SignInComponent} />
+                        
             <Route path="/signup" component={SignUpComponent} />
+                        
             <Route path="/post" component={PostComponent} />
+                        
             <Route path="/profile" component={ProfileComponent} />
+                        
             <Route path="/inbox" component={InboxComponent} />
-            {this.props.books.map(book => {
+                                     
+            {this.props.books.map((book) => {
               return (
-                <Route path={"/book/" + book.id} 
+                <Route
+                  path={"/book/" + book.id}
                   render={() => {
-                    return <SelectedBookPage key={"listedbook"+book.id} book={book}/>
+                    return (
+                      <SelectedBookPage
+                        key={"listedbook" + book.id}
+                        book={book}
+                      />
+                    );
                   }}
                 />
-              )
+              );
             })}
+                        {/*{this.props.books.map(book => {*/}
+                          
+            {/*  {this.props.books.map((book, key) => {
+              book.owner = this.props.books.username; 
+              create reducer*/}
+            {this.props.bookOwners.map((bookOwner) => {
+              return (
+                <Route
+                  path={"/otheruser/" + bookOwner.id}
+                  render={() => {
+                    return (
+                      <OtherUsers
+                        key={"listed" + bookOwner.id}
+                        bookOwner={bookOwner}
+                      />
+                    );
+                  }}
+                />
+              );
+            })}
+                        
           </Switch>
         </Router>
       </div>
@@ -88,15 +121,16 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.users,
     books: state.books,
-    currentUser: state.currentUser
-  }
-}
+    currentUser: state.currentUser,
+    bookOwners: state.bookOwners,
+  };
+};
 
-export default connect (mapStateToProps, {
+export default connect(mapStateToProps, {
   postBook,
-  addUser
+  addUser,
 })(App);

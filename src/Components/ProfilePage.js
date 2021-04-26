@@ -3,7 +3,7 @@ import MyBooks from "./mybooks";
 import { connect } from "react-redux";
 import { setUser, postBook, clearBooksTemporary } from "../Actions";
 import { Link } from "react-router-dom";
-import {Redirect} from 'react-router';
+import { Redirect } from "react-router";
 
 class Profile extends Component {
   logout = () => {
@@ -13,9 +13,7 @@ class Profile extends Component {
 
   render() {
     if (!this.props.currentUser.id) {
-      return (
-          <Redirect to="/"/>
-      )
+      return <Redirect to="/" />;
     }
     return (
       <div>
