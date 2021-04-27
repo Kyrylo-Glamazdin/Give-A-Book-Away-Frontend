@@ -99,6 +99,4 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  postBook,
-  addUser,
 })(App);
