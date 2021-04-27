@@ -23,10 +23,6 @@ class BookList extends Component {
         })
     }
 
-    componentDidMount(){
-        console.log(this.props.currentUser)
-    }
-
     handleSearchSubmit = async event => {
         event.preventDefault();
         if(this.state.searchInput) {

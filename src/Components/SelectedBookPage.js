@@ -17,14 +17,16 @@ class SelectedBookPage extends Component {
 
   componentDidMount() {
     this.props.cancelRedirect();
-    let fullLocation =
-      this.props.book.city +
-      " " +
-      this.props.book.state +
-      " (" +
-      this.props.book.zipcode +
-      ")";
-    this.setState({ fullLocation });
+    if (this.props.book.city && this.props.book.state && this.props.book.zipcode) {
+      let fullLocation =
+        this.props.book.city +
+        " " +
+        this.props.book.state +
+        " (" +
+        this.props.book.zipcode +
+        ")";
+      this.setState({ fullLocation });
+    }
   }
 
   findChat = otherUserId => {
@@ -32,7 +34,9 @@ class SelectedBookPage extends Component {
     for (let i = 0; i < this.props.chats.length; i++) {
       if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
         foundChat = true
-        this.props.setChat(this.props.chats[i])
+        let existingChat = this.props.chats[i]
+        existingChat.existing = true
+        this.props.setChat(existingChat)
         this.props.initiateRedirect()
         break;
       }

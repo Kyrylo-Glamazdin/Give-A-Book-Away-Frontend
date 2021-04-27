@@ -103,6 +103,13 @@ export const setChat = chat => {
     };
 };
 
+export const unsetChat = () => {
+    return {
+        type: "UNSET_CHAT",
+        payload: {}
+    };
+};
+
 export const initiateRedirect = () => {
     return {
         type: "INITIATE_REDIRECT",
@@ -113,6 +120,84 @@ export const initiateRedirect = () => {
 export const cancelRedirect = () => {
     return {
         type: "CANCEL_REDIRECT",
+        payload: {}
+    };
+};
+
+export const addIcon = icon => {
+    return {
+        type: "ADD_ICON",
+        payload: icon
+    };
+};
+
+export const editIcon = icon => {
+    return {
+        type: "EDIT_ICON",
+        payload: icon
+    };
+};
+
+export const setIcons = icons => {
+    return {
+        type: "SET_ICONS",
+        payload: icons
+    };
+};
+
+export const deleteIcons = () => {
+    return {
+        type: "DELETE_ICONS",
+        payload: {}
+    };
+};
+
+export const setConversationUsername = conversationUsername => {
+    return {
+        type: "SET_CONVERSATION_USERNAME",
+        payload: conversationUsername
+    };
+};
+
+export const deleteConversationUsername = () => {
+    return {
+        type: "DELETE_CONVERSATION_USERNAME",
+        payload: {}
+    };
+};
+
+
+export const setMessage = message => {
+    return {
+        type: "SET_MESSAGE",
+        payload: message
+    };
+};
+
+export const clearMessage = () => {
+    return {
+        type: "CLEAR_MESSAGE",
+        payload: ""
+    };
+};
+
+export const setConversation = message => {
+    return {
+        type: "SET_CONVERSATION",
+        payload: message
+    };
+};
+
+export const addMessageToConversation = message => {
+    return {
+        type: "ADD_MESSAGE_TO_CONVERSATION",
+        payload: message
+    };
+};
+
+export const clearConversation = () => {
+    return {
+        type: "CLEAR_CONVERSATION",
         payload: {}
     };
 };
