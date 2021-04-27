@@ -23,9 +23,6 @@ class BookList extends Component {
         })
     }
 
-    componentDidMount(){
-    }
-
     handleSearchSubmit = async event => {
         event.preventDefault();
         if(this.state.searchInput) {

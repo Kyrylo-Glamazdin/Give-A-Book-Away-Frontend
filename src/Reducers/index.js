@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
 
 let users = [
-  { id: 1, username: "User_1" },
-  { id: 2, username: "User_2" },
-  { id: 3, username: "User_3" },
+
 ];
 
 let books = [];
@@ -16,9 +14,7 @@ let similarBooksState = {
 };
 
 let chats = [
-  { id: 1, userOneId: 1, userTwoId: 2 },
-  { id: 2, userOneId: 1, userTwoId: 3 },
-  { id: 3, userOneId: 3, userTwoId: 2 },
+
 ];
 
 let currentUser = {};
@@ -115,27 +111,26 @@ const chatsReducer = (oldChats = chats, action) => {
 };
 
 const currentChatReducer = (curChat = currentChat, action) => {
-  switch (action.type) {
-    case "SET_CHAT":
-      return action.payload;
-    default:
-      return curChat;
-  }
-};
 
-const redirectRequiredReducer = (
-  oldRedirectRequired = redirectRequired,
-  action
-) => {
-  switch (action.type) {
-    case "INITIATE_REDIRECT":
-      return true;
-    case "CANCEL_REDIRECT":
-      return false;
-    default:
-      return oldRedirectRequired;
-  }
-};
+    switch (action.type) {
+        case "SET_CHAT":
+            return action.payload;
+        case "UNSET_CHAT":
+            return {}
+        default:
+            return curChat;
+    }
+}
+
+const redirectRequiredReducer = (oldRedirectRequired = redirectRequired, action) => {
+    switch (action.type) {
+        case "INITIATE_REDIRECT":
+            return true
+        case "CANCEL_REDIRECT":
+            return false
+        default: return oldRedirectRequired
+    }
+}
 
 const bookOwnersReducer = (oldOwner = bookOwners, action) => {
   switch (action.type) {
@@ -148,15 +143,75 @@ const bookOwnersReducer = (oldOwner = bookOwners, action) => {
   }
 };
 
+
+const chatIconsReducer = (oldChatIcons = [], action) => {
+    switch(action.type) {
+        case "ADD_ICON":
+            return oldChatIcons.concat(action.payload)
+        case "EDIT_ICON":
+            for (let i = 0; i < oldChatIcons.length; i++) {
+                if (oldChatIcons[i].chatId === action.payload.chatId) {
+                    oldChatIcons[i] = action.payload
+                    break
+                }
+            }
+            return oldChatIcons
+        case "SET_ICONS":
+            return action.payload
+        case "DELETE_ICONS":
+            return []
+        default: return oldChatIcons
+    }
+}
+
+const currentConversationUsernameReducer = (oldConversationUsername = "", action) => {
+    switch(action.type) {
+        case "SET_CONVERSATION_USERNAME":
+            console.log(action.payload)
+            return action.payload
+        case "DELETE_CONVERSATION_USERNAME":
+            return ""
+        default: return oldConversationUsername
+    }
+}
+
+const inboxMessageReducer = (oldMessage = "", action) => {
+    switch(action.type) {
+        case "SET_MESSAGE":
+            return action.payload
+        case "CLEAR_MESSAGE":
+            return ""
+        default: return oldMessage
+    }
+}
+
+const currentConversationReducer = (oldConversation = [], action) => {
+    switch(action.type) {
+        case "SET_CONVERSATION":
+            return action.payload
+        case "ADD_MESSAGE_TO_CONVERSATION":
+            return oldConversation.concat(action.payload)
+        case "CLEAR_CONVERSATION":
+            return []
+        default: return oldConversation
+    }
+}
+
+
 export default combineReducers({
-  users: usersReducer,
-  books: booksReducer,
-  currentUser: currentUserReducer,
-  currentBook: currentBookReducer,
-  postedBooks: postedBooksReducer,
-  similarBooks: similarBooksReducer,
-  chats: chatsReducer,
-  currentChat: currentChatReducer,
-  redirect: redirectRequiredReducer,
-  bookOwners: bookOwnersReducer,
+    users: usersReducer,
+    books: booksReducer,
+    currentUser: currentUserReducer,
+    currentBook: currentBookReducer,
+    postedBooks: postedBooksReducer,
+    similarBooks: similarBooksReducer,
+    chats: chatsReducer,
+    currentChat: currentChatReducer,
+    redirect: redirectRequiredReducer,
+    chatIcons: chatIconsReducer,
+    currentConversationUsername: currentConversationUsernameReducer,
+    inboxMessage: inboxMessageReducer,
+    currentConversation: currentConversationReducer,
+    bookOwners: bookOwnersReducer,
 });
+

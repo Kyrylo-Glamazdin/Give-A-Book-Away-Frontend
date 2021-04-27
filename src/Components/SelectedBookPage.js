@@ -22,6 +22,7 @@ class SelectedBookPage extends Component {
       this.props.book.state &&
       this.props.book.zipcode
     ) {
+
       let fullLocation =
         this.props.book.city +
         " " +
@@ -36,13 +37,14 @@ class SelectedBookPage extends Component {
   findChat = (otherUserId) => {
     let foundChat = false;
     for (let i = 0; i < this.props.chats.length; i++) {
-      if (
-        this.props.chats[i].userOneId === otherUserId ||
-        this.props.chats[i].userTwoId === otherUserId
-      ) {
-        foundChat = true;
-        this.props.setChat(this.props.chats[i]);
-        this.props.initiateRedirect();
+
+      if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
+        foundChat = true
+        let existingChat = this.props.chats[i]
+        existingChat.existing = true
+        this.props.setChat(existingChat)
+        this.props.initiateRedirect()
+
         break;
       }
     }

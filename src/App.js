@@ -8,46 +8,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SignIn from "./Components/login/SignIn";
 import SignUp from "./Components/login/SignUp";
 import Profile from "./Components/ProfilePage.js";
+import {connect} from 'react-redux';
 import OtherUsers from "./Components/OtherUsers.js";
-import { connect } from "react-redux";
-// import axios from 'axios';
-import { postBook, addUser } from "./Actions";
 import SelectedBookPage from "./Components/SelectedBookPage";
-import "./Styles/design.css";
+import './Styles/design.css'
 import Inbox from "./Components/Inbox";
-import socket from "./socket.js";
+import socket from './socket.js';
 
 class App extends Component {
-  componentDidMount() {
-    // this.fetchUsers();
-    // this.fetchBooks();
-  }
-
-  // fetchUsers = async () => {
-  //   axios.get("http://localhost:3500/api/user/")
-  //   .then(response => {
-  //     for (let i = 0; i < response.data.length; i++) {
-  //       this.props.addUser(response.data[i]);
-  //     }
-  //   })
-  //   .catch(err => {
-  //   })
-  // }
-
-  // fetchBooks = async () => {
-  //   let req = {
-  //     id: this.props.currentUser.id,
-  //     zipcode: this.props.currentUser.zipcode
-  //   }
-  //   axios.post("http://localhost:3500/api/book/recommended", req)
-  //   .then(response => {
-  //     for (let i = 0; i < response.data.length; i++) {
-  //       this.props.postBook(response.data[i]);
-  //     }
-  //   })
-  //   .catch(err => {
-  //   })
-  // }
 
   render() {
     const NavbarComponent = () => <Navbar />;
