@@ -45,7 +45,10 @@ class Inbox extends Component {
             if (message.otherUserId === this.props.currentUser.id) {
                 console.log('find new chat')
                 //new chat
-                axios.post("http://localhost:3500/api/inbox/findchat", message.conversationId)
+                let requestObj = {
+                    conversationId: message.conversationId
+                }
+                axios.post("http://localhost:3500/api/inbox/findchat", requestObj)
                 .then(result => {
                     this.props.addChat(result.data)
                     axios.get(`http://localhost:3500/api/user/${message.id}`)
