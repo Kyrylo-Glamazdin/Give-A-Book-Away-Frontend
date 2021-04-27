@@ -21,6 +21,7 @@ class MyBooks extends Component {
         <Container>
           <Row className="py-5">
             {this.props.postedBooks.map((item, key) => {
+              item.distance = "0.0";
               item.owner = "self";
               return (
                 <Col key={key} md={3} sm={6} className="list py-3">

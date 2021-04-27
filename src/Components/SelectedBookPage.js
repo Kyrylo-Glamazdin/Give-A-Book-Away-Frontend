@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
-import { connect } from 'react-redux';
-import {Redirect} from 'react-router';
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import {setChat, initiateRedirect, cancelRedirect} from "../Actions";
+import { setChat, initiateRedirect, cancelRedirect } from "../Actions";
 
 class SelectedBookPage extends Component {
   constructor(props) {
@@ -17,7 +17,12 @@ class SelectedBookPage extends Component {
 
   componentDidMount() {
     this.props.cancelRedirect();
-    if (this.props.book.city && this.props.book.state && this.props.book.zipcode) {
+    if (
+      this.props.book.city &&
+      this.props.book.state &&
+      this.props.book.zipcode
+    ) {
+
       let fullLocation =
         this.props.book.city +
         " " +
@@ -29,42 +34,38 @@ class SelectedBookPage extends Component {
     }
   }
 
-  findChat = otherUserId => {
+  findChat = (otherUserId) => {
     let foundChat = false;
     for (let i = 0; i < this.props.chats.length; i++) {
+
       if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
         foundChat = true
         let existingChat = this.props.chats[i]
         existingChat.existing = true
         this.props.setChat(existingChat)
         this.props.initiateRedirect()
+
         break;
       }
     }
     if (foundChat) {
-      return
-    }
-    else {
+      return;
+    } else {
       let newChat = {
         userOneId: this.props.currentUser.id,
         userTwoId: otherUserId,
-        new: true
-      }
-      this.props.setChat(newChat)
-      this.props.initiateRedirect()
+        new: true,
+      };
+      this.props.setChat(newChat);
+      this.props.initiateRedirect();
     }
-  }
+  };
 
   render() {
     if (!this.props.currentUser.id) {
-      return (
-          <Redirect to="/"/>
-      )
-    }
-    else if (this.props.redirect) {
-      return (
-        <Redirect to="/inbox"/>
-      )
+      return <Redirect to="/" />;
+    } else if (this.props.redirect) {
+      return <Redirect to="/inbox" />;
     }
     return (
       <div className="a-book">
@@ -88,10 +89,19 @@ class SelectedBookPage extends Component {
         </div>
 
         <div className="description">
-          <h5 className="desc">Posted by: {this.props.book.username}</h5>
+          <h5 className="desc">
+            Posted by:
+            <Link to={"/otheruser/" + this.props.book.userId}>
+              {this.props.book.username}
+            </Link>
+          </h5>
         </div>
 
-        <button type="button" className="button10" onClick={() => this.findChat(this.props.book.userOwnerId)}>
+        <button
+          type="button"
+          className="button10"
+          onClick={() => this.findChat(this.props.book.userOwnerId)}
+        >
           Contact owner
         </button>
 
@@ -110,12 +120,12 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
     chats: state.chats,
-    redirect: state.redirect
+    redirect: state.redirect,
   };
-}
+};
 
 export default connect(mapStateToProps, {
   setChat,
   initiateRedirect,
-  cancelRedirect
+  cancelRedirect,
 })(SelectedBookPage);

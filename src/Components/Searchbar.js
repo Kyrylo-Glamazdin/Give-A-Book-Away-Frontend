@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
-import { postBook, clearBooksTemporary, addPostedBook } from '../Actions';
+import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook } from '../Actions';
 
 class Searchbar extends Component{
 
@@ -14,14 +14,15 @@ class Searchbar extends Component{
       let bookAndZipObject = {
         book: book,
         zipcode: this.props.currentUser.zipcode,
-        id: this.props.currentUser.id
+        id: this.props.currentUser.id,
+        formValue: this.props.formValue
       }
       axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
       .then(response => {
-        console.log(response.data)
-        for (let i = 0; i < response.data.length; i++) {
-          this.props.postBook(response.data[i]);
+        for (let i = 0; i < response.data.result.length; i++) {
+          this.props.postBook(response.data.result[i]);
         }
+        this.props.postSimilarBook(response.data.similarBooks);
       })
       .catch(err => {
         console.log(err);
@@ -30,20 +31,18 @@ class Searchbar extends Component{
   }
 
   handleRowSelection = book => {
+    console.log(book)
+    this.props.postSimilarBook([])
     if (this.props.option === "search") {
       this.fetchBooks(book)
     }
     else {
-      console.log('title: "' + book.title + '", author: "' + book.author + '", isbn: "' + book.isbn + '", preview_image: "' + book.preview_image + '"')
       this.props.setSelectedBook(book)
     }
   }
 
   render() {
     let searchBooks = this.props.searchBooks;
-
-    console.log(searchBooks, "searchBooks")
-
     return(
       <>
         <div className="searchbar">
@@ -65,16 +64,18 @@ class Searchbar extends Component{
               >
                 {
                   searchBooks.map((item, key) => (
-                    <Row key={key} className="search-book mt-3 ml-1 p-1" onClick = {() => this.handleRowSelection(item)}>
-                      <div>
-                        <img className="ml-5" src={item.preview_image} alt =""></img>
-                        <div className="pl-3 dropdown-letter">
-                          <p>{`${item.title}`}</p>
-                          <p>{`${item.author}`}</p>
-                          <p>{`${item.isbn}`}</p>
+                    <React.Fragment key={key}>
+                      <Row className="search-book mt-3 ml-1 p-1" onClick = {() => this.handleRowSelection(item)}>
+                        <div>
+                          <img className="ml-5" src={item.preview_image} alt =""></img>
+                          <div className="pl-3 dropdown-letter">
+                            <p>{`${item.title}`}</p>
+                            <p>{`${item.author}`}</p>
+                            <p>{`${item.isbn}`}</p>
+                          </div>
                         </div>
-                      </div>
-                    </Row>
+                      </Row>
+                    </React.Fragment>
                   ))
                 }
               </div>
@@ -96,5 +97,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   postBook,
   clearBooksTemporary,
-  addPostedBook
+  addPostedBook,
+  postSimilarBook
 })(Searchbar);
