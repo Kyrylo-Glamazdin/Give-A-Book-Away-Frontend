@@ -35,30 +35,8 @@ class SelectedBookPage extends Component {
   }
 
   findChat = (otherUserId) => {
-    let foundChat = false;
-    for (let i = 0; i < this.props.chats.length; i++) {
-
-      if (this.props.chats[i].userOneId === otherUserId || this.props.chats[i].userTwoId === otherUserId) {
-        foundChat = true
-        let existingChat = this.props.chats[i]
-        existingChat.existing = true
-        this.props.setChat(existingChat)
-        this.props.initiateRedirect()
-
-        break;
-      }
-    }
-    if (foundChat) {
-      return;
-    } else {
-      let newChat = {
-        userOneId: this.props.currentUser.id,
-        userTwoId: otherUserId,
-        new: true,
-      };
-      this.props.setChat(newChat);
+      this.props.setChat(otherUserId);
       this.props.initiateRedirect();
-    }
   };
 
   render() {

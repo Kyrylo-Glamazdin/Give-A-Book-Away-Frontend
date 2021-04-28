@@ -19,7 +19,7 @@ let chats = [
 
 let currentUser = {};
 let currentBook = {};
-let currentChat = {};
+let currentChat = "";
 
 let redirectRequired = false;
 
@@ -116,7 +116,7 @@ const currentChatReducer = (curChat = currentChat, action) => {
         case "SET_CHAT":
             return action.payload;
         case "UNSET_CHAT":
-            return {}
+            return 0
         default:
             return curChat;
     }

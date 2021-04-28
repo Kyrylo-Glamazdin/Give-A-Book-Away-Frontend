@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Post from "./Components/Post";
 import Navbar from "./Components/Navbar.js";
-// import Searchbar from "./Components/Searchbar.js";
 import BookList from "./Components/BookList.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignIn from "./Components/login/SignIn";
@@ -12,8 +11,7 @@ import {connect} from 'react-redux';
 import OtherUsers from "./Components/OtherUsers.js";
 import SelectedBookPage from "./Components/SelectedBookPage";
 import './Styles/design.css'
-import Inbox from "./Components/Inbox";
-import socket from './socket.js';
+import Chat from './Components/Chat';
 
 class App extends Component {
 
@@ -24,8 +22,7 @@ class App extends Component {
     const BookListComponent = () => <BookList />;
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
-    const InboxComponent = () => <Inbox socket={socket} />;
-    const OtherUsersComponent = () => <OtherUsers />;
+    const ChatComponent = () => <Chat/>;
     return (
       <div className="design">
         <Router>
@@ -44,7 +41,7 @@ class App extends Component {
                         
             <Route path="/profile" component={ProfileComponent} />
                         
-            <Route path="/inbox" component={InboxComponent} />
+            <Route path="/inbox" component={ChatComponent} />
                                      
             {this.props.books.map((book) => {
               return (
@@ -61,11 +58,6 @@ class App extends Component {
                 />
               );
             })}
-                        {/*{this.props.books.map(book => {*/}
-                          
-            {/*  {this.props.books.map((book, key) => {
-              book.owner = this.props.books.username; 
-              create reducer*/}
             {this.props.bookOwners.map((bookOwner) => {
               return (
                 <Route
@@ -91,7 +83,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users,
     books: state.books,
     currentUser: state.currentUser,
     bookOwners: state.bookOwners,
