@@ -5,11 +5,12 @@ class ChatList extends Component {
         return(
             <div>
                 {this.props.chats.map(chat => {
-                    console.log(chat)
                     return( <ChatIconItem 
-                        key={"chat"+chat.id} 
+                        key={"chat"+chat.chatId} 
                         chat={chat} 
-                        redirectToConversation={this.props.redirectToConversation} />)})} 
+                        redirectToConversation={this.props.redirectToConversation}
+                        currentUserId={this.props.currentUserId}
+                        />)})} 
             </div>
         );
     }

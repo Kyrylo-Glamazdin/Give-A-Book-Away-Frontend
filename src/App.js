@@ -46,6 +46,7 @@ class App extends Component {
             {this.props.books.map((book) => {
               return (
                 <Route
+                key={"bookroute"+book.id}
                   path={"/book/" + book.id}
                   render={() => {
                     return (
@@ -61,6 +62,7 @@ class App extends Component {
             {this.props.bookOwners.map((bookOwner) => {
               return (
                 <Route
+                key={"bookownerroute"+bookOwner.id}
                   path={"/otheruser/" + bookOwner.id}
                   render={() => {
                     return (
