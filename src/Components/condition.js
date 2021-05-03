@@ -1,38 +1,35 @@
-import React from 'react'
-import { Dropdown } from 'semantic-ui-react'
-import '../Styles/PostButtons.css';
+import React from "react";
 
+import "../Styles/PostButtons.css";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
-const conditionOptions = [
-  {
-    key: 'Old',
-    text: 'Old',
-    value: 'Old',
-    
-  },
-  {
-    key: 'Slightly Used',
-    text: 'Slightly Used',
-    value: 'Slightly Used',
-    
-  },
-  {
-    key: 'New',
-    text: 'New',
-    value: 'New',
-    
-  },
-  
-]
+class DropdownExampleSelection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "Select Condition",
+    };
+  }
 
-const DropdownExampleSelection = () => (
-  <Dropdown 
-  className='button'
-    placeholder='Select Book Condition'
-    fluid
-    selection
-    options={conditionOptions}
-  />
-)
+  handleSelect = (e) => {
+    this.props.handleConditionSubmit(e);
+    this.setState({ title: e });
+  };
 
-export default DropdownExampleSelection
+  render() {
+    return (
+      <DropdownButton
+        alignRight
+        title={this.state.title}
+        onSelect={this.handleSelect}
+        id="dropdown-menu-align-right"
+      >
+        <Dropdown.Item eventKey="Old">Old</Dropdown.Item>
+        <Dropdown.Item eventKey="Slightly Used">Slightly Used</Dropdown.Item>
+        <Dropdown.Item eventKey="New">New</Dropdown.Item>
+      </DropdownButton>
+    );
+  }
+}
+export default DropdownExampleSelection;

@@ -22,7 +22,6 @@ class SelectedBookPage extends Component {
       this.props.book.state &&
       this.props.book.zipcode
     ) {
-
       let fullLocation =
         this.props.book.city +
         " " +
@@ -35,8 +34,8 @@ class SelectedBookPage extends Component {
   }
 
   findChat = (otherUserId) => {
-      this.props.setChat(otherUserId);
-      this.props.initiateRedirect();
+    this.props.setChat(otherUserId);
+    this.props.initiateRedirect();
   };
 
   render() {
@@ -66,13 +65,16 @@ class SelectedBookPage extends Component {
           <h5 className="distance">Location: {this.state.fullLocation}</h5>
         </div>
 
-        <div className="description">
-          <h5 className="desc">
+        <div className="userinfo">
+          <h5 className="otheruser">
             Posted by:
             <Link to={"/otheruser/" + this.props.book.userId}>
               {this.props.book.username}
             </Link>
           </h5>
+        </div>
+        <div className="book-condition">
+          <h5 className="bookCon">Condition: {this.props.book.condition}</h5>
         </div>
 
         <button

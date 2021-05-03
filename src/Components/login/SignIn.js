@@ -104,26 +104,25 @@ class SignIn extends Component {
   };
 
   fetchChats = async (loggedInUserId) => {
-    axios.get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
-    .then(response => {
-      let chatData = response.data
-      console.log(chatData)
-      for (let i = 0; i < chatData.length; i++) {
-        if (chatData[i].userOneId === loggedInUserId) {
-          console.log("fetching user two " + chatData[i].userTwoId)
-          this.fetchUser(chatData[i].userTwoId)
+    axios
+      .get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
+      .then((response) => {
+        let chatData = response.data;
+        console.log(chatData);
+        for (let i = 0; i < chatData.length; i++) {
+          if (chatData[i].userOneId === loggedInUserId) {
+            console.log("fetching user two " + chatData[i].userTwoId);
+            this.fetchUser(chatData[i].userTwoId);
+          } else if (chatData[i].userTwoId === loggedInUserId) {
+            console.log("fetching user one " + chatData[i].userOneId);
+            this.fetchUser(chatData[i].userOneId);
+          } else {
+            console.log("Couldn't fetch user");
+          }
+          this.props.addChat(chatData[i]);
         }
-        else if (chatData[i].userTwoId === loggedInUserId){
-          console.log("fetching user one " + chatData[i].userOneId)
-          this.fetchUser(chatData[i].userOneId)
-        }
-        else {
-          console.log("Couldn't fetch user")
-        }
-        this.props.addChat(chatData[i])
-      }
-    })
-  }
+      });
+  };
 
   fetchUser = async (userId) => {
     axios.get(`http://localhost:3500/api/user/${userId}`).then((response) => {
