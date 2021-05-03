@@ -5,7 +5,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.description {
+.userinfo {
   text-align: left;
   margin-top: 40px;
   margin-left: 100px;
@@ -52,4 +52,12 @@ button.button10 {
 }
 button.button10:hover {
   background-color: #cccc;
+}
+
+.book-condition {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }

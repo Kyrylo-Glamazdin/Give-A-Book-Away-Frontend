@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import MyBooks from "./mybooks";
 import { connect } from "react-redux";
-import { setUser, postBook, clearBooksTemporary } from "../Actions";
+import {
+  setUser,
+  postBook,
+  clearBooksTemporary,
+  clearBookOwner,
+} from "../Actions";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
@@ -9,6 +14,7 @@ class Profile extends Component {
   logout = () => {
     this.props.clearBooksTemporary();
     this.props.setUser({});
+    this.props.clearBookOwner();
   };
 
   render() {
@@ -47,4 +53,5 @@ export default connect(mapStateToProps, {
   setUser,
   postBook,
   clearBooksTemporary,
+  clearBookOwner,
 })(Profile);
