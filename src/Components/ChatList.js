@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import ChatIconItem from './ChatIconItem';
+import '../Styles/ChatList.css';
 class ChatList extends Component {
     render() {
         return(
-            <div>
+            <div className="chat-list">
                 {this.props.chats.map(chat => {
                     return( <ChatIconItem 
                         key={"chat"+chat.chatId} 

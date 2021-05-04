@@ -8,6 +8,7 @@ import axios from 'axios';
 import moment from 'moment'
 import socket from '../socket.js';
 import '../Styles/Chat.css'
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 class Chat extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class Chat extends Component {
     }
 
     async componentDidMount() {
+        disableBodyScroll(this);
         this.joinPersonalRoom(this.props.currentUser.username)
         socket.on('message', message => {
             this.outputMessage(message)
@@ -131,6 +133,7 @@ class Chat extends Component {
     }
 
     componentWillUnmount() {
+        clearAllBodyScrollLocks();
         this.leavePersonalRoom(this.props.currentUser.username)
         if (this.state.currentChat.id) {
             this.leaveRoom(this.state.currentChat.id)

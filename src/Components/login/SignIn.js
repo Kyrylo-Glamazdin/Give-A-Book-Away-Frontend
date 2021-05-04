@@ -108,13 +108,10 @@ class SignIn extends Component {
       .get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
       .then((response) => {
         let chatData = response.data;
-        console.log(chatData);
         for (let i = 0; i < chatData.length; i++) {
           if (chatData[i].userOneId === loggedInUserId) {
-            console.log("fetching user two " + chatData[i].userTwoId);
             this.fetchUser(chatData[i].userTwoId);
           } else if (chatData[i].userTwoId === loggedInUserId) {
-            console.log("fetching user one " + chatData[i].userOneId);
             this.fetchUser(chatData[i].userOneId);
           } else {
             console.log("Couldn't fetch user");
