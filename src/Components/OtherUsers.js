@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addUser, setUser, postBook, clearBooksTemporary } from "../Actions";
-
-import BookItem from "./BookItem";
+import { addUserBook, clearUserBooks } from "../Actions";
+import {Redirect} from 'react-router';
+import OtherBookItem from "./OtherBookItem";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 
 class OtherUser extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userbooks: [],
-    };
   }
 
   fetchUserBooks = async () => {
+    this.props.clearUserBooks();
     let requestObj = {
       currentUserZipcode: this.props.currentUser.zipcode,
       otherUserZipcode: this.props.bookOwner.zipcode,
@@ -24,31 +22,39 @@ class OtherUser extends Component {
       .post(`http://localhost:3500/api/book/userbooks`, requestObj)
       .then((response) => {
         const userbooks = response.data;
-        this.setState({ userbooks });
+        for(let i = 0; i < userbooks.length; i++) {
+          this.props.addUserBook(userbooks[i])
+        }
       })
-      .catch((err) => {});
+      .catch((err) => console.log(err));
   };
   componentDidMount() {
+    if (!this.props.currentUser.id) {
+      return;
+    }
     this.fetchUserBooks();
   }
 
   render() {
+    if (!this.props.currentUser.id) {
+      return(
+          <Redirect to = "/"/>
+      )
+    }
     return (
       <div>
-        <h1>HIIII</h1>
         <div className="profile-title">{this.props.bookOwner.username}</div>
         <div>
           <div>
             <div className="list-box m-3 py-5">
               <Container>
                 <Row className="py-5">
-                  {this.state.userbooks.map((item, key) => {
-                    console.log(item);
+                  {this.props.userBooks.map((item, key) => {
                     item.owner = this.props.bookOwner.username;
                     return (
                       <Col key={key} md={3} sm={6} className="list py-3">
                         <div className="imagebox m-auto">
-                          <BookItem book={item} />
+                          <OtherBookItem book={item} />
                         </div>
                       </Col>
                     );
@@ -66,17 +72,11 @@ class OtherUser extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
-    books: state.books,
-    users: state.users,
-    postedBooks: state.postedBooks,
-    otherPosted: state.otherPosted,
+    userBooks: state.userBooks
   };
 };
 
 export default connect(mapStateToProps, {
-  setUser,
-  postBook,
-
-  addUser,
-  clearBooksTemporary,
+  addUserBook,
+  clearUserBooks
 })(OtherUser);

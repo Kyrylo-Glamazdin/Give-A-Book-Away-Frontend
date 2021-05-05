@@ -17,6 +17,10 @@ let chats = [
 
 ];
 
+let userBooks = [
+
+];
+
 let currentUser = {};
 let currentBook = {};
 let currentChat = "";
@@ -135,6 +139,11 @@ const redirectRequiredReducer = (oldRedirectRequired = redirectRequired, action)
 const bookOwnersReducer = (oldOwner = bookOwners, action) => {
   switch (action.type) {
     case "ADD_BOOK_OWNER":
+      for (let i = 0; i < oldOwner.length; i++) {
+        if (oldOwner[i].id === action.payload.id) {
+          return oldOwner;
+        }
+      }
       return oldOwner.concat(action.payload);
     case "CLEAR_BOOK_OWNER":
       return [];
@@ -142,6 +151,16 @@ const bookOwnersReducer = (oldOwner = bookOwners, action) => {
       return oldOwner;
   }
 };
+
+const userBooksReducer = (oldUserBooks = userBooks, action) => {
+  switch (action.type) {
+    case "ADD_USER_BOOK":
+      return oldUserBooks.concat(action.payload)
+    case "CLEAR_USER_BOOKS":
+      return [];
+    default: return oldUserBooks
+  }
+}
 
 export default combineReducers({
     users: usersReducer,
@@ -154,5 +173,6 @@ export default combineReducers({
     currentChat: currentChatReducer,
     redirect: redirectRequiredReducer,
     bookOwners: bookOwnersReducer,
+    userBooks: userBooksReducer
 });
 

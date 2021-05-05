@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import logo from '../Styles/GiveaBook.png'
-import {postBook, clearBooksTemporary} from '../Actions'
+import {postBook, clearBooksTemporary, addBookOwner, clearBookOwner} from '../Actions'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import '../Styles/Navbar.css';
@@ -17,6 +17,7 @@ class Navbar extends Component {
         if (!this.props.currentUser.id) {
             return;
         }
+        this.props.clearBookOwner();
         let req = {
           id: this.props.currentUser.id,
           zipcode: this.props.currentUser.zipcode 
@@ -24,6 +25,8 @@ class Navbar extends Component {
         axios.post("http://localhost:3500/api/book/recommended", req)
         .then(response => {
           for (let i = 0; i < response.data.length; i++) {
+            let bookOwner = response.data[i].user;
+            this.props.addBookOwner(bookOwner);
             this.props.postBook(response.data[i]);
           }
         })
@@ -44,7 +47,11 @@ class Navbar extends Component {
                     </Link>
                 </div>
                 <div className="button-group">
-                    <Link className="navbutton" to="/home">HOME</Link>
+                    <Link className="navbutton" to="/home">
+                        <button className="navigationbutton" onClick={this.updateBooksOnMainPage}>
+                            HOME
+                        </button>
+                    </Link>
                     <Link className="navbutton" to="/post">POST</Link>
                     <Link className="navbutton" to="/inbox/">INBOX</Link>
                     <Link className="navbutton" to="/profile/">PROFILE</Link>
@@ -64,5 +71,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     clearBooksTemporary,
-    postBook
+    postBook,
+    addBookOwner,
+    clearBookOwner
 })(Navbar);

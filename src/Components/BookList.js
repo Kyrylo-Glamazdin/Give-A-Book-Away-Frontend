@@ -1,6 +1,5 @@
 import React, { Component} from 'react'
 import {connect} from 'react-redux';
-import {postBook, clearBooksTemporary} from '../Actions';
 import Searchbar from './Searchbar.js';
 import BookItem from './BookItem.js';
 import axios from 'axios';
@@ -42,7 +41,7 @@ class BookList extends Component {
                 }
                 this.setState({searchBooks: books})
             })
-            .catch(err => {})
+            .catch(err => {console.log(err)})
         } else {
             alert("Please input search key.");
         }
@@ -105,6 +104,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    postBook,
-    clearBooksTemporary,
+
 })(BookList);

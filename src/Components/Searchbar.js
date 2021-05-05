@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
-import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook } from '../Actions';
+import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner } from '../Actions';
 
 class Searchbar extends Component{
 
   fetchBooks(book){
     if (this.props.option === "search") {
       this.props.clearBooksTemporary();
+      this.props.clearBookOwner();
       this.props.me.handleSearchBook();
       let bookAndZipObject = {
         book: book,
@@ -20,6 +21,8 @@ class Searchbar extends Component{
       axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
       .then(response => {
         for (let i = 0; i < response.data.result.length; i++) {
+          let bookOwner = response.data.result[i].user;
+          this.props.addBookOwner(bookOwner);          
           this.props.postBook(response.data.result[i]);
         }
         this.props.postSimilarBook(response.data.similarBooks);
@@ -98,5 +101,7 @@ export default connect(mapStateToProps, {
   postBook,
   clearBooksTemporary,
   addPostedBook,
-  postSimilarBook
+  postSimilarBook,
+  addBookOwner,
+  clearBookOwner 
 })(Searchbar);
