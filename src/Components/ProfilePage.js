@@ -23,7 +23,7 @@ class Profile extends Component {
     }
     return (
       <div>
-        <div className="profile-title">Books You Are Giving Away</div>
+        <h1 className="profile-title">Books You Are Giving Away </h1>
         <div>
           <div className="log-out">
             <Link to="/">
