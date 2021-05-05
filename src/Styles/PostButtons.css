@@ -1,9 +1,9 @@
 .heading {
   color: #ffffff;
   text-align: center;
+  padding-top: 5%;
   margin: auto;
-  position:relative;
-  bottom:-40px;
+  float:center;
   text-shadow: 0px 2px 5px #333333;
   
 }
@@ -28,12 +28,12 @@
 }
 .remoofbutton{
   height: 3w0px;
-    width: 10%;
+    width: 100px;
     padding: 5px;
     position:relative;
-  left: 45%;
+  left: 40%;
   bottom:-70px;
-    margin: auto;
+    margin: 15px;
     background-color: #7e947a;
     border-radius: 3px;
     border:1px solid #c4c4c4;
@@ -43,35 +43,31 @@
     background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
 
 }
+.conditbutt{
+  height: 3w0px;
+    width: 100px;
+    padding: 5px;
+    position:relative;
+  left: 43%;
+  bottom:-50px;
+    margin: 15px;
+    
+    font-size: .8rem;
+    color: #ffffff;
+    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
+
+}
 .searchButtonPost{
   margin: 10%;
 
 }
-.layout {
-    /*border: 1px solid #cccccc;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0, .75);*/
-    border-radius: 20px;
-    position: absolute;
-    top:80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    height: 210px;
 
-    margin-top: 10%;
-  }
-  .keys {
-    display: grid;
-    grid-template-columns: repeat(1,3fr);
-    grid-gap: 50px;
-    padding-top: 10px;
-    padding: 10px;
-    margin: auto;
-  }
   .button{
     height: 40px;
-    width: 70%;
-    padding: 5px;
+    width: 70vw;
+    position:relative;
+    left: 15%;
+    padding: 15px;
     margin: auto;
     background-color: #7e947a;
     border-radius: 3px;
@@ -95,4 +91,15 @@
     left :80%; 
     top: 10%;
     
+  }
+  @media screen and (max-width: 400px) {
+
+    .heading {
+      color: #ffffff;
+      text-align: center;
+      margin: auto;
+      float:left;
+      text-shadow: 0px 2px 5px #333333;
+      
+    }
   }

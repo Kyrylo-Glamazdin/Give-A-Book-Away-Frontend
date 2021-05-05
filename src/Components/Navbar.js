@@ -5,6 +5,7 @@ import {postBook, clearBooksTemporary, addBookOwner, clearBookOwner} from '../Ac
 import {connect} from 'react-redux';
 import axios from 'axios';
 import '../Styles/Navbar.css';
+import MediaQuery from 'react-responsive';
 
 class Navbar extends Component {
 
@@ -37,6 +38,8 @@ class Navbar extends Component {
 
     render() {
         return (
+            <div>
+                <MediaQuery minDeviceWidth={751} >
             <div className="navbar">
                 <div className="logo">
                     
@@ -57,6 +60,34 @@ class Navbar extends Component {
                     <Link className="navbutton" to="/profile/">PROFILE</Link>
                 </div>
             </div>
+            </MediaQuery>
+
+            <MediaQuery maxDeviceWidth={750} >
+            <link rel="stylesheet" href= 
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> 
+                <div className="navbarsmall">
+                <div className="logosmall">
+                    
+                    <Link className="navbutton-left" to="/home">
+                    
+                    <img className= "logosmall" src={logo} alt= "logo" onClick={this.updateBooksOnMainPage}></img>
+                    
+                    </Link>
+                </div>
+
+                <div className="dropdown">
+                    <button className="dropbtn"> <i class="fa fa-bars"></i> </button>
+                    <div className="dropdown-content">
+                        <Link  to="/home">HOME</Link>
+                        <Link  to="/post">POST</Link>
+                        <Link  to="/inbox/">INBOX</Link>
+                        <Link  to="/profile/">PROFILE</Link>
+                    </div>
+                </div>
+                </div>
+                </MediaQuery>
+
+                </div>
         );
     }
 }

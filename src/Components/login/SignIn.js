@@ -136,9 +136,11 @@ class SignIn extends Component {
       <Card
         border="primary mx-auto"
         style={{
-          width: "400px",
+          float: "center",
+          top: "3%",
+          width: "50%",
+          margin: "30px",
           padding: "40px 20px",
-          marginTop: "calc(50vh - 250px)",
         }}
       >
         <h1>Sign In</h1>

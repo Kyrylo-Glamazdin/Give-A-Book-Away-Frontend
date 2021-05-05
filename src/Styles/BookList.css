@@ -12,28 +12,46 @@
 }
 
 .list-box {
-    border: 1px solid #cccccc;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0, .75);
-    border-radius: 20px;
+    position: absolute;
+    left:10vw;
 }
 .list .imagebox .list-item{
     width: 100%;
+    
 }
 .list .imagebox{
     width: 200px;
+    text-align: left;
 }
+.book-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 35px;
+    margin-bottom: 55px;
+    margin-left: 10%;
+}
+.Container{
+    position: absolute;
+    left: 500px;
 
-@media screen and (max-width: 600px) {
+}
+@media screen and (max-width: 700px) {
+    body {
+        background-color: #424668;
+      }
     .search-box .search-input{
         width: 90%;
         display: block !important;
     }
+    .book-grid {
+        display: grid;
+        grid-template-columns: auto auto;
+        margin-left: 10%;
+        grid-gap: 10px;
+        padding-left: 10%;
+        
+    }
+
   }
 
-  .book-grid {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 35px;
-      margin-bottom: 55px;
-      margin-left: 10%;
-  }
+  
