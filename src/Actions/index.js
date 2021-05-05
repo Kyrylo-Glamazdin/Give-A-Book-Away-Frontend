@@ -130,6 +130,7 @@ export const postSimilarBook = (payload) => {
     payload,
   };
 };
+
 export const addBookOwner = (user) => {
   return {
     type: "ADD_BOOK_OWNER",
@@ -141,5 +142,19 @@ export const clearBookOwner = () => {
   return {
     type: "CLEAR_BOOK_OWNER",
     payload: {},
+  };
+};
+
+export const addUserBook = (book) => {
+  return {
+    type: "ADD_USER_BOOK",
+    payload: book
+  };
+};
+
+export const clearUserBooks = () => {
+  return {
+    type: "CLEAR_USER_BOOKS",
+    payload: {}
   };
 };

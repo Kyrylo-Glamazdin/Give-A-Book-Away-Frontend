@@ -16,6 +16,9 @@ class SelectedBookPage extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.currentUser.id) {
+      return;
+    }
     this.props.cancelRedirect();
     if (
       this.props.book.city &&

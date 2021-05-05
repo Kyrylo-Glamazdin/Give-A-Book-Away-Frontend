@@ -82,8 +82,8 @@ class SignUp extends Component {
 
   fetchBooks = async (id, zipcode) => {
     let req = {
-      id, //: this.props.currentUser.id,
-      zipcode, //: this.props.currentUser.zipcode
+      id,
+      zipcode
     };
     axios
       .post("http://localhost:3500/api/book/recommended", req)
@@ -94,19 +94,8 @@ class SignUp extends Component {
           this.props.postBook(response.data[i]);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {console.log(err)});
   };
-
-  //   fetchUsers = async () => {
-  //     axios.get("http://localhost:3500/api/user/")
-  //     .then(response => {
-  //       for (let i = 0; i < response.data.length; i++) {
-  //         this.props.addUser(response.data[i]);
-  //       }
-  //     })
-  //     .catch(err => {
-  //     })
-  //   }
 
   handleFormChange = (event) => {
     this.setState({

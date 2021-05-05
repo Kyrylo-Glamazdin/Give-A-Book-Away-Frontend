@@ -75,6 +75,22 @@ class App extends Component {
                 />
               );
             })}
+            {this.props.userBooks.map((book) => {
+              return (
+                <Route
+                key={"userbookroute"+book.id}
+                  path={"/books/" + book.id}
+                  render={() => {
+                    return (
+                      <SelectedBookPage
+                        key={"userlistedbook" + book.id}
+                        book={book}
+                      />
+                    );
+                  }}
+                />
+              );
+            })}
                         
           </Switch>
         </Router>
@@ -88,6 +104,7 @@ const mapStateToProps = (state) => {
     books: state.books,
     currentUser: state.currentUser,
     bookOwners: state.bookOwners,
+    userBooks: state.userBooks
   };
 };
 

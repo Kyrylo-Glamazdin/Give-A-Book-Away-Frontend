@@ -77,8 +77,8 @@ class SignIn extends Component {
 
   fetchBooks = async (id, zipcode) => {
     let req = {
-      id, //: this.props.currentUser.id,
-      zipcode, //: this.props.currentUser.zipcode
+      id,
+      zipcode
     };
     axios
       .post("http://localhost:3500/api/book/recommended", req)

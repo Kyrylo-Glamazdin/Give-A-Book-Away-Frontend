@@ -34,6 +34,12 @@
 .navbutton:hover {
     color: rgb(221, 221, 221);
 }
+
+.navigationbutton {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+}
 /*************** BELOW FOR SMALLER SCREENS LIKE PHONES*******/
 .navbarsmall {
     

@@ -24,6 +24,9 @@ class Chat extends Component {
     }
 
     async componentDidMount() {
+        if (!this.props.currentUser.id) {
+            return;
+        }
         disableBodyScroll(this);
         this.joinPersonalRoom(this.props.currentUser.username)
         socket.on('message', message => {
@@ -300,7 +303,7 @@ class Chat extends Component {
 
     outputMessage = messageObject => {
             let chatDataItem = {
-                chatId: this.props.currentChat.id,
+                chatId: this.state.currentChat.id,
                 username: messageObject.username,
                 lineText: messageObject.line,
                 time: messageObject.time
