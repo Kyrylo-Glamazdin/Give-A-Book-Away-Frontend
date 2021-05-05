@@ -45,12 +45,18 @@ class Searchbar extends Component{
     let searchBooks = this.props.searchBooks;
     return(
       <>
+
+<link rel="stylesheet" href= 
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> 
         <div className="searchbar">
           <form className="standard-search-form" onSubmit={this.props.handleSearchSubmit}>
             <input className="search-input" name="searchInput" onChange={this.props.handleFormChange} value={this.props.formValue} placeholder="Search by title, author, or ISBN"/>
-            <input className="search-button" type="submit" value="Search"/>
+            <button className="search-button" type="submit" value="hi">
+            <i class="fa fa-search"></i>
+            </button>
           </form>
         </div>
+
         {
           searchBooks.length ? 
             <div className="searchbar height-0 mt-0">

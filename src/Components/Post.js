@@ -49,7 +49,7 @@ class Post extends Component {
               </div>
             </Row>
             <div>
-              <div className="DropCon">
+              <div className="conditbutt">
                 <DropdownExampleSelection
                   handleConditionSubmit={this.handleConditionSubmit}
                 />
@@ -180,12 +180,12 @@ class Post extends Component {
             me={this}
           />
         </div>
-        <div className="layout">
-          <div className="keys">
+        <div >
+          
             {/*<Upload/>*/}
             <Buttons confirmBookPost={this.confirmBookPost} />
             <div>{this.state.errorMessage}</div>
-          </div>
+          
         </div>
       </div>
     );
