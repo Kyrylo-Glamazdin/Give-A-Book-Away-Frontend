@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import '../Styles/BookItem.css';
 import {Link} from 'react-router-dom';
 
-class BookItem extends Component {
+class SimilarBookItem extends Component {
     constructor(props) {
         super(props)
 
@@ -27,13 +27,13 @@ class BookItem extends Component {
     render() {
         return (
             <div className="book-item">
-                <Link to={"/book/" + this.props.book.id} className="book-link">
+                <Link to={"/similarbook/" + this.props.book.id} className="book-link">
                     <div className="book-item-img-div">
                         <img src = {this.props.book.preview_image} className="book-image" alt=""/>
                     </div>
                 </Link>
                 <div className="book-item-info">
-                    <Link to={"/book/" + this.props.book.id} className="book-link">
+                    <Link to={"/similarbook/" + this.props.book.id} className="book-link">
                         <div className="book-item-title">
                             {this.props.book.title}
                         </div>
@@ -50,4 +50,4 @@ class BookItem extends Component {
     }
 }
 
-export default BookItem;
+export default SimilarBookItem;

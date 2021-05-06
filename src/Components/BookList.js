@@ -2,6 +2,7 @@ import React, { Component} from 'react'
 import {connect} from 'react-redux';
 import Searchbar from './Searchbar.js';
 import BookItem from './BookItem.js';
+import SimilarBookItem from './SimilarBookItem.js';
 import axios from 'axios';
 import {Redirect} from 'react-router';
 import "../Styles/BookList.css"
@@ -12,7 +13,9 @@ class BookList extends Component {
 
         this.state = {
             searchInput: "",
-            searchBooks: []
+            searchBooks: [],
+            noSearchResults: <div/>,
+            noSearchResultsBool: false
         }
     }
 
@@ -68,6 +71,8 @@ class BookList extends Component {
                     option="search"
                     me={this}
                 />
+                    {/* {this.state.noSearchResults} */}
+                    {this.props.books.length > 0 ?
                 <div className="book-grid">
                     {
                         this.props.books.map((book, key) => (
@@ -75,6 +80,22 @@ class BookList extends Component {
                         ))
                     }
                 </div>
+                : 
+                    <div>
+                        {this.props.booksLoading ? 
+                            <div className="no-listed-books">
+                                Loading...
+                            </div>
+                            :
+                            <div className="no-listed-books">
+                                There are no books that match your search
+                            </div>
+                        }
+                    </div>
+                // <div className="no-listed-books">
+                //     There are no books that match your search
+                // </div>
+                }
                 {
                     this.props.similarBooks && this.props.similarBooks.length ? 
                         <React.Fragment>
@@ -84,7 +105,7 @@ class BookList extends Component {
                             <div className="book-grid">
                                 {
                                     this.props.similarBooks.map((book, key) => (
-                                        <BookItem key={key} book={book} />
+                                        <SimilarBookItem key={key} book={book} />
                                     ))
                                 }
                             </div>
@@ -99,7 +120,8 @@ const mapStateToProps = (state) => {
     return {
         books: state.books,
         currentUser: state.currentUser,
-        similarBooks: state.similarBooks.similarBooks
+        similarBooks: state.similarBooks,
+        booksLoading: state.booksLoading
     };
 }
 

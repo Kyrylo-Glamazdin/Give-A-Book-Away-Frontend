@@ -12,6 +12,8 @@ import {
   addChat,
   clearChats,
   addBookOwner,
+  beginLoading, 
+  endLoading
 } from "../../Actions";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
@@ -76,6 +78,7 @@ class SignIn extends Component {
   };
 
   fetchBooks = async (id, zipcode) => {
+    this.props.beginLoading();
     let req = {
       id,
       zipcode
@@ -83,6 +86,7 @@ class SignIn extends Component {
     axios
       .post("http://localhost:3500/api/book/recommended", req)
       .then((response) => {
+        this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {
           let bookOwner = response.data[i].user;
           this.props.addBookOwner(bookOwner);
@@ -137,8 +141,8 @@ class SignIn extends Component {
         border="primary mx-auto"
         style={{
           float: "center",
-          top: "3%",
-          width: "50%",
+          top: "15vh",
+          width: "30%",
           margin: "30px",
           padding: "40px 20px",
         }}
@@ -148,7 +152,7 @@ class SignIn extends Component {
           <Col>
             <p className="float-left">New User?</p>
             <Link to="/signup">
-              <p className="red-color float-left ml-3">Create an Account.</p>
+              <p className="red-color float-left ml-2">Create an Account.</p>
             </Link>
           </Col>
         </Row>
@@ -187,12 +191,6 @@ class SignIn extends Component {
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          <Row>
-            <Col>
-              <input className="float-left" type="checkbox" />
-              <h6 className="float-left ml-1">Keep me signed in.</h6>
-            </Col>
-          </Row>
           <Button
             style={{ width: "100%" }}
             type="submit"
@@ -225,4 +223,6 @@ export default connect(mapStateToProps, {
   addChat,
   clearChats,
   addBookOwner,
+  beginLoading,
+  endLoading
 })(SignIn);

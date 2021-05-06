@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
-import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner } from '../Actions';
+import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner, clearSimilarBooks, beginLoading, endLoading } from '../Actions';
 
 class Searchbar extends Component{
 
@@ -11,21 +11,61 @@ class Searchbar extends Component{
     if (this.props.option === "search") {
       this.props.clearBooksTemporary();
       this.props.clearBookOwner();
+      this.props.clearSimilarBooks();
       this.props.me.handleSearchBook();
+      this.props.beginLoading();
+
       let bookAndZipObject = {
         book: book,
         zipcode: this.props.currentUser.zipcode,
         id: this.props.currentUser.id,
         formValue: this.props.formValue
       }
+
+      let similarBooksRequest = {
+        books: [],
+        zipcode: this.props.currentUser.zipcode,
+        id: this.props.currentUser.id,
+      }
+
+      let ind1 = 0;
+      let ind2 = 0;
+      let selectedBookISBN = bookAndZipObject.book.isbn;
+      while (ind1 < this.props.searchBooks.length && ind2 < 4) {
+        if (this.props.searchBooks[ind1].isbn !== selectedBookISBN) {
+          similarBooksRequest.books.push(this.props.searchBooks[ind1]);
+          ind2++;
+        }
+        ind1++;
+      }
+
       axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
       .then(response => {
-        for (let i = 0; i < response.data.result.length; i++) {
-          let bookOwner = response.data.result[i].user;
-          this.props.addBookOwner(bookOwner);          
-          this.props.postBook(response.data.result[i]);
+        console.log(response)
+        this.props.endLoading();
+        if (response.data) {
+          for (let i = 0; i < response.data.length; i++) {
+            let bookOwner = response.data[i].user;
+            this.props.addBookOwner(bookOwner);          
+            this.props.postBook(response.data[i]);
+          }
         }
-        this.props.postSimilarBook(response.data.similarBooks);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      axios.post('http://localhost:3500/api/book/similar', similarBooksRequest)
+      .then(response => {
+        console.log(response.data)
+        let similarBooksResponse = response.data
+        if (similarBooksResponse) {
+          for (let i = 0; i < similarBooksResponse.length; i++) {
+            let bookOwner = similarBooksResponse[i].user;
+            this.props.addBookOwner(bookOwner);  
+            this.props.postSimilarBook(similarBooksResponse[i]);
+          }
+        }
       })
       .catch(err => {
         console.log(err);
@@ -35,7 +75,6 @@ class Searchbar extends Component{
 
   handleRowSelection = book => {
     console.log(book)
-    this.props.postSimilarBook([])
     if (this.props.option === "search") {
       this.fetchBooks(book)
     }
@@ -54,7 +93,7 @@ class Searchbar extends Component{
         <div className="searchbar">
           <form className="standard-search-form" onSubmit={this.props.handleSearchSubmit}>
             <input className="search-input" name="searchInput" onChange={this.props.handleFormChange} value={this.props.formValue} placeholder="Search by title, author, or ISBN"/>
-            <button className="search-button" type="submit" value="hi">
+            <button className="search-button" type="submit" value="Search">
             <i class="fa fa-search"></i>
             </button>
           </form>
@@ -109,5 +148,8 @@ export default connect(mapStateToProps, {
   addPostedBook,
   postSimilarBook,
   addBookOwner,
-  clearBookOwner 
+  clearBookOwner ,
+  clearSimilarBooks,
+  beginLoading, 
+  endLoading
 })(Searchbar);

@@ -2,17 +2,16 @@ p{
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  /*supposed to hide any text outside a div but doesnt work :( */
   }
+
   .searchbar {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 35px;
     padding: 10px;
-    
-  
   }
+  
   input:focus {
     outline: none;
   }

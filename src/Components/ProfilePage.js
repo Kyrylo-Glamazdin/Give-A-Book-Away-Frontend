@@ -8,7 +8,8 @@ import {
   clearBookOwner,
   clearPostedBooks,
   clearChats,
-  clearUserBooks
+  clearUserBooks,
+  clearSimilarBooks
 } from "../Actions";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
@@ -21,6 +22,7 @@ class Profile extends Component {
     this.props.clearUserBooks();
     this.props.clearUsers();
     this.props.clearChats();
+    this.props.clearSimilarBooks();
     this.props.setUser({});
   };
 
@@ -63,5 +65,6 @@ export default connect(mapStateToProps, {
   clearBooksTemporary,
   clearBookOwner,
   clearChats,
-  clearUserBooks
+  clearUserBooks,
+  clearSimilarBooks
 })(Profile);

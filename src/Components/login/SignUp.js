@@ -10,6 +10,8 @@ import {
   clearBooksTemporary,
   clearPostedBooks,
   addBookOwner,
+  beginLoading,
+  endLoading
 } from "../../Actions";
 
 class SignUp extends Component {
@@ -77,10 +79,11 @@ class SignUp extends Component {
           return;
         }
       })
-      .catch((err) => {});
+      .catch((err) => {console.log(err)});
   };
 
   fetchBooks = async (id, zipcode) => {
+    this.props.beginLoading();
     let req = {
       id,
       zipcode
@@ -88,6 +91,7 @@ class SignUp extends Component {
     axios
       .post("http://localhost:3500/api/book/recommended", req)
       .then((response) => {
+        this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {
           let bookOwner = response.data[i].user;
           this.props.addBookOwner(bookOwner);
@@ -111,9 +115,9 @@ class SignUp extends Component {
       <Card
         border="primary mx-auto"
         style={{
-          width: "400px",
+          width: "30%",
           padding: "40px 20px",
-          marginTop: "calc(50vh - 250px)",
+          marginTop: "15vh",
         }}
       >
         <h1>Sign Up</h1>
@@ -232,7 +236,7 @@ class SignUp extends Component {
             <Col>
               <p className="float-left">Already have an account?</p>
               <Link to="/">
-                <p className="red-color float-left ml-3">Log in</p>
+                <p className="red-color float-left ml-2">Log in</p>
               </Link>
             </Col>
           </Form.Row>
@@ -264,4 +268,6 @@ export default connect(mapStateToProps, {
   postBook,
   clearPostedBooks,
   addBookOwner,
+  beginLoading,
+  endLoading
 })(SignUp);

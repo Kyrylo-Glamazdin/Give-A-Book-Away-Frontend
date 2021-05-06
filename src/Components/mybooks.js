@@ -18,6 +18,13 @@ class MyBooks extends Component {
   };
 
   render() {
+    if (this.props.postedBooks.length === 0 ) {
+      return (
+        <div className="no-posted-books">
+          You haven't posted any books yet
+        </div>
+      );
+    }
     return (
 
       <div className="list-box m-3 py-5">

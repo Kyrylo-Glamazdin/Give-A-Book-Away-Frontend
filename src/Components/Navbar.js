@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import logo from '../Styles/GiveaBook.png'
-import {postBook, clearBooksTemporary, addBookOwner, clearBookOwner} from '../Actions'
+import {postBook, clearBooksTemporary, addBookOwner, clearBookOwner, clearSimilarBooks, beginLoading, endLoading} from '../Actions'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import '../Styles/Navbar.css';
@@ -18,13 +18,16 @@ class Navbar extends Component {
         if (!this.props.currentUser.id) {
             return;
         }
+        this.props.clearSimilarBooks();
         this.props.clearBookOwner();
+        this.props.beginLoading();
         let req = {
           id: this.props.currentUser.id,
           zipcode: this.props.currentUser.zipcode 
         }
         axios.post("http://localhost:3500/api/book/recommended", req)
         .then(response => {
+            this.props.endLoading();
           for (let i = 0; i < response.data.length; i++) {
             let bookOwner = response.data[i].user;
             this.props.addBookOwner(bookOwner);
@@ -104,5 +107,8 @@ export default connect(mapStateToProps, {
     clearBooksTemporary,
     postBook,
     addBookOwner,
-    clearBookOwner
+    clearBookOwner,
+    clearSimilarBooks,
+    beginLoading,
+    endLoading
 })(Navbar);
