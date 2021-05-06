@@ -10,6 +10,7 @@ import Profile from "./Components/ProfilePage.js";
 import {connect} from 'react-redux';
 import OtherUsers from "./Components/OtherUsers.js";
 import SelectedBookPage from "./Components/SelectedBookPage";
+import EditBook from "./Components/EditBook";
 import './Styles/design.css'
 import Chat from './Components/Chat';
 
@@ -51,6 +52,22 @@ class App extends Component {
                   render={() => {
                     return (
                       <SelectedBookPage
+                        key={"listedbook" + book.id}
+                        book={book}
+                      />
+                    );
+                  }}
+                />
+              );
+            })}
+            {this.props.postedBooks.map((book) => {
+              return (
+                <Route
+                key={"bookedit"+book.id}
+                  path={"/book/edit/" + book.id}
+                  render={() => {
+                    return (
+                      <EditBook
                         key={"listedbook" + book.id}
                         book={book}
                       />
@@ -104,7 +121,8 @@ const mapStateToProps = (state) => {
     books: state.books,
     currentUser: state.currentUser,
     bookOwners: state.bookOwners,
-    userBooks: state.userBooks
+    userBooks: state.userBooks,
+    postedBooks: state.postedBooks
   };
 };
 

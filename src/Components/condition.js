@@ -23,7 +23,7 @@ class DropdownExampleSelection extends React.Component {
         alignRight
         title={this.state.title}
         onSelect={this.handleSelect}
-        id="dropdown-menu-align-right"
+        id="dropdown-menu-align-center"
       >
         <Dropdown.Item eventKey="Old">Old</Dropdown.Item>
         <Dropdown.Item eventKey="Slightly Used">Slightly Used</Dropdown.Item>

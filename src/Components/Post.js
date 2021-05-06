@@ -6,7 +6,7 @@ import { addPostedBook } from "../Actions";
 import DropdownExampleSelection from "./condition.js";
 import Searchbar from "./Searchbar.js";
 import Buttons from "./submit";
-import { Row } from "react-bootstrap";
+import { Row, Form } from "react-bootstrap";
 import { Redirect } from "react-router";
 import axios from "axios";
 
@@ -21,6 +21,7 @@ class Post extends Component {
       selectedBookItem: <div />,
       errorMessage: "",
       condition: "",
+      description: ""
     };
   }
 
@@ -37,30 +38,35 @@ class Post extends Component {
         selectedBook: book,
         selectedBookItem: (
           <div>
-            <div className="selecttext">You Selected:</div>
-            <Row key={"selectedBook"} className="search-book mt-3 ml-1 p-1">
-              <div className="selectedbook">
-                <img className="ml-5" src={book.preview_image} alt=""></img>
-                <div className="pl-3 dropdown-letter">
-                  <p>{`${book.title}`}</p>
-                  <p>{`${book.author}`}</p>
-                  <p>{`${book.isbn}`}</p>
-                </div>
+            <div className="d-flex justify-content-center text-white">
+              <p>You Selected:</p>
+            </div>
+            <Row className="d-flex justify-content-center" style={{marginTop: "3rem"}}>
+              <img className="ml-5" src={book.preview_image} alt=""></img>
+              <div className="pl-3 dropdown-letter text-white">
+                <p>{`${book.title}`}</p>
+                <p>{`${book.author}`}</p>
+                <p>{`${book.isbn}`}</p>
               </div>
             </Row>
+            <div className="d-flex justify-content-center">
+              <DropdownExampleSelection handleConditionSubmit={this.handleConditionSubmit} />
+            </div>
             <div>
-              <div className="conditbutt">
-                <DropdownExampleSelection
-                  handleConditionSubmit={this.handleConditionSubmit}
-                />
+              <div className="pt-5 d-flex justify-content-center" style={{width: "100%"}}>
+                <Form.Group style={{width: "50%"}}>
+                  <Form.Label className="text-white">Description</Form.Label>
+                  <Form.Control as="textarea" rows={3} onChange={(e)=>this.setState({ description: e.target.value })} />
+                </Form.Group>
               </div>
-
-              <button
-                className="remoofbutton"
-                onClick={() => this.setSelectedBook({})}
-              >
-                Remove Selection
-              </button>
+              <div className="d-flex justify-content-center">
+                <button
+                  className="remoofbutton"
+                  onClick={() => this.setSelectedBook({})}
+                >
+                  Remove Selection
+                </button>
+              </div>
             </div>
           </div>
         ),
@@ -98,6 +104,7 @@ class Post extends Component {
     }
     let book = this.state.selectedBook;
     book.condition = this.state.condition;
+    book.description = this.state.description;
     let bookAndUserObject = {
       book,
       user: this.props.currentUser,
@@ -105,6 +112,7 @@ class Post extends Component {
     axios
       .post("http://localhost:3500/api/book/post", bookAndUserObject)
       .then((response) => {
+        this.setState({ description: "" })
         this.props.addPostedBook(response.data);
       })
       .catch((err) => {
@@ -181,11 +189,8 @@ class Post extends Component {
           />
         </div>
         <div >
-          
-            {/*<Upload/>*/}
-            <Buttons confirmBookPost={this.confirmBookPost} />
-            <div>{this.state.errorMessage}</div>
-          
+          <Buttons confirmBookPost={this.confirmBookPost} />
+          <div>{this.state.errorMessage}</div>
         </div>
       </div>
     );
