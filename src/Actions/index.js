@@ -131,6 +131,13 @@ export const postSimilarBook = (payload) => {
   };
 };
 
+export const clearSimilarBooks = () => {
+  return {
+    type: "CLEAR_SIMILAR_BOOKS",
+    payload: {}
+  };
+};
+
 export const addBookOwner = (user) => {
   return {
     type: "ADD_BOOK_OWNER",
@@ -156,5 +163,19 @@ export const clearUserBooks = () => {
   return {
     type: "CLEAR_USER_BOOKS",
     payload: {}
+  };
+};
+
+export const beginLoading = () => {
+  return {
+    type: "BEGIN_LOADING",
+    payload: ""
+  };
+};
+
+export const endLoading = () => {
+  return {
+    type: "END_LOADING",
+    payload: ""
   };
 };

@@ -9,9 +9,8 @@ let books = [];
 let postedBooks = [];
 let bookOwners = [];
 
-let similarBooksState = {
-  similarBooks: [],
-};
+let similarBooks = [];
+
 
 let chats = [
 
@@ -26,6 +25,8 @@ let currentBook = {};
 let currentChat = "";
 
 let redirectRequired = false;
+
+let booksLoading = false;
 
 const usersReducer = (oldUsers = users, action) => {
   switch (action.type) {
@@ -94,10 +95,12 @@ const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
   }
 };
 
-const similarBooksReducer = (oldSimilarBooks = similarBooksState, action) => {
+const similarBooksReducer = (oldSimilarBooks = similarBooks, action) => {
   switch (action.type) {
     case "CHANGE_SIMILAR_BOOK":
-      return { ...oldSimilarBooks, similarBooks: action.payload };
+      return oldSimilarBooks.concat(action.payload)
+    case "CLEAR_SIMILAR_BOOKS":
+      return [];
     default:
       return oldSimilarBooks;
   }
@@ -162,6 +165,16 @@ const userBooksReducer = (oldUserBooks = userBooks, action) => {
   }
 }
 
+const booksLoadingReducer = (oldBooksLoading = booksLoading, action) => {
+  switch (action.type) {
+    case "BEGIN_LOADING":
+      return true;
+    case "END_LOADING":
+      return false;
+    default: return oldBooksLoading;
+  }
+}
+
 export default combineReducers({
     users: usersReducer,
     books: booksReducer,
@@ -173,6 +186,7 @@ export default combineReducers({
     currentChat: currentChatReducer,
     redirect: redirectRequiredReducer,
     bookOwners: bookOwnersReducer,
-    userBooks: userBooksReducer
+    userBooks: userBooksReducer,
+    booksLoading: booksLoadingReducer
 });
 

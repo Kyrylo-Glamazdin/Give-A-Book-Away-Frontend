@@ -108,6 +108,22 @@ class App extends Component {
                 />
               );
             })}
+            {this.props.similarBooks.map((book) => {
+              return (
+                <Route
+                key={"similarbookroute"+book.id}
+                  path={"/similarbook/" + book.id}
+                  render={() => {
+                    return (
+                      <SelectedBookPage
+                        key={"similarlistedbook" + book.id}
+                        book={book}
+                      />
+                    );
+                  }}
+                />
+              );
+            })}
                         
           </Switch>
         </Router>
@@ -122,7 +138,8 @@ const mapStateToProps = (state) => {
     currentUser: state.currentUser,
     bookOwners: state.bookOwners,
     userBooks: state.userBooks,
-    postedBooks: state.postedBooks
+    postedBooks: state.postedBooks,
+    similarBooks: state.similarBooks
   };
 };
 
