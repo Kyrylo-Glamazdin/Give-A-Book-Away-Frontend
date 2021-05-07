@@ -1,8 +1,9 @@
 .button1 {
+  width: 100px;
   height: 30px;
   margin-top: 5px;
   padding: 5px;
-  float:center;
+  float: center;
   background-color: #7e947a;
   border-radius: 3px;
   border: 1px solid #7e947a;
@@ -24,14 +25,14 @@
   color: #ffffff;
   text-align: center;
   margin: auto;
-  position:relative;
-  bottom:-40px;
+  position: relative;
+  bottom: -40px;
   text-shadow: 0px 2px 5px #333333;
 }
 .log-out {
   float: right;
   margin-right: 20px;
-  position:relative;
+  position: relative;
   top: -20px;
 }
 button.button20 {
@@ -41,13 +42,12 @@ button.button20 {
   border: 1px solid #7e947a;
 }
 @media screen and (max-width: 400px) {
-  
   .profile-title {
     color: #ffffff;
     font-size: 1.2em;
-    position:relative;
+    position: relative;
     top: 80px;
-    left:-40px;
+    left: -40px;
     text-align: center;
     text-shadow: 0px 2px 5px #333333;
   }

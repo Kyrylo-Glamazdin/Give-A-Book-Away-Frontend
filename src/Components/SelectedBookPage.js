@@ -79,7 +79,9 @@ class SelectedBookPage extends Component {
         <div className="book-condition">
           <h5 className="bookCon">Condition: {this.props.book.condition}</h5>
         </div>
-
+        <div className="description">
+          <h5 className="desc">Description: {this.props.book.description}</h5>
+        </div>
         <button
           type="button"
           className="button10"
@@ -87,13 +89,6 @@ class SelectedBookPage extends Component {
         >
           Contact owner
         </button>
-
-        {/* Uncomment after presentation */}
-        {/* <div className="description">
-          <h5 className="desc">
-          Description:
-          </h5>
-        </div> */}
       </div>
     );
   }
