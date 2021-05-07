@@ -61,3 +61,11 @@ button.button10:hover {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.description {
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 100px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}

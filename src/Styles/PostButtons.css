@@ -3,103 +3,116 @@
   text-align: center;
   padding-top: 5%;
   margin: auto;
-  float:center;
+  float: center;
   text-shadow: 0px 2px 5px #333333;
-  
 }
-.selecttext{
+.selecttext {
   font-size: 1rem;
   color: #ffffff;
   text-align: center;
   margin: auto;
-  position:relative;
-  bottom:-40px;
+  position: relative;
+  bottom: -40px;
   text-shadow: 0px 2px 5px #333333;
-
 }
 .selectedbook {
-  
   color: #ffffff;
-  position:relative;
+  position: relative;
   left: 30%;
-  bottom:-60px;
+  bottom: -60px;
   text-align: center;
-
 }
-.remoofbutton{
+.remoofbutton {
   height: 3w0px;
-    width: 100px;
-    padding: 5px;
-    /* position:relative; */
+  width: 100px;
+  padding: 5px;
+  /* position:relative; */
   left: 40%;
-  bottom:-70px;
-    margin: 15px;
-    background-color: #7e947a;
-    border-radius: 3px;
-    border:1px solid #c4c4c4;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0, .75);
-    font-size: .8rem;
-    color: #ffffff;
-    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
-
+  bottom: -70px;
+  margin: 15px;
+  background-color: #7e947a;
+  border-radius: 3px;
+  border: 1px solid #c4c4c4;
+  box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0, 0.75);
+  font-size: 0.8rem;
+  color: #ffffff;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 50%,
+    rgba(0, 0, 0, 0.04)
+  );
 }
-.conditbutt{
+.conditbutt {
   height: 3w0px;
-    width: 100px;
-    padding: 5px;
-    position:relative;
+  width: 100px;
+  padding: 5px;
+  position: relative;
   left: 43%;
-  bottom:-50px;
-    margin: 15px;
-    
-    font-size: .8rem;
-    color: #ffffff;
-    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
+  bottom: -50px;
+  margin: 15px;
 
+  font-size: 0.8rem;
+  color: #ffffff;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 50%,
+    rgba(0, 0, 0, 0.04)
+  );
 }
-.searchButtonPost{
+.searchButtonPost {
   margin: 10%;
-
 }
 
-  .button{
-    height: 40px;
-    width: 70vw;
-    position:relative;
-    left: 15%;
-    padding: 15px;
-    margin: auto;
-    background-color: #7e947a;
-    border-radius: 3px;
-    border:1px solid #c4c4c4;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0, .75);
-    font-size: 1.5rem;
-    color: #ffffff;
-    background-image: linear-gradient(to bottom, transparent, transparent 50%, rgba(0,0,0,.04));
-    
-  
-  }
-  
-  .button:hover{
-   background-color:#cccccc;
-   
-  }
-  .layout img {
-    height: 100px;
-    width: 100px;
-    position: absolute ; 
-    left :80%; 
-    top: 10%;
-    
-  }
-  @media screen and (max-width: 400px) {
+.button {
+  height: 40px;
+  width: 70vw;
+  position: relative;
+  left: 15%;
+  padding: 15px;
+  margin: auto;
+  background-color: #7e947a;
+  border-radius: 3px;
+  border: 1px solid #c4c4c4;
+  box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0, 0.75);
+  font-size: 1.5rem;
+  color: #ffffff;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 50%,
+    rgba(0, 0, 0, 0.04)
+  );
+}
 
-    .heading {
-      color: #ffffff;
-      text-align: center;
-      margin: auto;
-      float:left;
-      text-shadow: 0px 2px 5px #333333;
-      
-    }
+.button:hover {
+  background-color: #cccccc;
+}
+.layout img {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 80%;
+  top: 10%;
+}
+
+.dropdown .btn {
+  background-color: #7e947a !important;
+  width: 150px;
+  margin-top: 30px;
+}
+.dropdown .dropdown-menu {
+  width: 150px;
+  position: absolute !important;
+}
+
+@media screen and (max-width: 400px) {
+  .heading {
+    color: #ffffff;
+    text-align: center;
+    margin: auto;
+    float: left;
+    text-shadow: 0px 2px 5px #333333;
   }
+}

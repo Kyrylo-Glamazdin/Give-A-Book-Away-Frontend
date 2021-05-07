@@ -20,7 +20,6 @@ class DropdownExampleSelection extends React.Component {
   render() {
     return (
       <DropdownButton
-        alignRight
         title={this.state.title}
         onSelect={this.handleSelect}
         id="dropdown-menu-align-center"
