@@ -69,3 +69,23 @@
     margin-top: 10vh;
     margin-bottom: 5vh;
   }
+
+  .my-books-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-top: 7vh;
+  }
+
+  .my-books-col {
+      width: 25%;
+      margin-bottom: 5vh;
+  }
+
+  .my-books-book-item {
+      width: 75%;
+  }
+
+  .my-books-remove-button {
+      margin-left: 25%;
+  }

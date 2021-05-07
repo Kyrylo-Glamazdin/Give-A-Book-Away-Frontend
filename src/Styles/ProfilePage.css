@@ -38,9 +38,17 @@
 button.button20 {
   background-color: #7e947a;
   color: white;
-  border-radius: 3px;
+  border-radius: 25px;
+  height: 4vh;
+  width: 5vw;
   border: 1px solid #7e947a;
+  font-size: 18px;
 }
+
+button.button20:hover {
+  background-color: #cccccc;
+}
+
 @media screen and (max-width: 400px) {
   .profile-title {
     color: #ffffff;

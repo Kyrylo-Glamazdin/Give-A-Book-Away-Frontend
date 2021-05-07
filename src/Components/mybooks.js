@@ -27,16 +27,14 @@ class MyBooks extends Component {
     }
     return (
 
-      <div className="list-box m-3 py-5">
-        <Container>
-          <Row className="py-5">
+      <div className="my-books-container">
             {this.props.postedBooks.map((item, key) => {
               item.distance = "0.0";
               item.owner = "self";
               return (
-                <Col key={key} md={3} sm={6} className="list py-3 ml-1">
-                  <div className="m-auto ml-2">
-                    <div className="book-item">
+                <div key={key} className="my-books-col">
+                  {/* <div className="m-auto ml-2"> */}
+                    <div className="my-books-book-item">
                       <Link to={"/book/edit/" + item.id} className="book-link">
                         <div className="book-item-img-div">
                           <img src={item.preview_image} alt="" />
@@ -53,15 +51,14 @@ class MyBooks extends Component {
                         </div>
                       </div>
                     </div>
-                    <RemoveButton removeBook={() => this.removeBook(item)} />
-                  </div>
-                </Col>
+                    <div className="my-books-remove-button">
+                      <RemoveButton removeBook={() => this.removeBook(item)} />
+                    </div>
+                  {/* </div> */}
+                </div>
               );
             })}
-          </Row>
-        </Container>
       </div>
-
     );
   }
 }

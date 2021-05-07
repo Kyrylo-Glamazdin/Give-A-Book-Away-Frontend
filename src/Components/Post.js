@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "../Styles/PostButtons.css";
-// import Upload from './upload'
 import { connect } from "react-redux";
-import { addPostedBook } from "../Actions";
+import { addPostedBook, beginLoading, endLoading } from "../Actions";
 import DropdownExampleSelection from "./condition.js";
 import Searchbar from "./Searchbar.js";
 import Buttons from "./submit";
@@ -21,7 +20,7 @@ class Post extends Component {
       selectedBookItem: <div />,
       errorMessage: "",
       condition: "",
-      description: ""
+      description: "",
     };
   }
 
@@ -37,11 +36,11 @@ class Post extends Component {
       this.setState({
         selectedBook: book,
         selectedBookItem: (
-          <div>
-            <div className="d-flex justify-content-center text-white">
+          <div className="post-selected-book-container">
+            <div className="you-selected-title">
               <p>You Selected:</p>
             </div>
-            <Row className="d-flex justify-content-center" style={{marginTop: "3rem"}}>
+            <Row className="post-book-info">
               <img className="ml-5" src={book.preview_image} alt=""></img>
               <div className="pl-3 dropdown-letter text-white">
                 <p>{`${book.title}`}</p>
@@ -49,7 +48,7 @@ class Post extends Component {
                 <p>{`${book.isbn}`}</p>
               </div>
             </Row>
-            <div className="d-flex justify-content-center">
+            <div className="condition-dropdown">
               <DropdownExampleSelection handleConditionSubmit={this.handleConditionSubmit} />
             </div>
             <div>
@@ -102,6 +101,7 @@ class Post extends Component {
       });
       return;
     }
+    this.props.beginLoading();
     let book = this.state.selectedBook;
     book.condition = this.state.condition;
     book.description = this.state.description;
@@ -112,6 +112,7 @@ class Post extends Component {
     axios
       .post("http://localhost:3500/api/book/post", bookAndUserObject)
       .then((response) => {
+        this.props.endLoading();
         this.setState({ description: "" })
         this.props.addPostedBook(response.data);
       })
@@ -163,7 +164,6 @@ class Post extends Component {
     this.setState({
       condition: e,
     });
-    console.log(this.state.condition);
   };
 
   render() {
@@ -173,8 +173,6 @@ class Post extends Component {
     return (
       <div>
         <h1 className="heading"> Give Your Book Away</h1>
-
-        {this.state.selectedBookItem}
 
         <div className="searchButtonPost">
           <Searchbar
@@ -188,10 +186,19 @@ class Post extends Component {
             me={this}
           />
         </div>
+        {this.props.booksLoading ?
+          <div className="posting-book-ui">
+            Posting...
+          </div>
+          :
+          <div>
+            {this.state.selectedBookItem}
+          </div>
+        }
         <div >
-          <Buttons confirmBookPost={this.confirmBookPost} />
-          <div>{this.state.errorMessage}</div>
-        </div>
+        <Buttons confirmBookPost={this.confirmBookPost} />
+        <div>{this.state.errorMessage}</div>
+      </div>
       </div>
     );
   }
@@ -200,9 +207,12 @@ class Post extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
+    booksLoading: state.booksLoading
   };
 };
 
 export default connect(mapStateToProps, {
-  addPostedBook,
+  beginLoading,
+  endLoading,
+  addPostedBook
 })(Post);

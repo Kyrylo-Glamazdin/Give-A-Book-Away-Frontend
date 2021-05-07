@@ -41,7 +41,6 @@ class Searchbar extends Component{
 
       axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
       .then(response => {
-        console.log(response)
         this.props.endLoading();
         if (response.data) {
           for (let i = 0; i < response.data.length; i++) {
@@ -57,7 +56,6 @@ class Searchbar extends Component{
 
       axios.post('http://localhost:3500/api/book/similar', similarBooksRequest)
       .then(response => {
-        console.log(response.data)
         let similarBooksResponse = response.data
         if (similarBooksResponse) {
           for (let i = 0; i < similarBooksResponse.length; i++) {
@@ -74,7 +72,6 @@ class Searchbar extends Component{
   }
 
   handleRowSelection = book => {
-    console.log(book)
     if (this.props.option === "search") {
       this.fetchBooks(book)
     }
