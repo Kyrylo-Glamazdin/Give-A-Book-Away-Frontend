@@ -1,5 +1,4 @@
-.a-book {
-  /*overflow-y: scroll;*/
+/* .a-book {
   text-align: center;
   margin-top: 35px;
   font-family: Arial, Helvetica, sans-serif;
@@ -68,4 +67,89 @@ button.button10:hover {
   margin-left: 100px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+.a-book {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20vh;
+  margin-left: 15vw;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(249, 249, 249);
+}
+
+.selected-book-image-div {
+  float: left;
+  margin-right: 2vw;
+  min-height: 35vh;
+}
+
+.selected-book-image {
+  width: 12vw;
+}
+
+.book-title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  padding-bottom: 15px;
+}
+
+.author-name {
+  margin-top: 2.5vh;
+  font-size: 24px;
+}
+
+.isbn {
+  margin-top: 2.5vh;
+  font-size: 20px;
+}
+
+.location {
+  margin-top: 2vh;
+  font-size: 20px;
+}
+
+.userinfo {
+  margin-top: 10vh;
+  font-size: 20px;
+}
+
+.book-details-title {
+  display: inline;
+  color: rgb(214, 214, 214);
+  font-weight: bold;
+}
+
+.book-details-title-user {
+  display: inline;
+  color: rgb(214, 214, 214);
+  font-weight: bold;
+  margin-right: 5px;
+  font-size: 24px;
+}
+
+a.button,
+button.button10 {
+  background-color: #7e947a;
+  height: 50px;
+  width: 12vw;
+  color: white;
+  border-radius: 25px;
+  font-size: 20px;
+  border: 1px solid #7e947a;
+  margin-top: 20px;
+  float: left;
+}
+button.button10:hover {
+  background-color: #cccc;
+}
+
+.book-owner-username {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(249, 249, 249);
+}
+
+.book-owner-username:hover {
+  color: rgb(203, 203, 203);
 }
