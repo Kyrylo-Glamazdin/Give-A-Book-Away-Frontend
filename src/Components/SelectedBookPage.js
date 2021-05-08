@@ -49,46 +49,51 @@ class SelectedBookPage extends Component {
     }
     return (
       <div className="a-book">
-        <div className="book-title">
-          <h1>{this.props.book.title}</h1>
-          <img src={this.props.book.preview_image} alt="" />
-        </div>
+        <div>
+          <div className="selected-book-image-div">
+            <img src={this.props.book.preview_image} className="selected-book-image" alt="" />
+          </div>
+          <div className="book-title">
+            {this.props.book.title}
+          </div>
 
-        <div className="author-name">
-          <h5 className="authname">
-            Author: <strong>{this.props.book.author}</strong>
-          </h5>
-        </div>
+          <div className="author-name">
+            <div className="book-details-title">Author:</div> {this.props.book.author}
+          </div>
 
-        <div className="isbn">
-          <h5 className="isbn-num">ISBN: {this.props.book.isbn}</h5>
-        </div>
+          <div className="isbn">
+            <div className="book-details-title">ISBN:</div> {this.props.book.isbn}
+          </div>
 
-        <div className="location">
-          <h5 className="distance">Location: {this.state.fullLocation}</h5>
+          <div className="location">
+            <div className="book-details-title">Location:</div> {this.state.fullLocation}
+          </div>
+          <div className="location">
+            <div className="book-details-title">Condition:</div> {this.props.book.condition}
+          </div>
+          {this.props.book.description && this.props.book.description.length > 0 ?
+            <div className="location">
+              <div className="book-details-title">Owner's Description:</div> {this.props.book.description}
+            </div>
+            :
+            <div/>
+          }
+          <div className="userinfo">
+            <div className="book-details-title-user">
+              Posted by:
+            </div>
+              <Link to={"/otheruser/" + this.props.book.userId} className="book-owner-username">
+                {this.props.book.username}
+              </Link>
+          </div>
         </div>
-
-        <div className="userinfo">
-          <h5 className="otheruser">
-            Posted by:
-            <Link to={"/otheruser/" + this.props.book.userId}>
-              {this.props.book.username}
-            </Link>
-          </h5>
-        </div>
-        <div className="book-condition">
-          <h5 className="bookCon">Condition: {this.props.book.condition}</h5>
-        </div>
-        <div className="description">
-          <h5 className="desc">Description: {this.props.book.description}</h5>
-        </div>
-        <button
-          type="button"
-          className="button10"
-          onClick={() => this.findChat(this.props.book.userOwnerId)}
-        >
-          Contact owner
-        </button>
+          <button
+            type="button"
+            className="button10"
+            onClick={() => this.findChat(this.props.book.userOwnerId)}
+          >
+            Contact owner
+          </button>
       </div>
     );
   }
