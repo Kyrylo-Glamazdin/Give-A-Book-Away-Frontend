@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import '../Styles/BookItem.css';
+import '../Styles/OtherBookItem.css';
 import {Link} from 'react-router-dom';
 
 class OtherBookItem extends Component {
@@ -12,6 +12,7 @@ class OtherBookItem extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.book)
         if (this.props.book.owner === "self") {
             this.setState({
                 approximateDistance: ""
@@ -26,22 +27,22 @@ class OtherBookItem extends Component {
 
     render() {
         return (
-            <div className="book-item">
-                <Link to={"/books/" + this.props.book.id} className="book-link">
-                    <div className="book-item-img-div">
-                        <img src = {this.props.book.preview_image} alt=""/>
+            <div className="other-book-book-item">
+                <Link to={"/books/" + this.props.book.id} className="other-book-book-link">
+                    <div className="other-book-book-item-img-div">
+                        <img src = {this.props.book.preview_image} className="other-book-book-image" alt=""/>
                     </div>
                 </Link>
-                <div className="book-item-info">
-                    <Link to={"/books/" + this.props.book.id} className="book-link">
-                        <div className="book-item-title">
+                <div className="other-book-book-item-info">
+                    <Link to={"/books/" + this.props.book.id} className="other-book-book-link">
+                        <div className="other-book-book-item-title">
                             {this.props.book.title}
                         </div>
                     </Link>
-                    <div className="book-item-author">
+                    <div className="other-book-book-item-author">
                         {this.props.book.author}
                     </div>
-                    <div className="book-item-distance">
+                    <div className="other-book-book-item-distance">
                         {this.state.approximateDistance}
                     </div>
                 </div>

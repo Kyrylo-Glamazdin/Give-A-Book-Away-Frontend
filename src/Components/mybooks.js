@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Col, Container, Row } from "react-bootstrap";
 import RemoveButton from "./removebook";
 import { connect } from "react-redux";
 import { removePostedBook } from "../Actions";
@@ -33,7 +32,6 @@ class MyBooks extends Component {
               item.owner = "self";
               return (
                 <div key={key} className="my-books-col">
-                  {/* <div className="m-auto ml-2"> */}
                     <div className="my-books-book-item">
                       <Link to={"/book/edit/" + item.id} className="book-link">
                         <div className="book-item-img-div">
@@ -54,7 +52,6 @@ class MyBooks extends Component {
                     <div className="my-books-remove-button">
                       <RemoveButton removeBook={() => this.removeBook(item)} />
                     </div>
-                  {/* </div> */}
                 </div>
               );
             })}

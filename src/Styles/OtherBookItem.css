@@ -1,0 +1,45 @@
+.other-book-book-item {
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.other-book-book-item-info {
+    padding-left: 23%;
+    padding-right: 25%;
+    margin-left: 13%;
+}
+
+.other-book-book-item-img-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.other-book-book-item-title {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.other-book-book-item-author {
+    margin-top: 3px;
+    font-size: 13px;
+    color: #e8fff9;
+}
+
+.other-book-book-item-distance {
+    margin-top: 1px;
+    font-size: 16px;
+    color: #c6d9f1;
+}
+
+.other-book-book-link {
+    color: inherit;
+}
+
+.other-book-book-image {
+    height: 22vh;
+}

@@ -30,6 +30,13 @@ class Post extends Component {
     });
   };
 
+  setErrorMessage = message => {
+    this.setState({errorMessage: message})
+    setTimeout(() => {
+      this.setState({errorMessage: ""})
+    }, 5000)
+  }
+
   setSelectedBook = (book) => {
     this.handleSearchBook();
     if (book.title) {
@@ -79,26 +86,16 @@ class Post extends Component {
   };
 
   confirmBookPost = () => {
-    if (this.state.selectedBook.title && this.state.condition) {
-      this.setState({
-        errorMessage: "",
-      });
-    } else {
-      this.setState({
-        errorMessage: "You must select a book first",
-      });
+    if (!this.state.selectedBook.title) {
+      this.setErrorMessage("You must select a book first");
       return;
     }
-    if (!this.props.currentUser.id) {
-      this.setState({
-        errorMessage: "You are not logged in",
-      });
+    else if (!this.props.currentUser.id) {
+      this.setErrorMessage("You are not logged in")
       return;
     }
-    if (this.state.condition.length === 0) {
-      this.setState({
-        errorMessage: "You must select a condition",
-      });
+    else if (this.state.condition.length === 0) {
+      this.setErrorMessage("You must select a condition")
       return;
     }
     this.props.beginLoading();
@@ -197,7 +194,7 @@ class Post extends Component {
         }
         <div >
         <Buttons confirmBookPost={this.confirmBookPost} />
-        <div>{this.state.errorMessage}</div>
+        <div className="post-error-message">{this.state.errorMessage}</div>
       </div>
       </div>
     );

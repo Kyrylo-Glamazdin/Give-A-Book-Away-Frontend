@@ -152,3 +152,12 @@
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
+
+.post-error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin-top: 2vh;
+  color: rgb(255, 31, 31);
+}

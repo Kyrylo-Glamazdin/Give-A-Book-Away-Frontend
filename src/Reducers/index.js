@@ -86,6 +86,14 @@ const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
       return oldPostedBooks.concat(action.payload);
     case "SET_POSTED_BOOKS":
       return action.payload;
+    case "EDIT_POSTED_BOOK":
+      for (let i = 0; i < oldPostedBooks.length; i++) {
+        if (oldPostedBooks[i].id === action.payload.id) {
+          oldPostedBooks[i] = action.payload
+          break;
+        }
+      }
+      return oldPostedBooks;
     case "REMOVE_POSTED_BOOK":
       return oldPostedBooks.filter((book) => book.id !== action.payload.id);
     case "CLEAR_POSTED_BOOKS":

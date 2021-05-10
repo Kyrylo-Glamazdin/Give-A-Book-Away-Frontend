@@ -13,6 +13,7 @@ import {
   beginLoading,
   endLoading
 } from "../../Actions";
+import "../../Styles/SignIn.css";
 
 class SignUp extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class SignUp extends Component {
       zip: "",
       validated: false,
       newUser: {},
+      errorMessage: ""
     };
   }
 
@@ -36,6 +38,13 @@ class SignUp extends Component {
       validated: validity,
     });
   };
+
+  setErrorMessage = errorMessage => {
+    this.setState({errorMessage})
+    setTimeout(() => {
+      this.setState({errorMessage: ""})
+    }, 3000)
+  }
 
   handleSubmit = async (event) => {
     const form = event.currentTarget;
@@ -50,7 +59,7 @@ class SignUp extends Component {
     this.setValidated(true);
 
     if (this.state.password !== this.state.confirmPassword) {
-      alert("Passwords do not match!");
+      this.setErrorMessage("Passwords do not match!")
       return;
     }
     let newUser = {
@@ -72,9 +81,9 @@ class SignUp extends Component {
           this.fetchBooks(user.id, user.zipcode);
         } else {
           if (response.data.message) {
-            alert(response.data.message);
+            this.setErrorMessage(response.data.message)
           } else {
-            alert("Something went wrong");
+            this.setErrorMessage("Something went wrong")
           }
           return;
         }
@@ -249,6 +258,13 @@ class SignUp extends Component {
             Sign Up
           </Button>
         </Form>
+        {this.state.errorMessage.length > 0 ?
+          <div className="login-error-message">
+            {this.state.errorMessage}
+          </div>
+        :
+          <div/>
+        }
       </Card>
     );
   }

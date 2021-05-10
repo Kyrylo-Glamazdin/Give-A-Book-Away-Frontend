@@ -46,7 +46,6 @@
         margin-left: 10%;
         grid-gap: 10px;
         padding-left: 10%;
-        
     }
 
   }
@@ -88,4 +87,42 @@
 
   .my-books-remove-button {
       margin-left: 25%;
+  }
+
+  .other-users-book-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 35px;
+    margin-bottom: 55px;
+  }
+
+  .other-users-book-item {
+      width: 25%;
+  }
+
+  .other-users-books-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: whitesmoke;
+      font-size: 30px;
+      margin-top: 6vh;
+  }
+
+  .other-users-profile-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    font-size: 30px;
+    margin-top: 6vh;
+  }
+
+  .other-users-profile-location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    font-size: 20px;
+    margin-top: 2vh;
   }
