@@ -36,7 +36,7 @@ class Profile extends Component {
         <div>
           <div className="log-out">
             <Link to="/">
-              <button type="button" class="button20" onClick={this.logout}>
+              <button type="button" className="button20" onClick={this.logout}>
                 Log Out
               </button>
             </Link>

@@ -27,7 +27,15 @@ class SignIn extends Component {
       validated: false,
       username: "",
       password: "",
+      errorMessage: ""
     };
+  }
+
+  setErrorMessage = errorMessage => {
+    this.setState({errorMessage})
+    setTimeout(() => {
+      this.setState({errorMessage: ""})
+    }, 3000)
   }
 
   handleSubmit = (event) => {
@@ -56,12 +64,12 @@ class SignIn extends Component {
           this.fetchChats(user.id);
           this.props.setUser(user);
         } else {
-          alert(data.message);
+          this.setErrorMessage(data.message)
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("Server connection error.");
+        this.setErrorMessage("Server connection error.")
       });
   };
 
@@ -200,6 +208,13 @@ class SignIn extends Component {
             Sign In
           </Button>
         </Form>
+        {this.state.errorMessage.length > 0 ?
+          <div className="login-error-message">
+            {this.state.errorMessage}
+          </div>
+        :
+          <div/>
+        }
       </Card>
     );
   }

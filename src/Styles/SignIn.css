@@ -5,3 +5,8 @@
 .float-left{
     float: left;
 }
+
+.login-error-message {
+    color: rgb(201, 0, 0);
+    margin-top: 10px;
+}

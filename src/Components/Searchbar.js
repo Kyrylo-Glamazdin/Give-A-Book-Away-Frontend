@@ -91,7 +91,7 @@ class Searchbar extends Component{
           <form className="standard-search-form" onSubmit={this.props.handleSearchSubmit}>
             <input className="search-input" name="searchInput" onChange={this.props.handleFormChange} value={this.props.formValue} placeholder="Search by title, author, or ISBN"/>
             <button className="search-button" type="submit" value="Search">
-            <i class="fa fa-search"></i>
+            <i className="fa fa-search"></i>
             </button>
           </form>
         </div>

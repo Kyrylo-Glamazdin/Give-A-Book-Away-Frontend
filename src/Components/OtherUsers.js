@@ -3,14 +3,10 @@ import { connect } from "react-redux";
 import { addUserBook, clearUserBooks } from "../Actions";
 import {Redirect} from 'react-router';
 import OtherBookItem from "./OtherBookItem";
-import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
+import "../Styles/BookList.css";
 
 class OtherUser extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   fetchUserBooks = async () => {
     this.props.clearUserBooks();
     let requestObj = {
@@ -18,8 +14,7 @@ class OtherUser extends Component {
       otherUserZipcode: this.props.bookOwner.zipcode,
       userId: this.props.bookOwner.id,
     };
-    axios
-      .post(`http://localhost:3500/api/book/userbooks`, requestObj)
+    axios.post(`http://localhost:3500/api/book/userbooks`, requestObj)
       .then((response) => {
         const userbooks = response.data;
         for(let i = 0; i < userbooks.length; i++) {
@@ -43,28 +38,30 @@ class OtherUser extends Component {
     }
     return (
       <div>
-        <div className="profile-title">{this.props.bookOwner.username}</div>
-        <div>
-          <div>
-            <div className="list-box m-3 py-5">
-              <Container>
-                <Row className="py-5">
-                  {this.props.userBooks.map((item, key) => {
-                    item.owner = this.props.bookOwner.username;
-                    return (
-                      <Col key={key} md={3} sm={6} className="list py-3">
-                        <div className="imagebox m-auto">
-                          <OtherBookItem book={item} />
-                        </div>
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </Container>
-            </div>
-          </div>
+        <div className="other-users-profile-title">
+          {this.props.bookOwner.username}
         </div>
-      </div>
+        {this.props.userBooks.length > 0 && this.props.userBooks[0].city && this.props.userBooks[0].state && this.props.userBooks[0].user.zipcode ? 
+          <div className="other-users-profile-location">
+            Location: {this.props.userBooks[0].city}, {this.props.userBooks[0].state} ({this.props.userBooks[0].user.zipcode})
+          </div>
+        :
+          <div/>
+        }
+        <div className="other-users-books-title">
+          Books
+        </div>
+        <div className="other-users-book-list">
+          {this.props.userBooks.map((item, key) => {
+            item.owner = this.props.bookOwner.username;
+            return (
+              <div key={key} className="other-users-book-item">
+                <OtherBookItem book={item} />
+              </div>
+            );
+          })}
+        </div>
+     </div>
     );
   }
 }

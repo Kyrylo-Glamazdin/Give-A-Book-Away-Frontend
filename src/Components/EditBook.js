@@ -8,6 +8,7 @@ import {
   initiateRedirect,
   cancelRedirect,
   setPostedBooks,
+  editPostedBook
 } from "../Actions";
 import { Form } from "react-bootstrap";
 import DropdownExampleSelection from "./condition";
@@ -18,62 +19,34 @@ class SelectedBookPage extends Component {
     super(props);
 
     this.state = {
-      fullLocation: "",
       description: "",
       condition: "",
     };
   }
 
   componentDidMount() {
-    this.setState({ condition: this.props.book.condition });
-    this.setState({ description: this.props.book.description });
+    this.setState({ 
+      condition: this.props.book.condition,
+      description: this.props.book.description 
+    });
     if (!this.props.currentUser.id) {
       return;
     }
     this.props.cancelRedirect();
-    if (
-      this.props.book.city &&
-      this.props.book.state &&
-      this.props.book.zipcode
-    ) {
-      let fullLocation =
-        this.props.book.city +
-        " " +
-        this.props.book.state +
-        " (" +
-        this.props.book.zipcode +
-        ")";
-      this.setState({ fullLocation });
-    }
   }
 
   editChange = () => {
-    axios
-      .put(`http://localhost:3500/api/book/${this.props.book.id}`, {
+    axios.put(`http://localhost:3500/api/book/${this.props.book.id}`, {
         description: this.state.description,
+        condition: this.state.condition
       })
-      .then((res) => {
-        axios
-          .get(`http://localhost:3500/api/book/${this.props.currentUser.id}`)
-          .then((response) => {
-            this.props.setPostedBooks(response.data);
-          })
-          .catch((err) => console.log(err));
+      .then(res => {
+        if (res.data) {
+          let updatedBook = res.data;
+          this.props.editPostedBook(updatedBook)
+        }
       })
-      .catch((err) => console.log(err));
-    axios
-      .put(`http://localhost:3500/api/book/${this.props.book.id}`, {
-        condition: this.state.condition,
-      })
-      .then((res) => {
-        axios
-          .get(`http://localhost:3500/api/book/${this.props.currentUser.id}`)
-          .then((response) => {
-            this.props.setPostedBooks(response.data);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err))
   };
 
   handleConditionSubmit = (e) => {
@@ -89,8 +62,8 @@ class SelectedBookPage extends Component {
       return <Redirect to="/inbox" />;
     }
     return (
-      <div className="a-book">
-        <div className="book-title">
+      <div className="edit-a-book">
+        <div className="edit-book-title">
           <h1>{this.props.book.title}</h1>
           <img src={this.props.book.preview_image} alt="" />
         </div>
@@ -117,7 +90,7 @@ class SelectedBookPage extends Component {
 
         <button
           type="button"
-          className="button10"
+          className="button12"
           onClick={() => this.editChange()}
         >
           Save Change
@@ -140,4 +113,5 @@ export default connect(mapStateToProps, {
   initiateRedirect,
   cancelRedirect,
   setPostedBooks,
+  editPostedBook
 })(SelectedBookPage);
