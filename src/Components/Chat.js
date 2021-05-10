@@ -27,6 +27,9 @@ class Chat extends Component {
         if (!this.props.currentUser.id) {
             return;
         }
+        window.scrollTo({
+            top: 0, behavior: "auto"
+        })
         disableBodyScroll(this);
         this.joinPersonalRoom(this.props.currentUser.username)
         socket.on('message', message => {

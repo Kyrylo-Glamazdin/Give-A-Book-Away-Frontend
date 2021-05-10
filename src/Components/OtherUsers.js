@@ -27,6 +27,9 @@ class OtherUser extends Component {
     if (!this.props.currentUser.id) {
       return;
     }
+    window.scrollTo({
+      top: 0, behavior: "smooth"
+    })
     this.fetchUserBooks();
   }
 

@@ -25,6 +25,9 @@ class SelectedBookPage extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo({
+      top: 0, behavior: "smooth"
+    })
     this.setState({ 
       condition: this.props.book.condition,
       description: this.props.book.description 
