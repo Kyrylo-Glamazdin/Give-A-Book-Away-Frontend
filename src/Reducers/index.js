@@ -45,6 +45,8 @@ const booksReducer = (oldBooks = books, action) => {
     case "POST_BOOK":
       let newBook = action.payload;
       return oldBooks.concat(newBook);
+    case "SET_BOOKS":
+      return action.payload;
     case "EDIT_BOOK":
       for (let i = 0; i < oldBooks.length; i++) {
         if (oldBooks[i].id === action.payload.id) {

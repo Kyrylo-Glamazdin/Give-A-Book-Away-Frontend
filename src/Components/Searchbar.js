@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
-import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner, clearSimilarBooks, beginLoading, endLoading } from '../Actions';
+import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner, clearSimilarBooks, beginLoading, endLoading, setBooks } from '../Actions';
 
 class Searchbar extends Component{
 
@@ -43,10 +43,10 @@ class Searchbar extends Component{
       .then(response => {
         this.props.endLoading();
         if (response.data) {
+          this.props.setBooks(response.data)
           for (let i = 0; i < response.data.length; i++) {
             let bookOwner = response.data[i].user;
             this.props.addBookOwner(bookOwner);          
-            this.props.postBook(response.data[i]);
           }
         }
       })
@@ -148,5 +148,6 @@ export default connect(mapStateToProps, {
   clearBookOwner ,
   clearSimilarBooks,
   beginLoading, 
-  endLoading
+  endLoading,
+  setBooks
 })(Searchbar);

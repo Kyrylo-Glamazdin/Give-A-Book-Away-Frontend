@@ -19,6 +19,13 @@ export const postBook = (book) => {
   };
 };
 
+export const setBooks = (books) => {
+  return {
+    type: "SET_BOOKS",
+    payload: books,
+  };
+};
+
 export const editBook = (book) => {
   return {
     type: "EDIT_BOOK",
