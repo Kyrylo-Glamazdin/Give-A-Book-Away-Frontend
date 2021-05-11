@@ -12,13 +12,17 @@ Heroku link: [https://books-away.herokuapp.com/](https://books-away.herokuapp.co
 
 # Local Installation
 Clone the repo, then type:
+
 `
 npm install
 `
+
 After completing the installation, you can run the app by typing:
+
 `
 npm start
 `
+
 Keep in mind that this is only the front-end part of the project. To completely install the project, you also need to follow the instructions in the [back-end](https://github.com/Kyrylo-Glamazdin/Give-a-Book-Away-Backend) repo.
 
 # Contributors
