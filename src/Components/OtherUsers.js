@@ -14,7 +14,7 @@ class OtherUser extends Component {
       otherUserZipcode: this.props.bookOwner.zipcode,
       userId: this.props.bookOwner.id,
     };
-    axios.post(`http://localhost:3500/api/book/userbooks`, requestObj)
+    axios.post(`https://books-away.herokuapp.com/api/book/userbooks`, requestObj)
       .then((response) => {
         const userbooks = response.data;
         for(let i = 0; i < userbooks.length; i++) {

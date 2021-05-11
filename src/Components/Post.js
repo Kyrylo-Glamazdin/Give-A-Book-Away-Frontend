@@ -107,7 +107,7 @@ class Post extends Component {
       user: this.props.currentUser,
     };
     axios
-      .post("http://localhost:3500/api/book/post", bookAndUserObject)
+      .post("https://books-away.herokuapp.com/api/book/post", bookAndUserObject)
       .then((response) => {
         this.props.endLoading();
         this.setState({ description: "" })
@@ -121,7 +121,7 @@ class Post extends Component {
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     if (this.state.searchInput) {
-      let booksKey = await axios.get("http://localhost:3500/api/book/key");
+      let booksKey = await axios.get("https://books-away.herokuapp.com/api/book/key");
       await axios
         .get(
           "https://www.googleapis.com/books/v1/volumes?q=" +

@@ -51,7 +51,7 @@ class SignIn extends Component {
       password: this.state.password,
     };
     axios
-      .post("http://localhost:3500/api/auth/signin", sendData)
+      .post("https://books-away.herokuapp.com/api/auth/signin", sendData)
       .then((response) => {
         let data = response.data;
         if (data.status) {
@@ -92,7 +92,7 @@ class SignIn extends Component {
       zipcode
     };
     axios
-      .post("http://localhost:3500/api/book/recommended", req)
+      .post("https://books-away.herokuapp.com/api/book/recommended", req)
       .then((response) => {
         this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {
@@ -108,7 +108,7 @@ class SignIn extends Component {
 
   fetchPostedBooks = async (loggedInUserId) => {
     axios
-      .get(`http://localhost:3500/api/book/${loggedInUserId}`)
+      .get(`https://books-away.herokuapp.com/api/book/${loggedInUserId}`)
       .then((response) => {
         this.props.setPostedBooks(response.data);
       })
@@ -117,7 +117,7 @@ class SignIn extends Component {
 
   fetchChats = async (loggedInUserId) => {
     axios
-      .get(`http://localhost:3500/api/inbox/${loggedInUserId}`)
+      .get(`https://books-away.herokuapp.com/api/inbox/${loggedInUserId}`)
       .then((response) => {
         let chatData = response.data;
         for (let i = 0; i < chatData.length; i++) {
@@ -134,7 +134,7 @@ class SignIn extends Component {
   };
 
   fetchUser = async (userId) => {
-    axios.get(`http://localhost:3500/api/user/${userId}`).then((response) => {
+    axios.get(`https://books-away.herokuapp.com/api/user/${userId}`).then((response) => {
       let userData = response.data;
       this.props.addUser(userData);
     });

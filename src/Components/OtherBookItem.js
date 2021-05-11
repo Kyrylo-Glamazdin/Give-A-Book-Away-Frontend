@@ -12,7 +12,6 @@ class OtherBookItem extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.book)
         if (this.props.book.owner === "self") {
             this.setState({
                 approximateDistance: ""

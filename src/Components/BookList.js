@@ -28,7 +28,7 @@ class BookList extends Component {
     handleSearchSubmit = async event => {
         event.preventDefault();
         if(this.state.searchInput) {
-            let booksKey = await axios.get("http://localhost:3500/api/book/key");
+            let booksKey = await axios.get("https://books-away.herokuapp.com/api/book/key");
             await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + this.state.searchInput + "&key=" + booksKey.data)
             .then(result => {
                 let books = [];

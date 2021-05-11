@@ -25,7 +25,7 @@ class Navbar extends Component {
           id: this.props.currentUser.id,
           zipcode: this.props.currentUser.zipcode 
         }
-        axios.post("http://localhost:3500/api/book/recommended", req)
+        axios.post("https://books-away.herokuapp.com/api/book/recommended", req)
         .then(response => {
             this.props.endLoading();
           for (let i = 0; i < response.data.length; i++) {

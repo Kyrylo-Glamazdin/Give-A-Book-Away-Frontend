@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-const SERVER = "http://localhost:3500"
+const SERVER = "https://books-away.herokuapp.com"
 
 const socket = io(SERVER);
 

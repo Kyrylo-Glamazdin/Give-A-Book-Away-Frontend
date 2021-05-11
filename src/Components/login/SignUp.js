@@ -71,7 +71,7 @@ class SignUp extends Component {
       zip: this.state.zip,
     };
     axios
-      .post("http://localhost:3500/api/auth/signup", newUser)
+      .post("https://books-away.herokuapp.com/api/auth/signup", newUser)
       .then((response) => {
         if (response.data.status) {
           this.props.clearBooksTemporary();
@@ -98,7 +98,7 @@ class SignUp extends Component {
       zipcode
     };
     axios
-      .post("http://localhost:3500/api/book/recommended", req)
+      .post("https://books-away.herokuapp.com/api/book/recommended", req)
       .then((response) => {
         this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {

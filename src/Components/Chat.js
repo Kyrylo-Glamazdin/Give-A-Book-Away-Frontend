@@ -50,7 +50,7 @@ class Chat extends Component {
             let currentConversation = []
 
             //fetch chat with selected user
-            await axios.post("http://localhost:3500/api/inbox/findchatbytwousers", requestObj)
+            await axios.post("https://books-away.herokuapp.com/api/inbox/findchatbytwousers", requestObj)
             .then(response => {
                 if (response.data) {
                     currentChat = response.data
@@ -63,7 +63,7 @@ class Chat extends Component {
 
             //fetch selected user info
             let propsOtherUserId = this.props.currentChat
-            await axios.get(`http://localhost:3500/api/user/${propsOtherUserId}`)
+            await axios.get(`https://books-away.herokuapp.com/api/user/${propsOtherUserId}`)
             .then(response => {
                 otherUser = response.data
             })
@@ -73,7 +73,7 @@ class Chat extends Component {
             if (currentChat.id) {
                 let currentChatId = currentChat.id
                 this.changeRoom(currentChatId)
-                await axios.get(`http://localhost:3500/api/inbox/chatlines/${currentChatId}`)
+                await axios.get(`https://books-away.herokuapp.com/api/inbox/chatlines/${currentChatId}`)
                 .then(response => {
                     currentConversation = response.data
                     for (let i = 0; i < currentConversation.length; i++) {
@@ -99,7 +99,7 @@ class Chat extends Component {
         //build chat icons
         let chatIcons = []
         const currentUserId = this.props.currentUser.id
-        await axios.get(`http://localhost:3500/api/inbox/${currentUserId}`)
+        await axios.get(`https://books-away.herokuapp.com/api/inbox/${currentUserId}`)
         .then(async response => {
             let chats = response.data
             for (let i = 0; i < chats.length; i++) {
@@ -108,15 +108,15 @@ class Chat extends Component {
                 if (curChatOtherUserId === currentUserId) {
                     curChatOtherUserId = chats[i].userTwoId
                 }
-                await axios.get(`http://localhost:3500/api/user/${curChatOtherUserId}`)
+                await axios.get(`https://books-away.herokuapp.com/api/user/${curChatOtherUserId}`)
                 .then(response => {
                     curChatOtherUserUsername = response.data.username
                 })
-                await axios.get(`http://localhost:3500/api/inbox/chaticonline/${chats[i].id}`)
+                await axios.get(`https://books-away.herokuapp.com/api/inbox/chaticonline/${chats[i].id}`)
                 .then(async result => {
                     let latestChatLineId = result.data
                     if (latestChatLineId) {
-                        await axios.get(`http://localhost:3500/api/inbox/chaticonlatest/${latestChatLineId}`)
+                        await axios.get(`https://books-away.herokuapp.com/api/inbox/chaticonlatest/${latestChatLineId}`)
                         .then(chatIconLatest => {
                             let latestChatLine = chatIconLatest.data
                             if (!latestChatLine) {
@@ -162,7 +162,7 @@ class Chat extends Component {
         this.setState({message: ""})
         //new chat
         if (!this.state.currentChat.id) {
-            await axios.post("http://localhost:3500/api/inbox/chat", this.state.currentChat)
+            await axios.post("https://books-away.herokuapp.com/api/inbox/chat", this.state.currentChat)
             .then(async newChat => {
                 this.changeRoom(newChat.data.userTwoId)
                 this.joinPersonalRoom(otherUser.username)
@@ -194,7 +194,7 @@ class Chat extends Component {
                     lineText: currentMessage,
                     time: curTime
                 }
-                await axios.post("http://localhost:3500/api/inbox/chatline", newMessageObject)
+                await axios.post("https://books-away.herokuapp.com/api/inbox/chatline", newMessageObject)
                 .then(() => {
                     this.redirectToConversation(newChat.data.id)
                     socket.emit('iconUpdate', messageObject)
@@ -237,7 +237,7 @@ class Chat extends Component {
             }
             this.setState({chatIcons})
 
-            await axios.post("http://localhost:3500/api/inbox/chatline", newMessageObject)
+            await axios.post("https://books-away.herokuapp.com/api/inbox/chatline", newMessageObject)
             .then(() => {
                 socket.emit('iconUpdate', messageObject)
                 this.leavePersonalRoom(this.state.otherUser.username)
@@ -263,7 +263,7 @@ class Chat extends Component {
             }
         }
         let otherUser = {}
-        let thisChat = await axios.post("http://localhost:3500/api/inbox/findchat/", requestObj)
+        let thisChat = await axios.post("https://books-away.herokuapp.com/api/inbox/findchat/", requestObj)
         if (thisChat.data) {
             thisChat = thisChat.data
         }
@@ -272,7 +272,7 @@ class Chat extends Component {
             return
         }
         let thisChatId = thisChat.id
-        await axios.get(`http://localhost:3500/api/inbox/chatlines/${thisChatId}`)
+        await axios.get(`https://books-away.herokuapp.com/api/inbox/chatlines/${thisChatId}`)
         .then(async response => {
             fullConversation = response.data
             let otherUserId = thisChat.userOneId
@@ -280,7 +280,7 @@ class Chat extends Component {
                 otherUserId = thisChat.userTwoId
             }
             let currentConversationUsername = ""
-            await axios.get(`http://localhost:3500/api/user/${otherUserId}`)
+            await axios.get(`https://books-away.herokuapp.com/api/user/${otherUserId}`)
             .then(response => {
                 otherUser = response.data
                 currentConversationUsername = otherUser.username

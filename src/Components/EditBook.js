@@ -39,7 +39,7 @@ class SelectedBookPage extends Component {
   }
 
   editChange = () => {
-    axios.put(`http://localhost:3500/api/book/${this.props.book.id}`, {
+    axios.put(`https://books-away.herokuapp.com/api/book/${this.props.book.id}`, {
         description: this.state.description,
         condition: this.state.condition
       })

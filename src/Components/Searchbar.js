@@ -39,7 +39,7 @@ class Searchbar extends Component{
         ind1++;
       }
 
-      axios.post('http://localhost:3500/api/book/isbn', bookAndZipObject)
+      axios.post('https://books-away.herokuapp.com/api/book/isbn', bookAndZipObject)
       .then(response => {
         this.props.endLoading();
         if (response.data) {
@@ -54,7 +54,7 @@ class Searchbar extends Component{
         console.log(err);
       })
 
-      axios.post('http://localhost:3500/api/book/similar', similarBooksRequest)
+      axios.post('https://books-away.herokuapp.com/api/book/similar', similarBooksRequest)
       .then(response => {
         let similarBooksResponse = response.data
         if (similarBooksResponse) {

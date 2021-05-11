@@ -11,7 +11,7 @@ class MyBooks extends Component {
 
   removeBook = (book) => {
     axios
-      .delete(`http://localhost:3500/api/book/${book.id}`)
+      .delete(`https://books-away.herokuapp.com/api/book/${book.id}`)
       .then(this.props.removePostedBook(book))
       .catch((err) => console.log(err));
   };
