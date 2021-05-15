@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import MyBooks from "./mybooks";
 import { connect } from "react-redux";
-import {
-  setUser,
-  clearUsers,
-  clearBooksTemporary,
-  clearBookOwner,
-  clearPostedBooks,
-  clearChats,
-  clearUserBooks,
-  clearSimilarBooks
-} from "../Actions";
+import {setUser, clearUsers, clearBooksTemporary, clearBookOwner, clearPostedBooks, clearChats, clearUserBooks, clearSimilarBooks} from "../Actions";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
+// Profile page that displays all books posted by the logged in user. Also shows a log out button
 class Profile extends Component {
+  //clear app state entirely when logging out
   logout = () => {
     this.props.clearBooksTemporary();
     this.props.clearBookOwner();
@@ -26,6 +19,7 @@ class Profile extends Component {
     this.props.setUser({});
   };
 
+  //show all books listed for a giveaway
   render() {
     if (!this.props.currentUser.id) {
       return <Redirect to="/" />;

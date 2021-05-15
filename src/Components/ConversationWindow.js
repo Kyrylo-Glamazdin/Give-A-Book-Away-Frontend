@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import '../Styles/ConversationWindow.css'
 import MessageList from './MessageList'
+import '../Styles/ConversationWindow.css'
 
-
+// Lists all messages in the currently selected chat
 class ConversationWindow extends Component {
+    // show the username of the user that sent each message, as well as the message time
     render() {
         if (this.props.conversationUsername) {
             return(
@@ -22,6 +23,7 @@ class ConversationWindow extends Component {
                 </div>
             );
         }
+        //if there's no chat selected, display a message asking user to select a chat
         else {
             return(
                 <div className="empty-conversation">

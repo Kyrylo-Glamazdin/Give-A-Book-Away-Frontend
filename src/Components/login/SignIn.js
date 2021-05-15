@@ -19,6 +19,7 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import "../../Styles/SignIn.css";
 
+// Component for logging into an existing account. Asks the user to provide the username and the password
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class SignIn extends Component {
     };
   }
 
+  //if an error occurs, display the error to the user for 3 seconds
   setErrorMessage = errorMessage => {
     this.setState({errorMessage})
     setTimeout(() => {
@@ -38,6 +40,7 @@ class SignIn extends Component {
     }, 3000)
   }
 
+  //attempt logging in
   handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -50,8 +53,8 @@ class SignIn extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    axios
-      .post("https://books-away.herokuapp.com/api/auth/signin", sendData)
+    //check if the user with entered credentials exists. if so, fetch the user and all their data, and redirect to the home page
+    axios.post("https://books-away.herokuapp.com/api/auth/signin", sendData)
       .then((response) => {
         let data = response.data;
         if (data.status) {
@@ -85,14 +88,14 @@ class SignIn extends Component {
     });
   };
 
+  //get recommended books
   fetchBooks = async (id, zipcode) => {
     this.props.beginLoading();
     let req = {
       id,
       zipcode
     };
-    axios
-      .post("https://books-away.herokuapp.com/api/book/recommended", req)
+    axios.post("https://books-away.herokuapp.com/api/book/recommended", req)
       .then((response) => {
         this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {
@@ -106,18 +109,18 @@ class SignIn extends Component {
       });
   };
 
+  //get books posted by this user
   fetchPostedBooks = async (loggedInUserId) => {
-    axios
-      .get(`https://books-away.herokuapp.com/api/book/${loggedInUserId}`)
+    axios.get(`https://books-away.herokuapp.com/api/book/${loggedInUserId}`)
       .then((response) => {
         this.props.setPostedBooks(response.data);
       })
       .catch((err) => console.log(err));
   };
 
+  //fetch user's chats
   fetchChats = async (loggedInUserId) => {
-    axios
-      .get(`https://books-away.herokuapp.com/api/inbox/${loggedInUserId}`)
+    axios.get(`https://books-away.herokuapp.com/api/inbox/${loggedInUserId}`)
       .then((response) => {
         let chatData = response.data;
         for (let i = 0; i < chatData.length; i++) {
@@ -133,6 +136,7 @@ class SignIn extends Component {
       });
   };
 
+  //fetch individual user info for chat
   fetchUser = async (userId) => {
     axios.get(`https://books-away.herokuapp.com/api/user/${userId}`).then((response) => {
       let userData = response.data;

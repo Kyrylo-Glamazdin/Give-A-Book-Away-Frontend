@@ -6,7 +6,9 @@ import OtherBookItem from "./OtherBookItem";
 import axios from "axios";
 import "../Styles/BookList.css";
 
+// Component displaying all the books posted by the user other than the logged in user. Also shows that user's location
 class OtherUser extends Component {
+  //get the books posted by that user
   fetchUserBooks = async () => {
     this.props.clearUserBooks();
     let requestObj = {
@@ -23,6 +25,7 @@ class OtherUser extends Component {
       })
       .catch((err) => console.log(err));
   };
+
   componentDidMount() {
     if (!this.props.currentUser.id) {
       return;
@@ -33,6 +36,8 @@ class OtherUser extends Component {
     this.fetchUserBooks();
   }
 
+  //show user's city, state, and zipcode based on their entered zipcode.
+  //display all user's books
   render() {
     if (!this.props.currentUser.id) {
       return(

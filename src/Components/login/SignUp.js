@@ -15,6 +15,8 @@ import {
 } from "../../Actions";
 import "../../Styles/SignIn.css";
 
+// Component for creating a new account.
+//the user is asked to provide their name, username, email, password, and zipcode to create an account
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +41,7 @@ class SignUp extends Component {
     });
   };
 
+  //if an error occurs, display the error to the user for 3 seconds
   setErrorMessage = errorMessage => {
     this.setState({errorMessage})
     setTimeout(() => {
@@ -46,6 +49,7 @@ class SignUp extends Component {
     }, 3000)
   }
 
+  //attment to create an account
   handleSubmit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -58,6 +62,7 @@ class SignUp extends Component {
     }
     this.setValidated(true);
 
+    //check if the passwords match
     if (this.state.password !== this.state.confirmPassword) {
       this.setErrorMessage("Passwords do not match!")
       return;
@@ -70,8 +75,9 @@ class SignUp extends Component {
       password: this.state.password,
       zip: this.state.zip,
     };
-    axios
-      .post("https://books-away.herokuapp.com/api/auth/signup", newUser)
+    //create a new account. 
+    //if the username is not taken already, and other fields are correct, the account will be created and the user will be redirected to the home page
+    axios.post("https://books-away.herokuapp.com/api/auth/signup", newUser)
       .then((response) => {
         if (response.data.status) {
           this.props.clearBooksTemporary();
@@ -91,14 +97,14 @@ class SignUp extends Component {
       .catch((err) => {console.log(err)});
   };
 
+  //get recommended books for the home page
   fetchBooks = async (id, zipcode) => {
     this.props.beginLoading();
     let req = {
       id,
       zipcode
     };
-    axios
-      .post("https://books-away.herokuapp.com/api/book/recommended", req)
+    axios.post("https://books-away.herokuapp.com/api/book/recommended", req)
       .then((response) => {
         this.props.endLoading();
         for (let i = 0; i < response.data.length; i++) {

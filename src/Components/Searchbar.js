@@ -5,8 +5,10 @@ import { Row } from "react-bootstrap";
 import "../Styles/Searchbar.css";
 import { postBook, clearBooksTemporary, addPostedBook, postSimilarBook, addBookOwner, clearBookOwner, clearSimilarBooks, beginLoading, endLoading, setBooks } from '../Actions';
 
+// Searchbar used for searching for books using google books api
 class Searchbar extends Component{
 
+  //get books from the database that match @book. also fetch result similar to @book
   fetchBooks(book){
     if (this.props.option === "search") {
       this.props.clearBooksTemporary();
@@ -28,6 +30,7 @@ class Searchbar extends Component{
         id: this.props.currentUser.id,
       }
 
+      //get 4 other books to use as similar books
       let ind1 = 0;
       let ind2 = 0;
       let selectedBookISBN = bookAndZipObject.book.isbn;
@@ -39,6 +42,7 @@ class Searchbar extends Component{
         ind1++;
       }
 
+      //search for the main selected book
       axios.post('https://books-away.herokuapp.com/api/book/isbn', bookAndZipObject)
       .then(response => {
         this.props.endLoading();
@@ -54,6 +58,7 @@ class Searchbar extends Component{
         console.log(err);
       })
 
+      //fetch similar books
       axios.post('https://books-away.herokuapp.com/api/book/similar', similarBooksRequest)
       .then(response => {
         let similarBooksResponse = response.data
@@ -71,6 +76,8 @@ class Searchbar extends Component{
     }
   }
 
+  //fetch books only if searchbar is used from booklist component.
+  //if used from the post component, get the selected book ready for being posted.
   handleRowSelection = book => {
     if (this.props.option === "search") {
       this.fetchBooks(book)
@@ -80,13 +87,12 @@ class Searchbar extends Component{
     }
   }
 
+  //show the searchbard and the dropdown of books returned from google books api
   render() {
     let searchBooks = this.props.searchBooks;
     return(
       <>
-
-<link rel="stylesheet" href= 
-"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> 
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> 
         <div className="searchbar">
           <form className="standard-search-form" onSubmit={this.props.handleSearchSubmit}>
             <input className="search-input" name="searchInput" onChange={this.props.handleFormChange} value={this.props.formValue} placeholder="Search by title, author, or ISBN"/>

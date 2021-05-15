@@ -1,3 +1,4 @@
+// This is the redux state of the app. Each of these reducers can be accessed from any component
 import { combineReducers } from "redux";
 
 let users = [
@@ -28,6 +29,7 @@ let redirectRequired = false;
 
 let booksLoading = false;
 
+//User info (other than the logged in user)
 const usersReducer = (oldUsers = users, action) => {
   switch (action.type) {
     case "ADD_USER":
@@ -40,6 +42,7 @@ const usersReducer = (oldUsers = users, action) => {
   }
 };
 
+//Books on the home page
 const booksReducer = (oldBooks = books, action) => {
   switch (action.type) {
     case "POST_BOOK":
@@ -64,6 +67,7 @@ const booksReducer = (oldBooks = books, action) => {
   }
 };
 
+//The logged in user
 const currentUserReducer = (curUser = currentUser, action) => {
   switch (action.type) {
     case "SET_USER":
@@ -73,6 +77,7 @@ const currentUserReducer = (curUser = currentUser, action) => {
   }
 };
 
+//The selected book
 const currentBookReducer = (curBook = currentBook, action) => {
   switch (action.type) {
     case "SET_BOOK":
@@ -82,6 +87,7 @@ const currentBookReducer = (curBook = currentBook, action) => {
   }
 };
 
+//Books posted by the logged in user
 const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
   switch (action.type) {
     case "ADD_POSTED_BOOK":
@@ -105,6 +111,7 @@ const postedBooksReducer = (oldPostedBooks = postedBooks, action) => {
   }
 };
 
+//books similar to the search request book
 const similarBooksReducer = (oldSimilarBooks = similarBooks, action) => {
   switch (action.type) {
     case "CHANGE_SIMILAR_BOOK":
@@ -116,6 +123,7 @@ const similarBooksReducer = (oldSimilarBooks = similarBooks, action) => {
   }
 };
 
+//user's chats
 const chatsReducer = (oldChats = chats, action) => {
   switch (action.type) {
     case "ADD_CHAT":
@@ -127,8 +135,8 @@ const chatsReducer = (oldChats = chats, action) => {
   }
 };
 
+//Chat that's currently open
 const currentChatReducer = (curChat = currentChat, action) => {
-
     switch (action.type) {
         case "SET_CHAT":
             return action.payload;
@@ -139,6 +147,7 @@ const currentChatReducer = (curChat = currentChat, action) => {
     }
 }
 
+//Reducer signifying the need for the redirect from one component to another
 const redirectRequiredReducer = (oldRedirectRequired = redirectRequired, action) => {
     switch (action.type) {
         case "INITIATE_REDIRECT":
@@ -149,6 +158,7 @@ const redirectRequiredReducer = (oldRedirectRequired = redirectRequired, action)
     }
 }
 
+//Users that posted the books (other than the logged in user)
 const bookOwnersReducer = (oldOwner = bookOwners, action) => {
   switch (action.type) {
     case "ADD_BOOK_OWNER":
@@ -165,6 +175,7 @@ const bookOwnersReducer = (oldOwner = bookOwners, action) => {
   }
 };
 
+//Books posted by the selected user (other than logged in user)
 const userBooksReducer = (oldUserBooks = userBooks, action) => {
   switch (action.type) {
     case "ADD_USER_BOOK":
@@ -175,6 +186,7 @@ const userBooksReducer = (oldUserBooks = userBooks, action) => {
   }
 }
 
+//Indicates whether the loading is currently happening
 const booksLoadingReducer = (oldBooksLoading = booksLoading, action) => {
   switch (action.type) {
     case "BEGIN_LOADING":

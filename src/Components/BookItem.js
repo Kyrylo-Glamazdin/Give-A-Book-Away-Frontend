@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import '../Styles/BookItem.css';
 import {Link} from 'react-router-dom';
+import '../Styles/BookItem.css';
 
+// Small book component displayed in the book list
 class BookItem extends Component {
     constructor(props) {
         super(props)
@@ -12,11 +13,13 @@ class BookItem extends Component {
     }
 
     componentDidMount() {
+        //if displays the book of the logged in user, do not show the distance
         if (this.props.book.owner === "self") {
             this.setState({
                 approximateDistance: ""
             })
         }
+        //otherwise, update the distance
         else if (this.props.book.distance !== "0.0") {
             this.setState({
                 approximateDistance: this.props.book.distance + " miles from you"
