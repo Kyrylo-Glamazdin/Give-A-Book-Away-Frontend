@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
-import '../Styles/ChatIconItem.css'
 import LineText from './LineText'
 import ImageIcon from './ImageIcon'
+import '../Styles/ChatIconItem.css'
 
+// Individual chat preview icon
 class ChatIconItem extends Component {
+    //display chat's other user's username, the last chat message, and last message time
     render() {
+        //highlight the message in green if it was just received and haven't been read yet
         if (this.props.chat.new) {
             return(
                 <div className="conversation-container" onClick={() => {

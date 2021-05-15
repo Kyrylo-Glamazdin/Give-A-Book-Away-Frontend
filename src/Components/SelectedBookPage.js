@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../Styles/EditBook.css";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { setChat, initiateRedirect, cancelRedirect } from "../Actions";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../Styles/EditBook.css";
+
+//Select all the information about currently selected book
 class SelectedBookPage extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +25,10 @@ class SelectedBookPage extends Component {
       top: 0, behavior: "smooth"
     })
     this.props.cancelRedirect();
-    if (
-      this.props.book.city &&
+    //update book's location to include its city, state, and zipcode
+    if (this.props.book.city &&
       this.props.book.state &&
-      this.props.book.zipcode
-    ) {
+      this.props.book.zipcode) {
       let fullLocation =
         this.props.book.city +
         " " +
@@ -39,11 +40,14 @@ class SelectedBookPage extends Component {
     }
   }
 
+  //remember book owner's id to initiate a chat with them, and redirect to the chat window
   findChat = (otherUserId) => {
     this.props.setChat(otherUserId);
     this.props.initiateRedirect();
   };
 
+  //display book's location, author, isbn, location, condition, description (if present), 
+  //book owner's username, and a button to contact the owner
   render() {
     if (!this.props.currentUser.id) {
       return <Redirect to="/" />;

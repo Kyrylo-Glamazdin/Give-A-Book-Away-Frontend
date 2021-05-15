@@ -1,12 +1,15 @@
 import React, { Component} from 'react'
 import {connect} from 'react-redux';
+
 import Searchbar from './Searchbar.js';
 import BookItem from './BookItem.js';
 import SimilarBookItem from './SimilarBookItem.js';
+
 import axios from 'axios';
 import {Redirect} from 'react-router';
 import "../Styles/BookList.css"
 
+// Display all the books returned by the search request, or by the recommendation algorithm
 class BookList extends Component {
     constructor(props) {
         super(props);
@@ -25,10 +28,13 @@ class BookList extends Component {
         })
     }
 
+    //use search bar to query google books api
     handleSearchSubmit = async event => {
         event.preventDefault();
         if(this.state.searchInput) {
+            //get api key
             let booksKey = await axios.get("https://books-away.herokuapp.com/api/book/key");
+            //query google books and display the results in the searchbar dropdown
             await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + this.state.searchInput + "&key=" + booksKey.data)
             .then(result => {
                 let books = [];
@@ -50,10 +56,12 @@ class BookList extends Component {
         }
     }
 
+    //reset the dropdown
     handleSearchBook(){
         this.setState({searchBooks: []})
     }
 
+    //display search results (or recommended books) with similar books if any
     render() {
         if (!this.props.currentUser.id) {
             return (
@@ -71,7 +79,6 @@ class BookList extends Component {
                     option="search"
                     me={this}
                 />
-                    {/* {this.state.noSearchResults} */}
                     {this.props.books.length > 0 ?
                 <div className="book-grid">
                     {
@@ -92,9 +99,6 @@ class BookList extends Component {
                             </div>
                         }
                     </div>
-                // <div className="no-listed-books">
-                //     There are no books that match your search
-                // </div>
                 }
                 {
                     this.props.similarBooks && this.props.similarBooks.length ? 

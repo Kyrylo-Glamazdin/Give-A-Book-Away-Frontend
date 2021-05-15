@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 import "../Styles/BookList.css";
 import '../Styles/BookItem.css';
 
+// Shows all books posted by the logged in user
 class MyBooks extends Component {
-
+  //removes book from the database
   removeBook = (book) => {
-    axios
-      .delete(`https://books-away.herokuapp.com/api/book/${book.id}`)
+    axios.delete(`https://books-away.herokuapp.com/api/book/${book.id}`)
       .then(this.props.removePostedBook(book))
       .catch((err) => console.log(err));
   };
 
+  //show all books posted by current user or show informative message indicating that the current user haven't posted any books
   render() {
     if (this.props.postedBooks.length === 0 ) {
       return (

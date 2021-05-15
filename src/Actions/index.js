@@ -1,3 +1,7 @@
+//All actions listed here are designed to alter the reducers in the predictable way.
+//Each of these actions can be accessed from any component in which the needed actions were imported
+
+//USERS
 export const addUser = (user) => {
   return {
     type: "ADD_USER",
@@ -12,6 +16,7 @@ export const clearUsers = () => {
   };
 };
 
+//BOOKS
 export const postBook = (book) => {
   return {
     type: "POST_BOOK",
@@ -47,6 +52,7 @@ export const clearBooksTemporary = () => {
   };
 };
 
+//CURRENT USER
 export const setUser = (user) => {
   return {
     type: "SET_USER",
@@ -54,6 +60,7 @@ export const setUser = (user) => {
   };
 };
 
+//CURRENT BOOK
 export const setBook = (book) => {
   return {
     type: "SET_BOOK",
@@ -61,6 +68,7 @@ export const setBook = (book) => {
   };
 };
 
+//POSTED BOOKS (by current user)
 export const addPostedBook = (book) => {
   return {
     type: "ADD_POSTED_BOOK",
@@ -96,6 +104,7 @@ export const clearPostedBooks = () => {
   };
 };
 
+//CHATS
 export const addChat = (chat) => {
   return {
     type: "ADD_CHAT",
@@ -124,6 +133,7 @@ export const unsetChat = () => {
     };
 };
 
+//REDIRECT
 export const initiateRedirect = () => {
   return {
     type: "INITIATE_REDIRECT",
@@ -138,6 +148,7 @@ export const cancelRedirect = () => {
     };
 };
 
+//SIMILAR BOOKS
 export const postSimilarBook = (payload) => {
   return {
     type: "CHANGE_SIMILAR_BOOK",
@@ -152,6 +163,7 @@ export const clearSimilarBooks = () => {
   };
 };
 
+//BOOK OWNERS
 export const addBookOwner = (user) => {
   return {
     type: "ADD_BOOK_OWNER",
@@ -166,6 +178,7 @@ export const clearBookOwner = () => {
   };
 };
 
+//BOOKS BY OTHER USERS
 export const addUserBook = (book) => {
   return {
     type: "ADD_USER_BOOK",
@@ -180,6 +193,7 @@ export const clearUserBooks = () => {
   };
 };
 
+//LOADING
 export const beginLoading = () => {
   return {
     type: "BEGIN_LOADING",

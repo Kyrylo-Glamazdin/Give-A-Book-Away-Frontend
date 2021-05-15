@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import ChatIconItem from './ChatIconItem';
 import '../Styles/ChatList.css';
+
+// All chat preview icons that correspond to each chat associated with the current user.
+// redirect to chat's conversation when clicking on the chat icon
 class ChatList extends Component {
     render() {
         return(

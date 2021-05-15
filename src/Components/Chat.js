@@ -5,11 +5,13 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router';
 import {setChat, cancelRedirect} from "../Actions";
 import axios from 'axios';
+//current date & time
 import moment from 'moment'
 import socket from '../socket.js';
 import '../Styles/Chat.css'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
+// Chat component that allows users to select a conversation and text other users
 class Chat extends Component {
     constructor(props) {
         super(props)
@@ -32,9 +34,11 @@ class Chat extends Component {
         })
         disableBodyScroll(this);
         this.joinPersonalRoom(this.props.currentUser.username)
+        //display the message on socket message event
         socket.on('message', message => {
             this.outputMessage(message)
         })
+        //enable sockets to receive chat preview icon updates
         socket.on('updateRequired', message => {
             this.updateIcons(message)
         })
@@ -138,6 +142,7 @@ class Chat extends Component {
         this.setState({chatIcons})
     }
 
+    //reset all chat information & disable scroll lock
     componentWillUnmount() {
         clearAllBodyScrollLocks();
         this.leavePersonalRoom(this.props.currentUser.username)
@@ -154,9 +159,11 @@ class Chat extends Component {
         })
     }
 
+    //send a message
     handleChatFormSubmit = async event => {
         event.preventDefault()
         const currentMessage = this.state.message
+        //get current date and time
         const curTime = moment().format('LLL')
         const otherUser = this.state.otherUser
         this.setState({message: ""})
@@ -164,6 +171,7 @@ class Chat extends Component {
         if (!this.state.currentChat.id) {
             await axios.post("https://books-away.herokuapp.com/api/inbox/chat", this.state.currentChat)
             .then(async newChat => {
+                //use sockets to change rooms to send message only to the right person
                 this.changeRoom(newChat.data.userTwoId)
                 this.joinPersonalRoom(otherUser.username)
                 let chatDataItem = {
@@ -174,6 +182,7 @@ class Chat extends Component {
                     time: curTime
                 }
                 let chatIcons = this.state.chatIcons
+                //create new chat icon
                 chatIcons.push(chatDataItem)
                 this.setState({
                     chatIcons,
@@ -194,6 +203,8 @@ class Chat extends Component {
                     lineText: currentMessage,
                     time: curTime
                 }
+
+                //store message in the database. if successful, emit a message event
                 await axios.post("https://books-away.herokuapp.com/api/inbox/chatline", newMessageObject)
                 .then(() => {
                     this.redirectToConversation(newChat.data.id)
@@ -205,6 +216,7 @@ class Chat extends Component {
                 console.log(err)})
             })
         }
+        //chat already exists
         else {
             this.joinPersonalRoom(this.state.otherUser.username)
             let messageObject = {
@@ -228,6 +240,7 @@ class Chat extends Component {
                 lineText: currentMessage,
                 time: curTime
             }
+            //update chat icon
             let chatIcons = this.state.chatIcons
             for (let i = 0; i < chatIcons.length; i++) {
                 if (chatIcons[i].chatId === chatDataItem.chatId) {
@@ -237,6 +250,7 @@ class Chat extends Component {
             }
             this.setState({chatIcons})
 
+            //store message in the database. if successful, emit a message event
             await axios.post("https://books-away.herokuapp.com/api/inbox/chatline", newMessageObject)
             .then(() => {
                 socket.emit('iconUpdate', messageObject)
@@ -250,6 +264,7 @@ class Chat extends Component {
         }
     }
 
+    //fetch all messages in the selected conversation and other user's information
     redirectToConversation = async conversationId => {
         this.changeRoom(conversationId)
         let fullConversation = []
@@ -263,6 +278,7 @@ class Chat extends Component {
             }
         }
         let otherUser = {}
+        //find chat
         let thisChat = await axios.post("https://books-away.herokuapp.com/api/inbox/findchat/", requestObj)
         if (thisChat.data) {
             thisChat = thisChat.data
@@ -271,6 +287,7 @@ class Chat extends Component {
             console.log("Couldn't fetch chat")
             return
         }
+        //get messages in the conversation
         let thisChatId = thisChat.id
         await axios.get(`https://books-away.herokuapp.com/api/inbox/chatlines/${thisChatId}`)
         .then(async response => {
@@ -280,10 +297,12 @@ class Chat extends Component {
                 otherUserId = thisChat.userTwoId
             }
             let currentConversationUsername = ""
+            //get other user's username
             await axios.get(`https://books-away.herokuapp.com/api/user/${otherUserId}`)
             .then(response => {
                 otherUser = response.data
                 currentConversationUsername = otherUser.username
+                //for each message in the conversation, set the username of the user that sent the message (based on userId property)
                 for (let i = 0; i < fullConversation.length; i++) {
                     if (fullConversation[i].userId === this.props.currentUser.id) {
                         fullConversation[i].username = this.props.currentUser.username
@@ -304,24 +323,26 @@ class Chat extends Component {
         .catch(err => console.log(err))
     }
 
+    //update the conversation on socket message event
     outputMessage = messageObject => {
-            let chatDataItem = {
-                chatId: this.state.currentChat.id,
-                username: messageObject.username,
-                lineText: messageObject.line,
-                time: messageObject.time
-            }
-            let fullConversation = this.state.currentConversation
-            fullConversation.push(chatDataItem)
-            this.setState({
-                currentConversation: fullConversation
-            })
+        let chatDataItem = {
+            chatId: this.state.currentChat.id,
+            username: messageObject.username,
+            lineText: messageObject.line,
+            time: messageObject.time
+        }
+        let fullConversation = this.state.currentConversation
+        fullConversation.push(chatDataItem)
+        this.setState({
+            currentConversation: fullConversation
+        })
     }
 
+    //update chat preview icons on socket updateRequired event
     updateIcons = message => {
         if (message.otherUserId) {
             if (message.otherUserId === this.props.currentUser.id) {
-                //new chat
+                //new chat. add a new icon
                 let chatDataItem = {
                     userId: message.id,
                     chatId: message.conversationId,
@@ -335,6 +356,7 @@ class Chat extends Component {
                 this.setState({chatIcons})
             }
         }
+        //existing chat. update the icon
         else {
             let chatDataItem = {
                 chatId: message.conversationId,
@@ -357,12 +379,15 @@ class Chat extends Component {
         }
     }
 
+    //leave current chat room and join the new one (change socket room)
     changeRoom = roomId => {
         if (this.state.currentChat.id) {
             this.leaveRoom(this.state.currentChat.id)
         }
         this.joinRoom(roomId)
     }
+
+    //rooms for conversation & message updates
 
     joinRoom = roomId => {
         socket.emit('joinRoom', roomId)
@@ -371,6 +396,8 @@ class Chat extends Component {
     leaveRoom = roomId => {
         socket.emit('leaveRoom', roomId)
     }
+
+    //rooms for conversation preview icons updates
 
     joinPersonalRoom = roomId => {
         socket.emit('joinRoom', roomId)

@@ -1,6 +1,8 @@
 import React from 'react'
 import '../Styles/Message.css'
 
+// Individual message in a message list.
+//highlight message differently based on which user is logged in
 function Message(props) {
     if (props.currentUserUsername === props.username) {
         //logged in user's message
@@ -18,6 +20,7 @@ function Message(props) {
             </div>
         )
     }
+    //other user's message
     else {
         return(
             <div className="other-user">

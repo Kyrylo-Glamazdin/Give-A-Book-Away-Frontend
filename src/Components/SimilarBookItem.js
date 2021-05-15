@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import '../Styles/BookItem.css';
 import {Link} from 'react-router-dom';
+import '../Styles/BookItem.css';
 
+// Displays the basic book info as a single item in the booklist.
+// Used only in the Similar Book list
 class SimilarBookItem extends Component {
     constructor(props) {
         super(props)
@@ -17,6 +19,7 @@ class SimilarBookItem extends Component {
                 approximateDistance: ""
             })
         }
+        //update the distance
         else if (this.props.book.distance !== "0.0") {
             this.setState({
                 approximateDistance: this.props.book.distance + " miles from you"

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import "../Styles/PostButtons.css";
 import { connect } from "react-redux";
 import { addPostedBook, beginLoading, endLoading } from "../Actions";
+
 import DropdownExampleSelection from "./condition.js";
 import Searchbar from "./Searchbar.js";
 import Buttons from "./submit";
-import { Row, Form } from "react-bootstrap";
 import { Redirect } from "react-router";
 import axios from "axios";
 
+import { Row, Form } from "react-bootstrap";
+import "../Styles/PostButtons.css";
+
+// Post component is used for adding new books to the database
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +33,7 @@ class Post extends Component {
     });
   };
 
+  //if an error occurs while posting a book, display the error message for 5 seconds
   setErrorMessage = message => {
     this.setState({errorMessage: message})
     setTimeout(() => {
@@ -37,6 +41,8 @@ class Post extends Component {
     }, 5000)
   }
 
+  //display the book that was selected from the dropdown.
+  //also add the condition and description fields ready to be edited
   setSelectedBook = (book) => {
     this.handleSearchBook();
     if (book.title) {
@@ -85,7 +91,9 @@ class Post extends Component {
     }
   };
 
+  //add the book to the database
   confirmBookPost = () => {
+    //check for errors
     if (!this.state.selectedBook.title) {
       this.setErrorMessage("You must select a book first");
       return;
@@ -98,16 +106,17 @@ class Post extends Component {
       this.setErrorMessage("You must select a condition")
       return;
     }
+
     this.props.beginLoading();
     let book = this.state.selectedBook;
     book.condition = this.state.condition;
     book.description = this.state.description;
+    //add the book and add an association to the current user
     let bookAndUserObject = {
       book,
       user: this.props.currentUser,
     };
-    axios
-      .post("https://books-away.herokuapp.com/api/book/post", bookAndUserObject)
+    axios.post("https://books-away.herokuapp.com/api/book/post", bookAndUserObject)
       .then((response) => {
         this.props.endLoading();
         this.setState({ description: "" })
@@ -118,17 +127,14 @@ class Post extends Component {
       });
   };
 
+  //get data from searchbar and query google books api. display the results in the dropdown
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     if (this.state.searchInput) {
+      //get google books api key from back-end
       let booksKey = await axios.get("https://books-away.herokuapp.com/api/book/key");
-      await axios
-        .get(
-          "https://www.googleapis.com/books/v1/volumes?q=" +
-            this.state.searchInput +
-            "&key=" +
-            booksKey.data
-        )
+      //query google books and add the results to the dropdown
+      await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + this.state.searchInput + "&key=" + booksKey.data)
         .then((result) => {
           let books = [];
           for (let i = 0; i < result.data.items.length; i++) {
@@ -153,10 +159,12 @@ class Post extends Component {
     }
   };
 
+  //reset the dropdown
   handleSearchBook() {
     this.setState({ searchBooks: [] });
   }
 
+  //pass this function to the condition dropdown to get the selected condition
   handleConditionSubmit = (e) => {
     this.setState({
       condition: e,

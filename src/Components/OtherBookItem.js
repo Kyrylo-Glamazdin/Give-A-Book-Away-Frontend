@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import '../Styles/OtherBookItem.css';
 import {Link} from 'react-router-dom';
 
+// Book icon used in the book list on other user's profile page
 class OtherBookItem extends Component {
     constructor(props) {
         super(props)

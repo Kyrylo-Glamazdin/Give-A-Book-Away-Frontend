@@ -1,9 +1,10 @@
 import React from "react";
-
-import "../Styles/PostButtons.css";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import "../Styles/PostButtons.css";
 
+// Dropdown from which the user can select a book condition.
+// The conditions are: New, Slightly Used, Old
 class DropdownExampleSelection extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,7 @@ class DropdownExampleSelection extends React.Component {
     };
   }
 
+  //change the title of the dropdown to replicate the currently selected condition
   handleSelect = (e) => {
     this.props.handleConditionSubmit(e);
     this.setState({ title: e });

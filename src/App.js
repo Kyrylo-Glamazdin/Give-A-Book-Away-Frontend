@@ -1,19 +1,23 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// components to be rendered on different routes
 import Post from "./Components/Post";
 import Navbar from "./Components/Navbar.js";
 import BookList from "./Components/BookList.js";
-import "bootstrap/dist/css/bootstrap.min.css";
 import SignIn from "./Components/login/SignIn";
 import SignUp from "./Components/login/SignUp";
 import Profile from "./Components/ProfilePage.js";
-import {connect} from 'react-redux';
 import OtherUsers from "./Components/OtherUsers.js";
 import SelectedBookPage from "./Components/SelectedBookPage";
 import EditBook from "./Components/EditBook";
-import './Styles/design.css'
 import Chat from './Components/Chat';
 
+import {connect} from 'react-redux';
+
+import './Styles/design.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// The main component of the app
 class App extends Component {
 
   render() {
@@ -24,6 +28,8 @@ class App extends Component {
     const PostComponent = () => <Post />;
     const ProfileComponent = () => <Profile />;
     const ChatComponent = () => <Chat/>;
+
+    //set components for different routes
     return (
       <div className="design">
         <Router>
@@ -43,7 +49,8 @@ class App extends Component {
             <Route path="/profile" component={ProfileComponent} />
                         
             <Route path="/inbox" component={ChatComponent} />
-                                     
+                  
+            {/* search result/recommended books */}
             {this.props.books.map((book) => {
               return (
                 <Route
@@ -60,6 +67,7 @@ class App extends Component {
                 />
               );
             })}
+            {/* all books posted by the logged in user */}
             {this.props.postedBooks.map((book) => {
               return (
                 <Route
@@ -76,6 +84,7 @@ class App extends Component {
                 />
               );
             })}
+            {/* all users whose books are shown in the app */}
             {this.props.bookOwners.map((bookOwner) => {
               return (
                 <Route
@@ -92,6 +101,7 @@ class App extends Component {
                 />
               );
             })}
+            {/* all books posted by a particular user */}
             {this.props.userBooks.map((book) => {
               return (
                 <Route
@@ -108,6 +118,7 @@ class App extends Component {
                 />
               );
             })}
+            {/* books similar to the search request */}
             {this.props.similarBooks.map((book) => {
               return (
                 <Route

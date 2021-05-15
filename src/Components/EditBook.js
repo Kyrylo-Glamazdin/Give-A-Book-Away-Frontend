@@ -3,18 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/SelectedBook.css";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import {
-  setChat,
-  initiateRedirect,
-  cancelRedirect,
-  setPostedBooks,
-  editPostedBook
-} from "../Actions";
+import {setChat, initiateRedirect, cancelRedirect, setPostedBooks, editPostedBook} from "../Actions";
 import { Form } from "react-bootstrap";
 import DropdownExampleSelection from "./condition";
 import axios from "axios";
 
-class SelectedBookPage extends Component {
+// Component for editing the condition and description fields of the book
+class EditBook extends Component {
   constructor(props) {
     super(props);
 
@@ -28,6 +23,7 @@ class SelectedBookPage extends Component {
     window.scrollTo({
       top: 0, behavior: "smooth"
     })
+    //set current condition
     this.setState({ 
       condition: this.props.book.condition,
       description: this.props.book.description 
@@ -38,6 +34,7 @@ class SelectedBookPage extends Component {
     this.props.cancelRedirect();
   }
 
+  //edit the book in the database
   editChange = () => {
     axios.put(`https://books-away.herokuapp.com/api/book/${this.props.book.id}`, {
         description: this.state.description,
@@ -45,25 +42,29 @@ class SelectedBookPage extends Component {
       })
       .then(res => {
         if (res.data) {
-          let updatedBook = res.data;
+          let oldBook = this.props.book;
+          oldBook.description = this.state.description;
+          oldBook.condition = this.state.condition;
+          let updatedBook = oldBook;
           this.props.editPostedBook(updatedBook)
         }
       })
       .catch(err => console.log(err))
   };
 
+  //select new condition
   handleConditionSubmit = (e) => {
     this.setState({
       condition: e,
     });
   };
 
+  //show the books current info, including condition and description
   render() {
     if (!this.props.currentUser.id) {
       return <Redirect to="/" />;
-    } else if (this.props.redirect) {
-      return <Redirect to="/inbox" />;
     }
+
     return (
       <div className="edit-a-book">
         <div className="edit-book-title">
@@ -117,4 +118,4 @@ export default connect(mapStateToProps, {
   cancelRedirect,
   setPostedBooks,
   editPostedBook
-})(SelectedBookPage);
+})(EditBook);
